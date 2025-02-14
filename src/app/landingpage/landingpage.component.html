@@ -1,0 +1,29 @@
+<div class="flex flex-col items-center justify-center min-h-screen bg-background text-light relative overflow-hidden">
+    <!-- Background Animation -->
+    <div class="absolute inset-0 flex items-center justify-center">
+      <div class="w-96 h-96 bg-purple-700 opacity-30 rounded-full animate-pulse"></div>
+    </div>
+  
+    <!-- Company Name -->
+    <h1 class="text-5xl font-extrabold text-primary relative z-10 animate-fade-in">
+      Welcome to <span class="text-accent animate-pulse bg-primary2 rounded-lg px-2">FoundIt.in</span>
+    </h1>
+  
+    <!-- Subheading -->
+    <p class="text-lg text-primary mt-2 relative z-10 animate-slide-up">
+      Your dream job is just a click away!
+    </p>
+  
+    <!-- Loading Animation -->
+    <div class="mt-6 flex items-center space-x-2 relative z-10">
+      <div class="w-4 h-4 bg-yellow-400 rounded-full animate-bounce"></div>
+      <div class="w-4 h-4 bg-yellow-400 rounded-full animate-bounce delay-150"></div>
+      <div class="w-4 h-4 bg-yellow-400 rounded-full animate-bounce delay-300"></div>
+    </div>
+  
+    <!-- Countdown Timer -->
+    <p class="mt-4 text-gray-400 text-sm text-light relative z-10">
+      Redirecting to login in <span id="countdown" class="text-yellow-400 font-semibold">{{countdown}}</span> seconds...
+    </p>
+  </div>
+  

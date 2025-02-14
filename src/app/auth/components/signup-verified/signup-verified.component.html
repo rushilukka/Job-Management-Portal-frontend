@@ -1,0 +1,20 @@
+<div class="flex min-h-screen items-center justify-center bg-background p-6">
+  <div class="w-full max-w-md rounded-lg glass-dark p-8 shadow-lg">
+    <h2 class="mb-4 text-center text-2xl font-bold text-primary">Email Verification</h2>
+
+    <p
+      [ngClass]="{ 'text-green-600': isSuccess, 'text-red-600': isSuccess === false }"
+      class="mb-4 text-center text-lg"
+    >
+      {{ verificationMessage }}
+    </p>
+
+    <button
+      *ngIf="isSuccess"
+      (click)="goToLogin()"
+      class="w-full rounded-lg bg-primary p-3 text-light hover:bg-purple-800"
+    >
+      Go to Login
+    </button>
+  </div>
+</div>

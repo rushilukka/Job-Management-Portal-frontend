@@ -1,0 +1,115 @@
+<div class="flex min-h-screen items-center justify-center bg-background p-6">
+  <div class="w-full max-w-md rounded-lg glass-dark p-8 shadow-lg">
+    <h2 class="mb-4 text-center text-2xl font-bold text-primary">Sign Up</h2>
+
+    <form (ngSubmit)="onSignup()" #signupForm="ngForm" class="space-y-4">
+      
+      <!-- Name Field -->
+      <input
+        type="text"
+        [(ngModel)]="name"
+        name="name"
+        placeholder="Name"
+        required
+        minlength="3"
+        #nameRef="ngModel"
+        class="w-full rounded-lg border border-gray-300 p-3 focus:border-primary focus:ring-2 focus:ring-primary"
+      />
+      <p *ngIf="nameRef.invalid && nameRef.touched" class="text-red-500 text-sm">
+        Name must be at least 3 characters long.
+      </p>
+
+      <!-- Email Field -->
+      <input
+        type="email"
+        [(ngModel)]="email"
+        name="email"
+        placeholder="Email"
+        required
+        email
+        #emailRef="ngModel"
+        class="w-full rounded-lg border border-gray-300 p-3 focus:border-primary focus:ring-2 focus:ring-primary"
+      />
+      <p *ngIf="emailRef.invalid && emailRef.touched" class="text-red-500 text-sm">
+        Please enter a valid email.
+      </p>
+
+      <!-- Phone Number Field -->
+      <input
+        type="tel"
+        [(ngModel)]="phoneNumber"
+        name="phoneNumber"
+        placeholder="Phone Number"
+        required
+        pattern="^[0-9]{10}$"
+        #phoneRef="ngModel"
+        class="w-full rounded-lg border border-gray-300 p-3 focus:border-primary focus:ring-2 focus:ring-primary"
+      />
+      <p *ngIf="phoneRef.invalid && phoneRef.touched" class="text-red-500 text-sm">
+        Please enter a valid 10-digit phone number.
+      </p>
+
+      <!-- Password Field -->
+      <div class="relative">
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          [(ngModel)]="password"
+          name="password"
+          placeholder="Password"
+          required
+          minlength="8"
+          pattern="^(?=.*[A-Z])(?=.*\d).{8,}$"
+          #passwordRef="ngModel"
+          class="w-full rounded-lg border border-gray-300 p-3 pr-10 focus:border-primary focus:ring-2 focus:ring-primary"
+        />
+        <button
+          type="button"
+          (click)="togglePassword()"
+          class="absolute right-3 top-3 text-gray-500 hover:text-primary"
+        >
+          <i [ngClass]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+        </button>
+      </div>
+      <p *ngIf="passwordRef.invalid && passwordRef.touched" class="text-red-500 text-sm">
+        Password must be at least 8 characters long, with 1 uppercase letter and 1 number.
+      </p>
+
+      <!-- Confirm Password Field -->
+      <div class="relative">
+        <input
+          [type]="showConfirmPassword ? 'text' : 'password'"
+          [(ngModel)]="confirmPassword"
+          name="confirmPassword"
+          placeholder="Confirm Password"
+          required
+          #confirmPasswordRef="ngModel"
+          class="w-full rounded-lg border border-gray-300 p-3 pr-10 focus:border-primary focus:ring-2 focus:ring-primary"
+        />
+        <button
+          type="button"
+          (click)="toggleConfirmPassword()"
+          class="absolute right-3 top-3 text-gray-500 hover:text-primary"
+        >
+          <i [ngClass]="showConfirmPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+        </button>
+      </div>
+      <p *ngIf="confirmPasswordRef.touched && passwordMismatch" class="text-red-500 text-sm">
+        Passwords do not match!
+      </p>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        [disabled]="signupForm.invalid || passwordMismatch"
+        class="w-full rounded-lg bg-primary p-3 text-light hover:bg-purple-800 disabled:bg-gray-400"
+      >
+        Sign Up
+      </button>
+    </form>
+
+    <p class="mt-4 text-center text-sm text-gray-600">
+      Already have an account?
+      <a routerLink="/auth/login" class="text-secondary hover:underline">Login</a>
+    </p>
+  </div>
+</div>

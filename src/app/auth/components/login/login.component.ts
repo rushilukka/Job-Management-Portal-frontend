@@ -1,0 +1,118 @@
+import { ChangeDetectorRef, Component, inject, NgZone } from '@angular/core';
+import { AuthService } from '../../auth.service';
+import { Router } from '@angular/router';
+import { HttpResponse } from '@angular/common/http';
+import { jwtDecode } from 'jwt-decode';
+import { ToasterService } from '../../../core/components/toaster.service';
+import { AUTH_STORAGE_KEY } from '../../constants';
+import { StandardResponse } from '../../../../interfaces/standard-response.interface';
+import {ROUTES} from "../../constants/Routes.constant";
+import { ERROR_MESSAGES } from '../../constants/errorMessages.constant';
+import { LOCALSTORAGE } from '../../constants/local-storage.constant';
+interface JwtPayload {
+  userId: string;
+  email: string;
+  isAdmin: boolean;
+  is2FAEnabled: boolean;
+  isVerifiedEmail: boolean;
+  is2FALogin:boolean;
+  exp?: number; // Optional expiration timestamp
+}
+
+@Component({
+  selector: 'app-login',
+  standalone: false,
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.scss',
+})
+export class LoginComponent {
+  email = '';
+  password = '';
+  totp = '';
+  requires2FA = false;
+  userId: string = '';
+  show2FAPopup = false;
+  TokenJWT = '';
+
+  private toasterService = inject(ToasterService);
+
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private ngZone: NgZone,
+    private changeDetectorRef: ChangeDetectorRef
+  ) {}
+
+  onLogin() {
+    this.authService.login(this.email, this.password).subscribe(
+      (response: HttpResponse<StandardResponse<{LoginTokenJWT: string}>>) => {
+         
+        if (response.status === 200 && response.body?.data?.LoginTokenJWT) {
+          const token = response.body.data.LoginTokenJWT;
+          this.TokenJWT = token;
+         
+          if (token) {
+            const decoded: JwtPayload = jwtDecode<JwtPayload>(token);
+            this.toasterService.success(response.body.message);
+
+             if (decoded.isVerifiedEmail) {
+              if (decoded.is2FAEnabled) {
+                
+                // this.router.navigate([AUTH_ROUTES.login2FA]);
+                this.router.navigate([`/auth/${ROUTES.AUTH.LOGIN_2FA}`]);
+              } else {
+                this.userId = decoded.userId;
+                this.authService.check2FAPopupStatus().subscribe((res) => {
+                  if (res.data) {
+                    this.ngZone.run(() => {
+                      this.show2FAPopup = true;
+                      this.changeDetectorRef.detectChanges();
+                    });
+                  } else {
+                    this.redirectAfterLogin(decoded);
+                  }
+                });
+              }
+            } else {
+              this.toasterService.warning(ERROR_MESSAGES.emailNotVerified);
+              
+              // Set flag when visiting signup
+              //  localStorage.setItem('verificationPending', 'true'); 
+               localStorage.setItem(LOCALSTORAGE.VERIFICATION_PENDING, 'true'); 
+ 
+              // this.router.navigate([AUTH_ROUTES.signupVerificationPending]);
+              // /auth/signup-verification-pending
+              this.router.navigate([`/auth/${ROUTES.AUTH.SIGNUP_VERIFICATION_PENDING}`]);
+            }
+          }
+        } else {
+          this.toasterService.warning(ERROR_MESSAGES.unexpectedResponse);
+        }
+      },
+      (error) => {
+        if (error.status === 409) {
+          this.router.navigate([`/auth/${ROUTES.AUTH.SIGNUP_VERIFICATION_PENDING}`]);
+          this.toasterService.warning(ERROR_MESSAGES.emailNotVerified);
+        } else if (error.status === 401) {
+          this.toasterService.error(ERROR_MESSAGES.invalidCredentials);
+        } else if (error.status === 403) {
+          this.toasterService.error(ERROR_MESSAGES.unauthorizedAccess);
+        } else {
+          this.toasterService.error(ERROR_MESSAGES.loginFailed);
+        }
+      }
+    );
+  }
+
+  redirectAfterLogin(decoded: JwtPayload) {
+    // this.router.navigate([decoded.isAdmin ? DASHBOARD_ROUTES.admin : DASHBOARD_ROUTES.user]);
+    this.router.navigate([decoded.isAdmin ? ROUTES.ADMIN.DASHBOARD : ROUTES.USERS.DASHBOARD]);
+  
+  }
+
+  closePopup() {
+    this.show2FAPopup = false;
+    const decoded = jwtDecode<JwtPayload>(localStorage.getItem(AUTH_STORAGE_KEY)!);
+    this.redirectAfterLogin(decoded);
+  }
+}

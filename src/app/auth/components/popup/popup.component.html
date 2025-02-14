@@ -1,0 +1,31 @@
+<div class="fixed inset-0 flex items-center justify-center bg-background">
+  <div class="w-full max-w-sm rounded-lg glass-effect-popup p-6 shadow-lg">
+    <h2 class="mb-4 text-center text-2xl font-bold text-primary">
+      Enable Two-Factor Authentication
+    </h2>
+    <p class="mb-4 text-center text-gray-600">
+      For better security, we recommend enabling 2FA.
+    </p>
+
+    <button
+      class="w-full rounded-lg bg-green-600 p-3 text-light transition hover:bg-green-700"
+      (click)="enable2FA()"
+    >
+      Enable 2FA
+    </button>
+
+    <button
+      class="mt-2 w-full rounded-lg bg-red-600 p-3 text-light transition hover:bg-red-700"
+      (click)="disable2FA()"
+    >
+      Disable 2FA
+    </button>
+
+    <button
+      class="mt-2 w-full rounded-lg bg-blue-600 p-3 text-light transition hover:bg-blue-700"
+      (click)="close()"
+    >
+      Remind Me Later
+    </button>
+  </div>
+</div>

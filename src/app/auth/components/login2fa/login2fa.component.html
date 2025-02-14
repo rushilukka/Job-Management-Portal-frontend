@@ -1,0 +1,32 @@
+<div class="flex min-h-screen items-center justify-center bg-background p-6">
+  <div class="w-full max-w-md rounded-lg glass-dark p-8 shadow-lg">
+    <h2 class="mb-4 text-center text-2xl font-bold text-primary">Two-Factor Authentication</h2>
+    <p class="mb-4 text-center text-gray-600">
+      Enter the 6-digit TOTP code from your authentication app.
+    </p>
+
+    <form (ngSubmit)="onVerifyTOTP()" class="space-y-4">
+      <input
+        type="text"
+        [(ngModel)]="totp"
+        name="totp"
+        placeholder="Enter TOTP Code"
+        pattern="\\d{6}"
+        maxlength="6"
+        required
+        class="w-full rounded-lg border border-gray-300 p-3 text-center text-lg focus:border-primary focus:ring-2 focus:ring-primary"
+      />
+
+      <button
+        type="submit"
+        class="w-full rounded-lg bg-primary p-3 text-light hover:bg-purple-800"
+      >
+        Verify
+      </button>
+    </form>
+
+    <p class="mt-4 text-center text-sm text-gray-600">
+      <a routerLink="/auth/login" class="text-secondary hover:underline">Back to Login</a>
+    </p>
+  </div>
+</div>

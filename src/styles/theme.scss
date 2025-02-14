@@ -1,0 +1,73 @@
+// Theme Variables
+
+// $primary-color: #6d28d9;  // primary purple-700
+$primary-color: #0f0224;   
+
+// $primary2-color: #0f0224;   // purple-600
+$primary2-color:#4a69bd;   // purple-600
+
+
+// $secondary-color: #9333ea; // secondary purple-500
+$secondary-color: #0a0a0a; // secondary
+
+// $accent-color: #facc15;    // accent yellow-400
+$accent-color: #fed330;    
+
+
+// $background-color: #1e293b; // background slate-800
+$background-color: #ffffff; // background
+
+// $text-color: #ffffff;
+
+$text-color: #ffffff;
+
+
+// Tailwind CSS Classes using SCSS
+:root {
+  --primary: #{$primary-color};
+  --primary2: #{$primary2-color};
+  --secondary: #{$secondary-color};
+  --accent: #{$accent-color};
+  --background: #{$background-color};
+  --text: #{$text-color};
+}
+
+// Custom Utility Classes
+.bg-primary {
+  background-color: var(--primary);
+}
+.bg-primary2 {
+  background-color: var(--primary2);
+}
+.bg-secondary {
+  background-color: var(--secondary);
+}
+
+.bg-accent {
+  background-color: var(--accent);
+}
+
+.bg-background {
+  background-color: var(--background);
+}
+// -----------------------TEXT-------------------------
+.text-primary {
+  color: var(--primary);
+}
+
+.text-secondary {
+  color: var(--secondary);
+}
+
+.text-accent {
+  color: var(--accent);
+}
+
+.text-background {
+  color: var(--background);
+}
+
+.text-light {
+  color: var(--text);
+}
+

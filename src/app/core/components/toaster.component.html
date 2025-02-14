@@ -1,0 +1,15 @@
+<div class="toaster-container">
+    <div
+      class="toast"
+      *ngFor="let toast of toasterService.toasts; let i = index"
+      [ngClass]="toast.type"
+      (click)="removeToast(i)"
+    >
+      <div class="toast-header">
+        <span class="toast-title">{{ toast.title }}</span>
+        <button class="close-btn" (click)="removeToast(i)">✖</button>
+      </div>
+      <div class="toast-body">{{ toast.message }}</div>
+    </div>
+  </div>
+  
