@@ -11,7 +11,7 @@ import { SignupVerificationPendingComponent } from './components/signup-verifica
 import { Enable2FAComponent } from './components/enable2fa/enable2fa.component';
  
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from './interceptor/auth.interceptor';
+import { AuthInterceptor } from '../interceptor/auth.interceptor';
 // import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { Login2faComponent } from './components/login2fa/login2fa.component';
 // import { Popup2faComponent } from './components/popup2fa/popup2fa.component';

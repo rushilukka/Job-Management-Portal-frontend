@@ -27,7 +27,8 @@ export class Login2faComponent {
   constructor(private router: Router, private http: HttpClient,private authService: AuthService) {}
 
   ngOnInit() {
-    this.authToken = localStorage.getItem(AUTH_STORAGE_KEY);
+    // this.authToken = localStorage.getItem(AUTH_STORAGE_KEY);
+    this.authToken = localStorage.getItem(LOCALSTORAGE.AUTH_TOKEN);
     if (this.authToken) {
       try {
         const decoded: any = jwtDecode(this.authToken);

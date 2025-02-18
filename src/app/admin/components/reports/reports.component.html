@@ -1,0 +1,64 @@
+<app-header class="w-full"></app-header>
+
+<div class="min-h-screen flex justify-center items-center bg-background p-6">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-5xl bg-slate-900 p-6 rounded-2xl shadow-lg">
+    
+    <!-- Reports Overview -->
+    <div class="  p-6 rounded-xl shadow-md">
+      <h2 class="text-xl font-semibold text-accent mb-4">Dashboard Overview</h2>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div class="bg-purple-700 p-4 rounded-lg text-center text-white shadow">
+          <i class="fa fa-briefcase text-2xl"></i>
+          <p class="mt-2 text-lg font-semibold">{{ totalJobs }} Jobs</p>
+        </div>
+
+        <div class="bg-yellow-500 p-4 rounded-lg text-center text-black shadow">
+          <i class="fa fa-users text-2xl"></i>
+          <p class="mt-2 text-lg font-semibold">{{ totalUsers }} Users</p>
+        </div>
+
+        <div class="bg-blue-600 p-4 rounded-lg text-center text-white shadow">
+          <i class="fa fa-file-alt text-2xl"></i>
+          <p class="mt-2 text-lg font-semibold">{{ totalApplications }} Applications</p>
+        </div>
+
+        <div class="bg-green-500 p-4 rounded-lg text-center text-black shadow">
+          <i class="fa fa-check-circle text-2xl"></i>
+          <p class="mt-2 text-lg font-semibold">{{ approvedApplications }} Approved</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reports Section -->
+    <div class="bg-slate-700 p-6 rounded-xl shadow-md">
+      <h2 class="text-xl font-semibold text-white mb-4">Reports</h2>
+      
+      <ul class="space-y-4">
+        <li class="bg-slate-600 p-4 rounded-lg text-white flex items-center justify-between">
+          <span><i class="fa fa-file text-yellow-400"></i> Jobs Report</span>
+          <button class="bg-purple-700 hover:bg-purple-600 text-white py-1 px-3 rounded">
+            View
+          </button>
+        </li>
+        
+        <li class="bg-slate-600 p-4 rounded-lg text-white flex items-center justify-between">
+          <span><i class="fa fa-user text-blue-400"></i> Users Report</span>
+          <button class="bg-yellow-500 hover:bg-yellow-400 text-black py-1 px-3 rounded">
+            View
+          </button>
+        </li>
+
+        <li class="bg-slate-600 p-4 rounded-lg text-white flex items-center justify-between">
+          <span><i class="fa fa-file-alt text-green-400"></i> Applications Report</span>
+          <button class="bg-blue-600 hover:bg-blue-500 text-white py-1 px-3 rounded">
+            View
+          </button>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<app-footer></app-footer>

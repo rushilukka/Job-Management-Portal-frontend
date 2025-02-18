@@ -1,0 +1,83 @@
+<app-header class="w-full"></app-header>
+
+<div class="container mx-auto p-6 min-h-screen">
+    <h2 class="text-xl font-bold text-primary">User Details</h2>
+
+    <div class="mt-4 bg-white p-4 rounded-lg shadow">
+        <p><strong>Name:</strong> {{ userData?.name }}</p>
+        <p><strong>Email:</strong> {{ userData?.email }}</p>
+        <p><strong>Phone Number:</strong> {{ userData?.phoneNumber }}</p>
+        <!-- <p><strong>Role ID:</strong> {{ userData?.roleId }}</p> -->
+        <!-- <p><strong>Is Email Verified:</strong> {{ userData?.isVerifiedEmail ? 'Yes' : 'No' }}</p>
+        <p><strong>Two-Factor Enabled:</strong> {{ userData?.isTwoFactorEnabled ? 'Yes' : 'No' }}</p> -->
+        <!-- <p><strong>2FA Secret:</strong> {{ userData?.twoFactorSecret }}</p> -->
+        <!-- <p><strong>2FA Reminder Popup:</strong> {{ userData?.is2FARemPopUp ? 'Yes' : 'No' }}</p> -->
+        <!-- <p><strong>Created At:</strong> {{ userData?.createdAt }}</p>
+        <p><strong>Updated At:</strong> {{ userData?.updatedAt }}</p> -->
+    </div>
+
+    <!-- User Skills -->
+    
+    <h3 class="text-lg font-semibold mt-6">Skills</h3>
+    <!-- <div class="mt-4 bg-white p-4 rounded-lg shadow"> -->
+    <!-- <ul class="list-disc ml-5"> -->
+        <!-- <li *ngFor="let skill of skills">{{ skills }}</li> -->
+        <!-- <li *ngFor="let skill of skills">{{ skills }}</li>
+    </ul> -->
+    <div class="mt-4 bg-white p-4 rounded-lg shadow">
+        <p *ngFor="let skill of skills">{{ skills }}</p>
+    <!-- </div> -->
+</div>
+
+
+
+
+
+<h3 class="text-lg font-semibold mt-6">Resume</h3>
+<div class="mt-4 bg-white p-4 rounded-lg shadow">
+  <!-- Download button to allow users to download the PDF -->
+  <a *ngIf="resumeUrl" [href]="resumeUrl" download="resume.pdf" class="text-blue-500">
+    Download Resume
+  </a>
+  <p *ngIf="!resumeUrl"  >
+    No Resume Found
+  </p>
+</div>
+
+
+ 
+<!-- <h3 class="text-lg font-semibold mt-6">Resume</h3> -->
+<!-- <div class="mt-4 bg-white p-4 rounded-lg shadow" *ngIf="resumeUrl">
+    
+    <embed 
+    
+    [src]="resumeUrl" type="application/pdf" 
+    class="w-full h-96 rounded-lg border"
+    />
+    
+</div>  -->
+
+
+
+
+
+
+
+
+
+
+<!-- Applied Jobs -->
+<h3 class="text-lg font-semibold mt-6">Applied Jobs</h3>
+<div class="mt-4 bg-white p-4 rounded-lg shadow" *ngIf="appliedJobs.length">
+    <ul class="list-disc ml-5">
+        <li *ngFor="let job of appliedJobs">{{ job.title }} at {{ job.company }}</li>
+    </ul>
+</div>
+<div class="mt-4 bg-white p-4 rounded-lg shadow" *ngIf="!appliedJobs.length">
+  Not Applied to any Jobs
+</div>
+ 
+
+</div>
+
+<app-footer></app-footer>

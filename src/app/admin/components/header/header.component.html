@@ -1,15 +1,15 @@
-<header class="bg-primary text-light shadow-lg fixed top-0 w-full z-50">
+<header class=" rounded-none bg-primary text-light shadow-lg fixed top-0 w-full z-50">
   <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-    <a href="/admin" class="text-xl font-bold">FoundIt.in - Admin Panel</a>
+    <a routerLink="/admin/dashboard" class="text-xl font-bold">FoundIt.in - Admin Panel</a>
 
     <nav class="flex items-center space-x-6">
-      <a routerLink="/users/dashboard" class="hover:text-accent flex items-center gap-1">
+      <a routerLink="/admin/reports" class="hover:text-accent flex items-center gap-1">
         <i class="fa fa-dashboard"></i> Report
       </a>
-      <a routerLink="/users/dashboard" class="hover:text-accent flex items-center gap-1">
+      <a routerLink="/admin/manage-jobs" class="hover:text-accent flex items-center gap-1">
         <i class="fa fa-briefcase"></i> Manage Jobs
       </a>
-      <a routerLink="/users/dashboard" class="hover:text-accent flex items-center gap-1">
+      <a routerLink="/admin/manage-users" class="hover:text-accent flex items-center gap-1">
         <i class="fa fa-users "></i> Manage Users
       </a>
  
@@ -20,18 +20,24 @@
   <div class="flex items-center space-x-4">
     <!-- User Profile Dropdown -->
     <div class="relative group">
-      <button class="flex items-center space-x-2 hover:text-accent">
+      <!-- <button class="flex items-center space-x-2 hover:text-accent">
         <i class="fa fa-user text-xl"></i>
         <span class="hidden md:inline">Profile</span>
-      </button>
-
+      </button> -->
+<!-- Profile Button -->
+<button 
+  class="flex items-center space-x-2 hover:text-accent"
+  (click)="toggleDropdown($event)">
+  <i class="fa fa-user text-xl"></i>
+  <span class="hidden md:inline">Profile</span>
+</button>
       <!-- Dropdown Menu -->
-      <div 
-        class="absolute right-0 mt-2 w-40 bg-white text-black rounded-lg shadow-lg p-2 opacity-0 group-hover:opacity-100 transition-all">
-        <a routerLink="/users/profile" class="block px-4 py-2 hover:bg-gray-200">
+      <!-- <div 
+         class="absolute right-0 mt-2 w-40 bg-white text-black rounded-lg shadow-lg p-2 opacity-0 group-hover:opacity-100 transition-all">
+        <a routerLink="/admin/profile" class="block px-4 py-2 hover:bg-gray-200">
           <i class="fa fa-user-circle"></i> My Profile
         </a>
-        <a routerLink="/users/settings" class="block px-4 py-2 hover:bg-gray-200">
+        <a routerLink="/admin/settings" class="block px-4 py-2 hover:bg-gray-200">
           <i class="fa fa-cog"></i> Settings
         </a>  
         <button 
@@ -39,6 +45,23 @@
       class="l-0  py-2 hover:bg-gray-200  w-full">
       <i class="fa fa-sign-out"></i> Logout
     </button>
+      </div> -->
+
+      <div 
+        #dropdownMenu
+        [class.hidden]="!isDropdownVisible"
+        class="absolute right-0 mt-2 w-40 bg-white text-black rounded-lg shadow-lg p-2">
+        <a routerLink="/admin/profile" class="block px-4 py-2 hover:bg-gray-200">
+          <i class="fa fa-user-circle"></i> My Profile
+        </a>
+        <a routerLink="/admin/settings" class="block px-4 py-2 hover:bg-gray-200">
+          <i class="fa fa-cog"></i> Settings
+        </a>  
+        <button 
+          (click)="logout()" 
+          class="l-0 py-2 hover:bg-gray-200 w-full">
+          <i class="fa fa-sign-out"></i> Logout
+        </button>
       </div>
     </div>
 

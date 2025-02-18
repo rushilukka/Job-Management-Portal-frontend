@@ -1,5 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
+import { ROUTES } from '../auth/constants/Routes.constant';
+
+
+interface JwtPayload {
+  userId: string;
+  email: string;
+  isAdmin: boolean;
+  is2FAEnabled: boolean;
+  isVerifiedEmail: boolean;
+  exp?: number; // Optional expiration timestamp
+}
 
 @Component({
   selector: 'app-landingpage',
@@ -18,10 +30,30 @@ export class LandingpageComponent implements OnInit {
     const interval = setInterval(() => {
       this.countdown--;
       document.getElementById('countdown')!.textContent = this.countdown.toString();
-
+      
       if (this.countdown === 0) {
         clearInterval(interval);
-        this.router.navigate(['/auth/login']);
+        const token = localStorage.getItem('authToken');
+        if(token){
+         const decoded = jwtDecode<JwtPayload>(token); 
+         if(decoded.exp){
+           
+           const expiry = decoded.exp * 1000; // Convert expiry to milliseconds
+           console.log('Date.now()',Date.now());
+           console.log('expiry',expiry);
+          if(Date.now() > expiry) // Compare expiry time with current time
+          this.router.navigate([`/auth/${ROUTES.AUTH.LOGIN}`]);
+          else
+          this.router.navigate([decoded.isAdmin ? ROUTES.ADMIN.DASHBOARD : ROUTES.USERS.DASHBOARD]);
+        
+      }
+    }
+    // else this.router.navigate(['/auth/login']);
+    else {
+      console.log('no token');
+        
+      this.router.navigate([`/auth/${ROUTES.AUTH.LOGIN}`]);
+    }
       }
     }, 1000); // Update every second
   }

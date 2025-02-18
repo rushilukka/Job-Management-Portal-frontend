@@ -5,6 +5,8 @@ import { environment } from '../../environments/environments';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { LOCALSTORAGE } from '../auth/constants/local-storage.constant';
+import { ToasterService } from '../core/components/toaster.service';
+import { ERROR_MESSAGES } from '../auth/constants/errorMessages.constant';
 
 
 //will work every time - but here for request to server only 
@@ -21,7 +23,7 @@ interface JwtPayload {
 @Injectable()
 export class SetHeaders_CheckExpireJWT_Interceptor implements HttpInterceptor {
   
-  constructor(private router: Router) {}
+  constructor(private router: Router,private tosterService:ToasterService) {}
 
   private excludedEndpoints = [
     `${environment.backendUrl}/auth/login`,
@@ -43,7 +45,7 @@ export class SetHeaders_CheckExpireJWT_Interceptor implements HttpInterceptor {
       this.handleLogout();
       throw new Error('Session Expired! Please log in again.');
     }
-
+   
      // Clone request and set the Authorization header only if a token is available
      if (token) {
       console.log('  Setting Authorization Header:', `Bearer ${token}`);
@@ -53,10 +55,11 @@ export class SetHeaders_CheckExpireJWT_Interceptor implements HttpInterceptor {
           Authorization: `Bearer ${token}`
         }
       });
-
+      
       console.log('🛠 Cloned Request with Headers:', clonedReq);
       return next.handle(clonedReq);
     }
+ 
 
     return next.handle(req);
   }
@@ -67,12 +70,14 @@ export class SetHeaders_CheckExpireJWT_Interceptor implements HttpInterceptor {
       const decoded: JwtPayload = jwtDecode<JwtPayload>(token?token:'');
       console.log('decoded.exp',decoded.exp);
                       
-         if(decoded.exp){
+         if(decoded?.exp){
           const expiry = decoded.exp * 1000; // Convert expiry to milliseconds
           return Date.now() > expiry; // Compare expiry time with current time
           
+         }else {
+         this.tosterService.error('Session Expired! Please log in again.');
+          return true; // Assume expired if decoding fails
          }
-         return true; // Assume expired if decoding fails
       // const payload = JSON.parse(atob(token.split('.')[1])); // Decode JWT payload
          } catch (e) {
           return true;
@@ -82,6 +87,8 @@ export class SetHeaders_CheckExpireJWT_Interceptor implements HttpInterceptor {
   // 🔄 Function to handle logout
   private handleLogout() {
     localStorage.removeItem('authToken'); // Remove expired token
+     this.tosterService.warning(ERROR_MESSAGES.SESSIONEXPIRED, 'Redirecting...');
+       
     this.router.navigate(['/auth/login'], { queryParams: { sessionExpired: 'true' } }); // Redirect to login
   }
 }

@@ -1,0 +1,55 @@
+<!-- <app-header class="w-full"></app-header>
+
+<div class="min-h-screen">
+    <p>manage-jobs works!</p>
+    add delete update  - job
+    <br>
+    for that job :- 
+    <br>
+    add delete update  - user job application
+    <br>
+    add delete update  - job skills 
+</div>
+<app-footer ></app-footer>   -->
+<app-header class="w-full"></app-header>
+
+<div class="container mx-auto p-6">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-bold text-primary">Manage Jobs</h2>
+        <button 
+            (click)="addNewJob()"   
+            class="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary2 transition-all">
+            + Add New Job
+        </button>
+    </div>
+
+    <!-- Jobs Table -->
+    <div class="overflow-x-auto">
+        <table class="w-full border-collapse border border-gray-300 bg-white">
+            <thead>
+                <tr class="bg-primary text-white">
+                    <th class="border border-gray-300 p-3 text-left">Job Title</th>
+                    <th class="border border-gray-300 p-3 text-left">Job Description</th>
+                    <th class="border border-gray-300 p-3 text-left">Location</th>
+                    <th class="border border-gray-300 p-3 text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let job of jobs" class=" ">
+                    <td class="border border-gray-300 p-3">{{ job.jobTitle }}</td>
+                    <td class="border border-gray-300 p-3">{{ job.jobDescription }}</td>
+                    <td class="border border-gray-300 p-3">{{ job.location }}</td>
+                    <td class="border border-gray-300 p-3 text-center">
+                        <button 
+                            (click)="viewJobDetails(job)" 
+                            class="bg-secondary text-white px-3 py-1 rounded-md hover:bg-gray-700 transition-all">
+                            View Details
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<app-footer></app-footer>

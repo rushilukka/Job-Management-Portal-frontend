@@ -112,7 +112,8 @@ export class LoginComponent {
 
   closePopup() {
     this.show2FAPopup = false;
-    const decoded = jwtDecode<JwtPayload>(localStorage.getItem(AUTH_STORAGE_KEY)!);
+    // const decoded = jwtDecode<JwtPayload>(localStorage.getItem(AUTH_STORAGE_KEY)!);
+    const decoded = jwtDecode<JwtPayload>(localStorage.getItem(LOCALSTORAGE.AUTH_TOKEN)!);
     this.redirectAfterLogin(decoded);
   }
 }

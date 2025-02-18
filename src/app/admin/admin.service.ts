@@ -6,6 +6,7 @@ import { environment } from '../../environments/environments';
 import { ROUTES } from './constants/Routes.constants';
 import { jwtDecode } from 'jwt-decode';
 import { LOCALSTORAGE } from '../auth/constants/local-storage.constant';
+import { StandardResponse } from '../../interfaces/standard-response.interface';
  
  
 interface JwtPayload {
@@ -22,6 +23,66 @@ interface JwtPayload {
   providedIn: 'root',
 })
 export class AdminService {
+  private userDataKey = 'userData';
+  private jobDataKey = 'jobData';
+
+  setUserData(data: {
+    uuid: string;
+    roleId: string;
+    name: string;
+    email: string;
+    phoneNumber: string;
+    password: string;
+    isVerifiedEmail: boolean;
+    verificationToken: string | null;
+    verificationTokenExpiration: string | null;
+    twoFactorSecret: string;
+    isTwoFactorEnabled: boolean;
+    is2FARemPopUp: boolean;
+    createdAt: string;
+    updatedAt: string;
+  }) {
+    localStorage.setItem(this.userDataKey, JSON.stringify(data));
+  }
+
+  getUserData(): {
+    uuid: string;
+    roleId: string;
+    name: string;
+    email: string;
+    phoneNumber: string;
+    password: string;
+    isVerifiedEmail: boolean;
+    verificationToken: string | null;
+    verificationTokenExpiration: string | null;
+    twoFactorSecret: string;
+    isTwoFactorEnabled: boolean;
+    is2FARemPopUp: boolean;
+    createdAt: string;
+    updatedAt: string;
+  } | null {
+    const data = localStorage.getItem(this.userDataKey);
+    return data ? JSON.parse(data) : null;
+  }
+
+  clearUserData() {
+    localStorage.removeItem(this.userDataKey);
+  }
+
+  setJobData(data: { id: string; jobTitle: string; location: string; jobDescription: string; salaryRange: string }) {
+    localStorage.setItem(this.jobDataKey, JSON.stringify(data));
+  }
+
+  getJobData(): { id: string; jobTitle: string; location: string; jobDescription: string; salaryRange: string } | null {
+    
+    const data = localStorage.getItem(this.jobDataKey);
+    console.log('getJobData-----',JSON.parse(data?data:''));
+    return data ? JSON.parse(data) : null;
+  }
+
+  clearJobData() {
+    localStorage.removeItem(this.jobDataKey);
+  }
   private apiUrl = environment.backendUrl;
 
   constructor(private http: HttpClient) {}
@@ -30,14 +91,6 @@ export class AdminService {
     return !!token; // Returns true if token exists
   }
 
-  getUserRole(): string {
-    const token = localStorage.getItem(LOCALSTORAGE.AUTH_TOKEN);
-    const decoded: JwtPayload = jwtDecode<JwtPayload>(token?token:'');
-                
-    const userRole = decoded.isAdmin? 'admin': 'candidate';
-    
-    return userRole || 'candidate'; // Default to 'user' role if not found
-  }
      
    getJobsPosted(): Observable<HttpResponse<{ statusCode: number; message: string; data: { LoginTokenJWT: string } }>> {
     
@@ -46,7 +99,55 @@ export class AdminService {
       { observe: 'response' } 
      );
   }
-
  //TO Add - when click on a job to get all skills, application received
  
+ fetchJobs(): Observable<HttpResponse<StandardResponse<[]>>> {
+
+  return this.http.get<StandardResponse<[]>>(
+          `${environment.backendUrl}/jobs`,
+    { observe: 'response' } 
+   );
+ }
+
+  // Update job details
+//   updateJob(jobData: {id: string, jobTitle: string, location: string, jobDescription: string, salaryRange: string}): Observable<any> {
+//     console.log('jobData-_-__-___-',jobData);
+
+    
+//     // return this.http.patch(`${this.apiUrl}/jobs`, jobData);
+//     return this.http.patch<StandardResponse<[]>>(
+//       `${environment.backendUrl}/jobs`,
+//      jobData,
+// { observe: 'response' } ,
+// );
+// }
+updateJob(jobData: { id: string; jobTitle: string; location: string; jobDescription: string; salaryRange: string }): Observable<any> {
+  console.log('jobData:', jobData);
+
+  const sendData={
+    id:String(jobData.id),
+  }
+  const sendJobData={
+    id:String(jobData.id),
+     jobTitle:jobData.jobTitle,
+    location:jobData.location,
+    jobDescription:jobData.jobDescription,
+    salaryRange:jobData.salaryRange
+  }
+  console.log(typeof(sendJobData.id));
+  console.log(sendJobData.id);
+  
+  return this.http.patch<StandardResponse<[]>>(
+    `${environment.backendUrl}/jobs`,
+    sendJobData,  // Send jobData directly instead of wrapping it inside another object
+    { observe: 'response' }
+  );
+}
+
+
+
+
+  addJob(jobData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/jobs`, jobData);
+  }
 }

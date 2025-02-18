@@ -7,5 +7,6 @@ export const ERROR_MESSAGES = {
     unexpectedResponse: 'Unexpected response from the server.',
     loginFailed: 'Login failed. Please try again later.',
     invalidTOTP: 'Invalid TOTP: Must be a 6-digit code.',
-    invalidToken:'invalid Token'
+    invalidToken:'invalid Token',
+    SESSIONEXPIRED:'Session Expired! Please log in again.'
   };

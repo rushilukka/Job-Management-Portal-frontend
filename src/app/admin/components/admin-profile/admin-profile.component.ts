@@ -7,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrl: './admin-profile.component.scss'
 })
 export class AdminProfileComponent {
-
+  name = 'Rushi Lukka';
+  email = 'admin@gmail.com';
+  is2FAEnabled = false; // Fetch from API in a real scenario
 }

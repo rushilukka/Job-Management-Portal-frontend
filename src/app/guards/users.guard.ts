@@ -40,9 +40,10 @@ export class UserRoleGuard implements CanActivate {
  
       return true;
     }
-
+    else {
     // Redirect to unauthorized page if role not allowed
     this.router.navigate(['/unauthorized']);
     return false;
+    }
   }
 }

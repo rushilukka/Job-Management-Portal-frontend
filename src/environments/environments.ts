@@ -5,6 +5,7 @@ export const environment = {
     // backendUrl: 'http://192.168.1.23:3000', // Change this to your actual backend URL
     
     backendUrl: 'http://localhost:3000', // Change this to your actual backend URL
-    AUTH_STORAGE_KEY:'authToken'
+    
+    // AUTH_STORAGE_KEY:'authToken'
   };
   

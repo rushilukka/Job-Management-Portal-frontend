@@ -1,1 +1,26 @@
-<p>user-profile works!</p>
+<div class="container mx-auto p-6">
+    <h2 class="text-2xl font-bold text-primary mb-4">User Profile</h2>
+  
+    <!-- User Resume -->
+    <div class="bg-secondary p-4 rounded-lg shadow">
+      <h3 class="text-xl font-semibold text-light">Resume</h3>
+      <!-- <p class="text-light"> {{ userResume?.resumeUrl || 'No resume uploaded' }} </p> -->
+    </div>
+  
+    <!-- User Skills -->    
+    <div class="bg-accent p-4 rounded-lg shadow mt-4">
+      <h3 class="text-xl font-semibold">Skills</h3>
+      <ul class="list-disc pl-5">
+        <!-- <li *ngFor="let skill of userSkills" class="text-background">{{ skill.name }}</li> -->
+      </ul>
+    </div>
+  
+    <!-- Applied Jobs -->
+    <div class="bg-primary p-4 rounded-lg shadow mt-4">
+      <h3 class="text-xl font-semibold text-light">Applied Jobs</h3>
+      <ul>
+        <!-- <li *ngFor="let job of appliedJobs" class="text-light">{{ job.title }}</li> -->
+      </ul>
+    </div>
+  </div>
+  

@@ -7,18 +7,46 @@ import { adminRoutes } from './admin.routes';
 import { Router, RouterModule } from '@angular/router';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
-
+import { ManageJobsComponent } from './components/manage-jobs/manage-jobs.component';
+import { ManageUsersComponent } from './components/manage-users/manage-users.component';
+import { AdminSettingsComponent } from './components/settings/settings.component';
+import { ReportsComponent } from './components/reports/reports.component';
+import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { JobDetailsComponent } from './components/job-details/job-details.component';
+import { FormsModule } from '@angular/forms';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { AddJobComponent } from './components/add-job/add-job.component';
+// import { SafePdfPipe } from '../safe-pdf.pipe'; // Adjust the path as needed
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    DashboardComponent,
+    
+    // SafePdfPipe,
+
+    ManageJobsComponent,
+    ManageUsersComponent,
     AdminProfileComponent,
+    AdminSettingsComponent,
+    ReportsComponent,
+    
+    DashboardComponent,
     FooterComponent,
-    HeaderComponent
+    HeaderComponent,
+ 
+     
+    JobDetailsComponent,
+     
+    UserDetailsComponent,
+          AddJobComponent
+      
   ],
   imports: [
+    ReactiveFormsModule,
+    NgxExtendedPdfViewerModule,
+    FormsModule,
      RouterModule.forChild(adminRoutes),
-      
+    //  HeaderComponent,
     CommonModule
   ],
   exports:[RouterModule]

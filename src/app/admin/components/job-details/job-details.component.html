@@ -1,0 +1,157 @@
+<app-header class="w-full"></app-header>
+
+<div *ngIf="!isEditing" class="min-h-screen">
+<div class="max-w-3xl mt-5 p-6 bg-white rounded-lg shadow mx-auto">
+  <!-- Your content goes here -->
+  <h2 class="text-2xl font-bold mb-4 text-primary">Job Details</h2>
+
+  <div *ngIf="jobData; else loading">
+    <div class="mb-4">
+      <label class="font-semibold">Job Title:</label>
+      <!-- <input
+        *ngIf="isEditing"
+        type="text"
+        [(ngModel)]="updatedJob.jobTitle"
+        class="border px-3 py-2 w-full rounded"
+      /> -->
+      <p *ngIf="!isEditing" class="text-gray-700">{{ jobData.jobTitle }}</p>
+    </div>
+
+    <div class="mb-4">
+      <label class="font-semibold">Description:</label>
+      <!-- <textarea
+        *ngIf="isEditing"
+        [(ngModel)]="updatedJob.jobDescription"
+        class="border px-3 py-2 w-full rounded"
+      ></textarea> -->
+      <p *ngIf="!isEditing" class="text-gray-700">{{ jobData.jobDescription }}</p>
+    </div>
+
+    <div class="mb-4">
+      <label class="font-semibold">Salary Range:</label>
+      <!-- <input
+        *ngIf="isEditing"
+        type="text"
+        [(ngModel)]="updatedJob.salaryRange"
+        class="border px-3 py-2 w-full rounded"
+      /> -->
+      <p *ngIf="!isEditing" class="text-gray-700">{{ jobData.salaryRange }}</p>
+    </div>
+
+    <div class="mb-4">
+      <label class="font-semibold">Location:</label>
+      <!-- <input
+        *ngIf="isEditing"
+        type="text"
+        [(ngModel)]="updatedJob.location"
+        class="border px-3 py-2 w-full rounded"
+      /> -->
+      <p *ngIf="!isEditing" class="text-gray-700">{{ jobData.location }}</p>
+    </div>
+
+    <div class="flex space-x-4 mt-4">
+      <button
+        *ngIf="!isEditing"
+        (click)="toggleEdit()"
+        class="bg-primary text-white px-4 py-2 rounded-lg"
+      >
+        Edit
+      </button>
+      <button
+        *ngIf="isEditing"
+        (click)="updateJob()"
+        class="bg-accent text-purple-800 px-4 py-2 rounded-lg"
+      >
+        Save
+      </button>
+      <button
+        *ngIf="isEditing"
+        (click)="toggleEdit()"
+        class="bg-gray-300 px-4 py-2 rounded-lg"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+
+  <ng-template #loading>
+    <p class="text-gray-500">Loading job details...</p>
+  </ng-template>
+</div>
+</div>
+
+
+<div *ngIf="isEditing" class="min-h-screen flex flex-col items-center justify-center bg-slate-100 p-6 space-y-6">
+  <form [formGroup]="jobForm" (ngSubmit)="updateJob()" class="w-full max-w-3xl mt-5 p-6 bg-white rounded-lg shadow mx-auto space-y-6">
+    <div class="form-group">
+      <label for="jobTitle" class="block text-lg font-semibold text-gray-700">Job Title</label>
+      <div class="flex items-center space-x-2">
+        <i class="fas fa-briefcase text-purple-500"></i>
+        <input id="jobTitle" formControlName="jobTitle" type="text" class="form-control p-3 w-full border rounded-lg focus:ring-2 focus:ring-purple-500" placeholder="Enter job title" />
+      </div>
+      <div *ngIf="jobForm.get('jobTitle')?.invalid && jobForm.get('jobTitle')?.touched" class="text-red-600 mt-2">
+        <small *ngIf="jobForm.get('jobTitle')?.hasError('required')">Job Title is required.</small>
+        <small *ngIf="jobForm.get('jobTitle')?.hasError('maxlength')">Job Title cannot exceed 100 characters.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="jobDescription" class="block text-lg font-semibold text-gray-700">Job Description</label>
+      <div class="flex items-center space-x-2">
+        <i class="fas fa-file-alt text-purple-500"></i>
+        <textarea id="jobDescription" formControlName="jobDescription" class="form-control p-3 w-full border rounded-lg focus:ring-2 focus:ring-purple-500" placeholder="Describe the job responsibilities"></textarea>
+      </div>
+      <div *ngIf="jobForm.get('jobDescription')?.invalid && jobForm.get('jobDescription')?.touched" class="text-red-600 mt-2">
+        <small *ngIf="jobForm.get('jobDescription')?.hasError('required')">Job Description is required.</small>
+        <small *ngIf="jobForm.get('jobDescription')?.hasError('maxlength')">Job Description cannot exceed 500 characters.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="salaryRange" class="block text-lg font-semibold text-gray-700">Salary Range</label>
+      <div class="flex items-center space-x-2">
+        <i class="fas fa-dollar-sign text-purple-500"></i>
+        <input id="salaryRange" formControlName="salaryRange" type="text" class="form-control p-3 w-full border rounded-lg focus:ring-2 focus:ring-purple-500" placeholder="e.g., 30000-200000" />
+      </div>
+      <div *ngIf="jobForm.get('salaryRange')?.invalid && jobForm.get('salaryRange')?.touched" class="text-red-600 mt-2">
+        <small *ngIf="jobForm.get('salaryRange')?.hasError('required')">Salary Range is required.</small>
+        <small *ngIf="jobForm.get('salaryRange')?.hasError('invalidSalaryFormat')">Salary Range should be in the format 'min-max'.</small>
+        <small *ngIf="jobForm.get('salaryRange')?.hasError('invalidSalaryRange')">Salary should be between 30,000 and 200,000, and min should be less than max.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="location" class="block text-lg font-semibold text-gray-700">Location</label>
+      <div class="flex items-center space-x-2">
+        <i class="fas fa-map-marker-alt text-purple-500"></i>
+        <input id="location" formControlName="location" type="text" class="form-control p-3 w-full border rounded-lg focus:ring-2 focus:ring-purple-500" placeholder="Enter job location" />
+      </div>
+      <div *ngIf="jobForm.get('location')?.invalid && jobForm.get('location')?.touched" class="text-red-600 mt-2">
+        <small *ngIf="jobForm.get('location')?.hasError('required')">Location is required.</small>
+        <small *ngIf="jobForm.get('location')?.hasError('maxlength')">Location cannot exceed 100 characters.</small>
+      </div>
+    </div>
+
+    <!-- <button type="submit" [disabled]="jobForm.invalid" class="btn btn-primary w-full py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
+      <i class="fas fa-plus-circle mr-2"></i> Create Job
+    </button> -->
+    <button
+    type="submit" [disabled]="jobForm.invalid"
+    
+    class="bg-accent text-purple-800 px-4 py-2 rounded-lg   space-y-6"
+  >
+    Save
+  </button>
+    <button
+        *ngIf="isEditing"
+        (click)="toggleEdit()"
+        class="bg-gray-300 mx-5 px-4 py-2 rounded-lg"
+      >
+        Cancel
+      </button>
+  </form>
+</div>
+
+
+
+<app-footer></app-footer>

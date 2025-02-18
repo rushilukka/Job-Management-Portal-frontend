@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import "styles/theme.scss";
+@use "styles/theme.scss";
 /* styles.scss (Global Styles) */
 .glass-effect {
     background: rgba(255, 255, 255, 0.63); /* Light transparent white */

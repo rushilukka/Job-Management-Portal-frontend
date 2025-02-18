@@ -71,3 +71,16 @@ $text-color: #ffffff;
   color: var(--text);
 }
 
+.container {
+  max-width: 800px;
+  margin: auto;
+}
+
+.bg-secondary, .bg-primary, .bg-accent {
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.text-light {
+  color: var(--text);
+}

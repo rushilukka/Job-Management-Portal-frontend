@@ -1,0 +1,60 @@
+<app-header class="w-full bg-purple-700 text-white py-4"></app-header>
+
+<div class="min-h-screen flex flex-col items-center justify-center bg-slate-100 p-6 space-y-6">
+  <form [formGroup]="jobForm" (ngSubmit)="onSubmit()" class="w-full max-w-xl p-6 bg-white rounded-lg shadow-lg space-y-6">
+    <div class="form-group">
+      <label for="jobTitle" class="block text-lg font-semibold text-gray-700">Job Title</label>
+      <div class="flex items-center space-x-2">
+        <i class="fas fa-briefcase text-purple-500"></i>
+        <input id="jobTitle" formControlName="jobTitle" type="text" class="form-control p-3 w-full border rounded-lg focus:ring-2 focus:ring-purple-500" placeholder="Enter job title" />
+      </div>
+      <div *ngIf="jobForm.get('jobTitle')?.invalid && jobForm.get('jobTitle')?.touched" class="text-red-600 mt-2">
+        <small *ngIf="jobForm.get('jobTitle')?.hasError('required')">Job Title is required.</small>
+        <small *ngIf="jobForm.get('jobTitle')?.hasError('maxlength')">Job Title cannot exceed 100 characters.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="jobDescription" class="block text-lg font-semibold text-gray-700">Job Description</label>
+      <div class="flex items-center space-x-2">
+        <i class="fas fa-file-alt text-purple-500"></i>
+        <textarea id="jobDescription" formControlName="jobDescription" class="form-control p-3 w-full border rounded-lg focus:ring-2 focus:ring-purple-500" placeholder="Describe the job responsibilities"></textarea>
+      </div>
+      <div *ngIf="jobForm.get('jobDescription')?.invalid && jobForm.get('jobDescription')?.touched" class="text-red-600 mt-2">
+        <small *ngIf="jobForm.get('jobDescription')?.hasError('required')">Job Description is required.</small>
+        <small *ngIf="jobForm.get('jobDescription')?.hasError('maxlength')">Job Description cannot exceed 500 characters.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="salaryRange" class="block text-lg font-semibold text-gray-700">Salary Range</label>
+      <div class="flex items-center space-x-2">
+        <i class="fas fa-dollar-sign text-purple-500"></i>
+        <input id="salaryRange" formControlName="salaryRange" type="text" class="form-control p-3 w-full border rounded-lg focus:ring-2 focus:ring-purple-500" placeholder="e.g., 30000-200000" />
+      </div>
+      <div *ngIf="jobForm.get('salaryRange')?.invalid && jobForm.get('salaryRange')?.touched" class="text-red-600 mt-2">
+        <small *ngIf="jobForm.get('salaryRange')?.hasError('required')">Salary Range is required.</small>
+        <small *ngIf="jobForm.get('salaryRange')?.hasError('invalidSalaryFormat')">Salary Range should be in the format 'min-max'.</small>
+        <small *ngIf="jobForm.get('salaryRange')?.hasError('invalidSalaryRange')">Salary should be between 30,000 and 200,000, and min should be less than max.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="location" class="block text-lg font-semibold text-gray-700">Location</label>
+      <div class="flex items-center space-x-2">
+        <i class="fas fa-map-marker-alt text-purple-500"></i>
+        <input id="location" formControlName="location" type="text" class="form-control p-3 w-full border rounded-lg focus:ring-2 focus:ring-purple-500" placeholder="Enter job location" />
+      </div>
+      <div *ngIf="jobForm.get('location')?.invalid && jobForm.get('location')?.touched" class="text-red-600 mt-2">
+        <small *ngIf="jobForm.get('location')?.hasError('required')">Location is required.</small>
+        <small *ngIf="jobForm.get('location')?.hasError('maxlength')">Location cannot exceed 100 characters.</small>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="jobForm.invalid" class="btn btn-primary w-full py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
+      <i class="fas fa-plus-circle mr-2"></i> Create Job
+    </button>
+  </form>
+</div>
+
+<app-footer class="bg-purple-700 text-white py-4"></app-footer>
