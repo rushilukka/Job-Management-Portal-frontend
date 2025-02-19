@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { API_ENDPOINTS } from '../../constants/api-endpoints.constant';
 import { AdminService } from '../../admin.service';
 import { environment } from '../../../../environments/environments';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { ROUTES } from '../../constants/Routes.constants';
  
 @Component({
   selector: 'app-user-details',
@@ -37,7 +38,7 @@ export class UserDetailsComponent {
       createdAt: string;
       updatedAt: string;
     }|null =null;
-  constructor(private sanitizer: DomSanitizer,private route: ActivatedRoute, private http: HttpClient,private adminService: AdminService) {}
+  constructor(private sanitizer: DomSanitizer,private route: ActivatedRoute, private http: HttpClient,private adminService: AdminService,private router: Router) {}
 
   ngOnInit(): void {
       this.userData = this.adminService.getUserData();
@@ -73,7 +74,7 @@ export class UserDetailsComponent {
           
           this.skills = response.data;
         }
-        this.skills = ['No Skills Added'];
+        else this.skills = ['No Skills Added'];
       },
       error: (error) => {
         console.error("Error fetching user skills:", error);
@@ -89,6 +90,7 @@ export class UserDetailsComponent {
           console.log('response resume url  -  ------', response.data);
           
           const pdfUrl = `${environment.backendUrl}/${response.data.storageDirectoryPath}`;
+          // const pdfUrl = response.data.storageDirectoryPath;
           // const pdfUrl = 'http://localhost:3000/uploads/resumes/1739769414987.pdf';
             
            this.resumeUrl = this.sanitizer.bypassSecurityTrustUrl(pdfUrl);
@@ -96,7 +98,7 @@ export class UserDetailsComponent {
           console.log('response resume url  -  ------', this.resumeUrl);
           
         }
-        this.resumeUrl = 'No Resumme Found';
+        else this.resumeUrl = 'No Resume Found';
       },  
       error: (error) => {
         console.error("Error fetching user skills:", error);
@@ -107,13 +109,13 @@ export class UserDetailsComponent {
   fetchUserAppliedJobs(userId: string): void {
     this.http.get<any>(`${API_ENDPOINTS.USER_APPLIED_JOBS}?userId=${userId}`).subscribe({
       next: (response) => {
-        console.log('fetchUserAppliedJobs-------------------------',response);
+        // console.log('fetchUserAppliedJobs-------------------------',response);
+        console.log('fetchUser AppliedJobs-------------------------',response.data);
         if(response.data.length > 0){
           this.appliedJobs = response.data;
           
         }
-        // else this.appliedJobs =['Not Applied to any job'];
-        console.log('fetchUserAppliedJobs-------------------------',response.data);
+        else this.appliedJobs =[];
         
 
       },
@@ -122,4 +124,21 @@ export class UserDetailsComponent {
       }
     });
   }
+
+
+
+  // Navigate to job details page
+  // viewJobDetails(jobId: string) {
+  //   this.router.navigate(['/job-details', jobId]);
+  // }
+    viewJobDetails(job: {id: string, jobTitle: string, location: string, jobDescription: string, salaryRange: string}): void {
+      console.log('Job ----vID:', job);
+      
+      // this.router.navigate([ROUTES.JOB_DETAILS], { queryParams: { jobId: jobId } });
+      this.adminService.setJobData(job);
+      this.router.navigate([ROUTES.JOB_DETAILS]);
+      
+      // this.router.navigate([ROUTES.JOB_DETAILS], { state: { jobId: jobId } });
+  
+    }
 }

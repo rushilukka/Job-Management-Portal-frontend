@@ -1,26 +1,92 @@
-<div class="container mx-auto p-6">
+<app-header class="w-full"></app-header>
+
+
+<div class="container min-h-screen  p-6">
     <h2 class="text-2xl font-bold text-primary mb-4">User Profile</h2>
   
+    <div class="container mx-auto p-6 min-h-screen">
+      <h2 class="text-xl font-bold text-primary">User Details</h2>
+  
+      <div class="mt-4 bg-white p-4 rounded-lg shadow">
+          <p><strong>Name:</strong> {{ userData?.name }}</p>
+          <p><strong>Email:</strong> {{ userData?.email }}</p>
+          <p><strong>Phone Number:</strong> {{ userData?.phoneNumber }}</p>
+          <!-- <p><strong>Role ID:</strong> {{ userData?.roleId }}</p> -->
+          <!-- <p><strong>Is Email Verified:</strong> {{ userData?.isVerifiedEmail ? 'Yes' : 'No' }}</p>
+          <p><strong>Two-Factor Enabled:</strong> {{ userData?.isTwoFactorEnabled ? 'Yes' : 'No' }}</p> -->
+          <!-- <p><strong>2FA Secret:</strong> {{ userData?.twoFactorSecret }}</p> -->
+          <!-- <p><strong>2FA Reminder Popup:</strong> {{ userData?.is2FARemPopUp ? 'Yes' : 'No' }}</p> -->
+          <!-- <p><strong>Created At:</strong> {{ userData?.createdAt }}</p>
+          <p><strong>Updated At:</strong> {{ userData?.updatedAt }}</p> -->
+      </div>
+  
+  
+
     <!-- User Resume -->
-    <div class="bg-secondary p-4 rounded-lg shadow">
-      <h3 class="text-xl font-semibold text-light">Resume</h3>
-      <!-- <p class="text-light"> {{ userResume?.resumeUrl || 'No resume uploaded' }} </p> -->
-    </div>
-  
-    <!-- User Skills -->    
-    <div class="bg-accent p-4 rounded-lg shadow mt-4">
-      <h3 class="text-xl font-semibold">Skills</h3>
-      <ul class="list-disc pl-5">
-        <!-- <li *ngFor="let skill of userSkills" class="text-background">{{ skill.name }}</li> -->
-      </ul>
-    </div>
-  
-    <!-- Applied Jobs -->
-    <div class="bg-primary p-4 rounded-lg shadow mt-4">
-      <h3 class="text-xl font-semibold text-light">Applied Jobs</h3>
-      <ul>
-        <!-- <li *ngFor="let job of appliedJobs" class="text-light">{{ job.title }}</li> -->
-      </ul>
-    </div>
+    <h3 class="text-lg font-semibold mt-6">Resume</h3>
+<div class="mt-4 bg-white p-4 rounded-lg shadow">
+  <!-- Download button to allow users to download the PDF -->
+  <div *ngIf="resumeUrl" class="flex justify-between items-center w-full">
+    <!-- View Resume (Left Aligned) -->
+    <a [href]="resumeUrl"  rel="noopener noreferrer" target="_blank" class="text-blue-500 font-medium hover:underline">
+      View Resume
+    </a>
+    <!-- <a [href]="'http://localhost:3000/' + resumeUrl" target="_blank" rel="noopener noreferrer">
+      http://localhost:3000/' + {{resumeUrl}}
+      View Resume
+    </a>
+     -->
+    <!-- Download Resume (Right Aligned) -->
+    <a [href]="resumeUrl" download="resume.pdf" class="text-blue-500 font-medium flex items-center space-x-2 hover:underline">
+      <span>Download</span>
+      <i class="fas fa-download"></i>
+    </a>
   </div>
   
+  <p *ngIf="!resumeUrl"  >
+    No Resume Found
+  </p>
+</div>
+
+
+
+    <!-- User Skills -->
+    
+    <h3 class="text-lg font-semibold mt-6">Skills</h3>
+    <!-- <div class="mt-4 bg-white p-4 rounded-lg shadow"> -->
+    <!-- <ul class="list-disc ml-5"> -->
+        <!-- <li *ngFor="let skill of skills">{{ skills }}</li> -->
+        <!-- <li *ngFor="let skill of skills">{{ skills }}</li>
+    </ul> -->
+    <div class="mt-4 bg-white p-4 rounded-lg shadow">
+        <p *ngFor="let skill of skills">{{ skill.skillName }}</p>
+    <!-- </div> -->
+</div>
+
+
+
+
+<!-- Applied Jobs -->
+<h3 class="text-lg font-semibold mt-6">Applied Jobs</h3>
+
+<!-- Show Jobs List if Available -->
+<div class="mt-4 bg-white p-4 rounded-lg shadow" *ngIf="appliedJobs.length > 0">
+    <ul class="list-disc ml-5">
+        <li *ngFor="let job of appliedJobs" class="flex justify-between items-center mb-2">
+            <span>{{ job.jobTitle }} - {{ job.location }}</span>
+            <button (click)="viewJobDetails(job)" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+                View Details
+            </button>
+        </li>
+    </ul>
+</div>
+
+<!-- Show "Not Applied" Message If No Jobs Are Available -->
+<div class="mt-4 bg-white p-4 rounded-lg shadow" *ngIf="appliedJobs.length === 0">
+    Not Applied to any Jobs
+</div>
+  
+</div>
+</div>
+  <app-footer class="w-full"></app-footer>
+  <!-- <app-footer></app-footer> -->

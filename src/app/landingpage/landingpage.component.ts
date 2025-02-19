@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { ROUTES } from '../auth/constants/Routes.constant';
+import { environment } from '../../environments/environments';
 
 
 interface JwtPayload {
@@ -33,7 +34,7 @@ export class LandingpageComponent implements OnInit {
       
       if (this.countdown === 0) {
         clearInterval(interval);
-        const token = localStorage.getItem('authToken');
+        const token = localStorage.getItem(environment.LOCALSTORAGE.AUTH_TOKEN);
         if(token){
          const decoded = jwtDecode<JwtPayload>(token); 
          if(decoded.exp){

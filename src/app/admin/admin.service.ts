@@ -23,8 +23,13 @@ interface JwtPayload {
   providedIn: 'root',
 })
 export class AdminService {
-  private userDataKey = 'userData';
-  private jobDataKey = 'jobData';
+  // private userDataKey = 'userData';
+  // private jobDataKey = 'jobData';
+  private userDataKey = environment.LOCALSTORAGE.USER_DATA;
+  private adminDataKey = environment.LOCALSTORAGE.ADMIN_DATA;
+  private jobDataKey = environment.LOCALSTORAGE.JOB_DATA;
+
+//implement admin data storage 
 
   setUserData(data: {
     uuid: string;
@@ -70,6 +75,8 @@ export class AdminService {
   }
 
   setJobData(data: { id: string; jobTitle: string; location: string; jobDescription: string; salaryRange: string }) {
+   console.log('data-----',data);
+   
     localStorage.setItem(this.jobDataKey, JSON.stringify(data));
   }
 

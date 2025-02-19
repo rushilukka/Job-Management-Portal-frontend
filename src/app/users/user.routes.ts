@@ -4,6 +4,7 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 import { UploadResumeComponent } from './components/upload-resume/upload-resume.component';
 import { ApplyForJobComponent } from './components/apply-for-job/apply-for-job.component';
 import { AppliedJobComponent } from './components/applied-job/applied-job.component';
+// import { JobDetailsComponent } from './components/job-details/job-details.component';
 
 export const usersRoutes: Routes = [
   { path: '', component: DashboardComponent },
@@ -12,5 +13,6 @@ export const usersRoutes: Routes = [
   { path: 'apply', component: ApplyForJobComponent },
   { path: 'upload-resume', component: UploadResumeComponent },
     { path: 'applied-job', component: AppliedJobComponent },
-
+    // { path: 'job-details', component: JobDetailsComponent },
+  
 ];

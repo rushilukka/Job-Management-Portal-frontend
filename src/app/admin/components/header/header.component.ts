@@ -1,5 +1,6 @@
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from '../../../../environments/environments';
 
 @Component({
   selector: 'app-header',
@@ -26,10 +27,22 @@ export class HeaderComponent {
     }
   }
 
+  settings() {
+    this.router.navigate(['/admin/settings']);
+  }
+  myprofile() {
+    this.router.navigate(['/admin/profile']);
+  }
+
 
 
     logout() {
-      localStorage.removeItem('authToken'); // 🔥 Clear token
+      localStorage.removeItem(environment.LOCALSTORAGE.AUTH_TOKEN); // 🔥 Clear token
+      localStorage.removeItem(environment.LOCALSTORAGE.VERIFICATION_PENDING); // 🔥 Clear token
+      localStorage.removeItem(environment.LOCALSTORAGE.JOB_DATA); // 🔥 Clear token
+      localStorage.removeItem(environment.LOCALSTORAGE.USER_DATA); // 🔥 Clear token
+      localStorage.removeItem(environment.LOCALSTORAGE.ADMIN_DATA); // 🔥 Clear token
+      
       this.router.navigate(['/auth/login']); // 🔄 Redirect to login
     }
 }

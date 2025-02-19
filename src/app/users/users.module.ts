@@ -11,6 +11,7 @@ import { ApplyForJobComponent } from './components/apply-for-job/apply-for-job.c
 import { AppliedJobComponent } from './components/applied-job/applied-job.component';
 import { UploadResumeComponent } from './components/upload-resume/upload-resume.component';
 import { SettingsComponent } from './components/settings/settings.component';
+// import { JobDetailsComponent } from './components/job-details/job-details.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { SettingsComponent } from './components/settings/settings.component';
     ApplyForJobComponent,
     AppliedJobComponent,
     UploadResumeComponent,
-    SettingsComponent
+    SettingsComponent,
+     
   ],
   imports: [
     RouterModule.forChild(usersRoutes),

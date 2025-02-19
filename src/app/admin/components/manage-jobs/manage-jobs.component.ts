@@ -36,20 +36,20 @@ export class ManageJobsComponent {
   }
 
   // viewJobDetails(jobId: string): void {
-  //   this.router.navigate([`${ROUTES.MANAGE_JOBS}`, { queryParams: {  jobId }}]);
+  //   this.router.navigate([`${ROUTES.JOB_DETAILS}`, { queryParams: {  jobId }}]);
   // }
   //   viewJobDetails( ): void {
-  //   this.router.navigate([`${ROUTES.MANAGE_JOBS}/job`]);
+  //   this.router.navigate([`${ROUTES.JOB_DETAILS}/job`]);
   // }
 
   viewJobDetails(job: any): void {
     console.log('Job ID:', job);
     
-    // this.router.navigate([ROUTES.MANAGE_JOBS], { queryParams: { jobId: jobId } });
+    // this.router.navigate([ROUTES.JOB_DETAILS], { queryParams: { jobId: jobId } });
     this.adminService.setJobData( job);
-    this.router.navigate([ROUTES.MANAGE_JOBS]);
+    this.router.navigate([ROUTES.JOB_DETAILS]);
     
-    // this.router.navigate([ROUTES.MANAGE_JOBS], { state: { jobId: jobId } });
+    // this.router.navigate([ROUTES.JOB_DETAILS], { state: { jobId: jobId } });
 
   }
   

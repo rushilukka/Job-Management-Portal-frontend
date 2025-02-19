@@ -13,16 +13,18 @@
       <!-- User Profile & Logout -->
       <div class="flex items-center space-x-4">
         <!-- User Profile Dropdown -->
+        <span class="hidden md:inline">Hello, {{userName}}! </span>
         <div class="relative group">
           <button class="flex items-center space-x-2 hover:text-accent">
-            <i class="fa fa-user text-xl"></i>
-            <span class="hidden md:inline">Profile</span>
+           
+            <i class="fa fa-user text-xl "></i>
+            <!-- <span class="hidden md:inline">Profile</span> -->
           </button>
 
           <!-- Dropdown Menu -->
           <div 
             class="absolute right-0 mt-2 w-40 bg-white text-black rounded-lg shadow-lg p-2 opacity-0 group-hover:opacity-100 transition-all">
-            <a routerLink="/users/profile" class="block px-4 py-2 hover:bg-gray-200">
+            <!-- <a routerLink="/users/profile" class="block px-4 py-2 hover:bg-gray-200">
               <i class="fa fa-user-circle"></i> My Profile
             </a>
             <a routerLink="/users/settings" class="block px-4 py-2 hover:bg-gray-200">
@@ -33,7 +35,24 @@
             (click)="logout()" 
             class="l-0  py-2 hover:bg-gray-200  w-full">
             <i class="fa fa-sign-out"></i> Logout
-          </button>
+          </button> -->
+
+          <button 
+          (click)="myprofile()" 
+          class="l-0 py-2 hover:bg-gray-200 w-full">
+          <i class="fa fa-user-circle"></i> My Profile
+        </button>
+        <button 
+          (click)="settings()" 
+          class="l-0 py-2 hover:bg-gray-200 w-full">
+          <i class="fa fa-cog"></i> Settings
+        </button>
+        <button 
+          (click)="logout()" 
+          class="l-0 py-2 hover:bg-gray-200 w-full">
+          <i class="fa fa-sign-out"></i> Logout
+        </button>
+        
           </div>
         </div>
 

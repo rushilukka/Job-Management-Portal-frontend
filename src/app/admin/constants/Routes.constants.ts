@@ -5,7 +5,7 @@ export const ROUTES = {
   JOBS: "/jobs",
   PROFILE: "/profile",
   SETTINGS: "/settings",
-  MANAGE_JOBS: "admin/job",
+  JOB_DETAILS: "admin/job",
   ADD_JOB: "admin/add-job",
   MANAGE_USERS:''
 };

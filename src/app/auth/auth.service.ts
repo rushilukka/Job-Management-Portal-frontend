@@ -91,7 +91,7 @@ export class AuthService {
   
 
   logout(): void {
-    localStorage.removeItem('authToken');
+    localStorage.removeItem(environment.LOCALSTORAGE.AUTH_TOKEN);
   }
  
   check2FAPopupStatus(): Observable<StandardResponse<boolean>> {

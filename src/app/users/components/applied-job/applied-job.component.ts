@@ -15,10 +15,6 @@ export class AppliedJobComponent {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.http.get<any>(API_ENDPOINTS.USER_APPLIED_JOBS).subscribe({
-      next: (response) => (this.appliedJobs = response.data),
-      error: () => console.error(MESSAGES.USER_PROFILE_FETCH_ERROR)
-      
-    });
+    
   }
 }

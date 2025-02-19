@@ -86,8 +86,12 @@ export class SetHeaders_CheckExpireJWT_Interceptor implements HttpInterceptor {
 
   // 🔄 Function to handle logout
   private handleLogout() {
-    localStorage.removeItem('authToken'); // Remove expired token
-     this.tosterService.warning(ERROR_MESSAGES.SESSIONEXPIRED, 'Redirecting...');
+    localStorage.removeItem(environment.LOCALSTORAGE.AUTH_TOKEN); // 🔥 Clear token
+    localStorage.removeItem(environment.LOCALSTORAGE.VERIFICATION_PENDING); // 🔥 Clear token
+    localStorage.removeItem(environment.LOCALSTORAGE.JOB_DATA); // 🔥 Clear token
+    localStorage.removeItem(environment.LOCALSTORAGE.USER_DATA); // 🔥 Clear token
+   
+    this.tosterService.warning(ERROR_MESSAGES.SESSIONEXPIRED, 'Redirecting...');
        
     this.router.navigate(['/auth/login'], { queryParams: { sessionExpired: 'true' } }); // Redirect to login
   }

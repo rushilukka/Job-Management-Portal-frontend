@@ -35,9 +35,9 @@ export class JobDetailsComponent implements OnInit {
  
     console.log('this.jobData',this.jobData);
     
-    const id= this.jobData ? this.jobData.id : null;
+    const id= this.jobData ? this.jobData.id : null ;
     this.id = id;
-    console.log('Job ID from service:', this.adminService.getJobData()?.id);
+    console.log('Job ID from service:', id);
 
     // Initialize updatedJob with jobData if jobData is available
     if (this.jobData) {
@@ -105,8 +105,11 @@ export class JobDetailsComponent implements OnInit {
        });
       
         // Optionally update jobData with the latest data
-        this.jobData = { ...this.updatedJob };
-        if(this.jobData)
+        this.jobData =this.updatedJob ;
+       
+        
+         if(this.jobData)
+
         this.adminService.setJobData(this.jobData);
         // Optionally fetch the latest jobs or refresh the data
         // this.fetchJobs();
