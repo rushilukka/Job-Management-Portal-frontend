@@ -44,38 +44,38 @@ export class DashboardComponent {
   jobs: any = [];
     constructor(private userService: UserService,private router: Router) {}
    ngOnInit(){
-     console.log("admin dashboard");
+     console.log("user dashboard");
      
      let token = localStorage.getItem(LOCALSTORAGE.AUTH_TOKEN);
-     this.userService.getUserDataFromBackend().subscribe(
-      (response: HttpResponse<StandardResponse<UserData>>) => {
-        if (response.body?.data) {
-          const userData = {
-            uuid: response.body.data.uuid,
-            roleId: String(response.body.data.roleId), // Ensure roleId is a string
-            name: response.body.data.name,
-            email: response.body.data.email,
-            phoneNumber: response.body.data.phoneNumber,
-            password: response.body.data.password,
-            isVerifiedEmail: response.body.data.isVerifiedEmail,
-            verificationToken: response.body.data.verificationToken ?? null,
-            verificationTokenExpiration: response.body.data.verificationTokenExpiration ?? null,
-            twoFactorSecret: response.body.data.twoFactorSecret ?? '', // Ensure a string
-            isTwoFactorEnabled: response.body.data.isTwoFactorEnabled,
-            is2FARemPopUp: response.body.data.is2FARemPopUp,
-            createdAt: response.body.data.createdAt,
-            updatedAt: response.body.data.updatedAt
-          };
+    //  this.userService.getUserDataFromBackend().subscribe(
+    //   (response: HttpResponse<StandardResponse<UserData>>) => {
+    //     if (response.body?.data) {
+    //       const userData = {
+    //         uuid: response.body.data.uuid,
+    //         roleId: String(response.body.data.roleId), // Ensure roleId is a string
+    //         name: response.body.data.name,
+    //         email: response.body.data.email,
+    //         phoneNumber: response.body.data.phoneNumber,
+    //         password: response.body.data.password,
+    //         isVerifiedEmail: response.body.data.isVerifiedEmail,
+    //         verificationToken: response.body.data.verificationToken ?? null,
+    //         verificationTokenExpiration: response.body.data.verificationTokenExpiration ?? null,
+    //         twoFactorSecret: response.body.data.twoFactorSecret ?? '', // Ensure a string
+    //         isTwoFactorEnabled: response.body.data.isTwoFactorEnabled,
+    //         is2FARemPopUp: response.body.data.is2FARemPopUp,
+    //         createdAt: response.body.data.createdAt,
+    //         updatedAt: response.body.data.updatedAt
+    //       };
     
-          console.log('userData----------',userData);
+    //       console.log('userData----------',userData);
           
-          this.userService.setUserData(userData);
-        }
-      },
-      (error) => {
-        console.error('Error fetching user data:', error);
-      }
-    );
+    //       this.userService.setUserData(userData);
+    //     }
+    //   },
+    //   (error) => {
+    //     console.error('Error fetching user data:', error);
+    //   }
+    // );
      
         
 

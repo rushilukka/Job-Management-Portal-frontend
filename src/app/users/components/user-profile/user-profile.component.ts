@@ -184,9 +184,16 @@ export class UserProfileComponent {
           // this.router.navigate([ROUTES.JOB_DETAILS], { queryParams: { jobId: jobId } });
           this.userService.setJobData(job);
           // this.router.navigate([ROUTES.APPLIED_JOB_DETAILS]);
-          this.router.navigate([ROUTES.APPLIED_JOB_DETAILS]);
-          
+          // this.router.navigate([ROUTES.APPLIED_JOB_DETAILS]);
+          setTimeout(() => {
+            this.routeToAppliedJobDetails();
+            // this.router.navigate([ROUTES.APPLIED_JOB_DETAILS]);
+          }, 10); // Small delay ensures the data is available before navigation
           // this.router.navigate([ROUTES.JOB_DETAILS], { state: { jobId: jobId } });
       
+        }
+
+        routeToAppliedJobDetails(): void {
+          this.router.navigate([ROUTES.APPLIED_JOB_DETAILS]);
         }
 }

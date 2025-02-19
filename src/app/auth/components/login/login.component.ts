@@ -9,6 +9,9 @@ import { StandardResponse } from '../../../../interfaces/standard-response.inter
 import {ROUTES} from "../../constants/Routes.constant";
 import { ERROR_MESSAGES } from '../../constants/errorMessages.constant';
 import { LOCALSTORAGE } from '../../constants/local-storage.constant';
+import { UserData, UserService } from '../../../users/user.service';
+import { AdminService } from '../../../admin/admin.service';
+
 interface JwtPayload {
   userId: string;
   email: string;
@@ -40,7 +43,9 @@ export class LoginComponent {
     private authService: AuthService,
     private router: Router,
     private ngZone: NgZone,
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    private userService: UserService,
+    private adminService : AdminService
   ) {}
 
   onLogin() {
@@ -106,7 +111,51 @@ export class LoginComponent {
 
   redirectAfterLogin(decoded: JwtPayload) {
     // this.router.navigate([decoded.isAdmin ? DASHBOARD_ROUTES.admin : DASHBOARD_ROUTES.user]);
-    this.router.navigate([decoded.isAdmin ? ROUTES.ADMIN.DASHBOARD : ROUTES.USERS.DASHBOARD]);
+     if(decoded.isAdmin){
+      this.router.navigate([ROUTES.ADMIN.DASHBOARD]); 
+      // this.adminService.setAdminDashboard(true);
+      // this.userS
+      
+
+ 
+   }
+   else if (!decoded.isAdmin){
+
+    this.userService.getUserDataFromBackend().subscribe(
+      (response: HttpResponse<StandardResponse<UserData>>) => {
+        if (response.body?.data) {
+          const userData = {
+            uuid: response.body.data.uuid,
+            roleId: String(response.body.data.roleId), // Ensure roleId is a string
+            name: response.body.data.name,
+            email: response.body.data.email,
+            phoneNumber: response.body.data.phoneNumber,
+            password: response.body.data.password,
+            isVerifiedEmail: response.body.data.isVerifiedEmail,
+            verificationToken: response.body.data.verificationToken ?? null,
+            verificationTokenExpiration: response.body.data.verificationTokenExpiration ?? null,
+            twoFactorSecret: response.body.data.twoFactorSecret ?? '', // Ensure a string
+            isTwoFactorEnabled: response.body.data.isTwoFactorEnabled,
+            is2FARemPopUp: response.body.data.is2FARemPopUp,
+            createdAt: response.body.data.createdAt,
+            updatedAt: response.body.data.updatedAt
+          };
+    
+          console.log('userData----------',userData);
+          
+          this.userService.setUserData(userData);
+        }
+      },
+      (error) => {
+        console.error('Error fetching user data:', error);
+      }
+    );
+
+
+
+     this.router.navigate([ROUTES.USERS.DASHBOARD]);
+   }
+    // this.router.navigate([decoded.isAdmin ? ROUTES.ADMIN.DASHBOARD : ROUTES.USERS.DASHBOARD]);
   
   }
 

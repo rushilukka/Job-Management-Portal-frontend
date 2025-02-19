@@ -64,8 +64,14 @@ export class Login2faComponent {
              const decoded: any = jwtDecode(newToken?newToken:'');
              this.toasterService.success(TOASTER_MESSAGES.totpVerified);
       
+             if(decoded.isAdmin){
+              this.router.navigate([ROUTES.ADMIN.DASHBOARD]); 
+           }
+           else if (!decoded.isAdmin){
+             this.router.navigate([ROUTES.USERS.DASHBOARD]);
+           }
             // this.router.navigate([decoded.isAdmin ? DASHBOARD_ROUTES.admin : DASHBOARD_ROUTES.user]);
-            this.router.navigate([decoded.isAdmin ? ROUTES.ADMIN.DASHBOARD : ROUTES.USERS.DASHBOARD]);
+            // this.router.navigate([decoded.isAdmin ? ROUTES.ADMIN.DASHBOARD : ROUTES.USERS.DASHBOARD]);
          
           } else {
             this.toasterService.error(ERROR_MESSAGES.invalidTOTP, 'Verification Failed');

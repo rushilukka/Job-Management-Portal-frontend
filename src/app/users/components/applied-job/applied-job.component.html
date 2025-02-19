@@ -1,11 +1,64 @@
-<app-header class="w-full"></app-header>
+   <app-header class="w-full"></app-header>
 
-<div class="container min-h-screen mx-auto p-6">
-    <h2 class="text-2xl font-bold text-primary mb-4">Applied Jobs</h2>
-  
-    <ul class="bg-secondary p-4 rounded-lg shadow">
-      <li *ngFor="let job of appliedJobs" class="text-light">{{ job.title }}</li>
-    </ul>
-  </div>
+<div  class="min-h-screen">
+<div class="max-w-3xl mt-5 p-6 bg-white rounded-lg shadow mx-auto">
+  <!-- Your content goes here -->
+  <h2 class="text-2xl font-bold mb-4 text-primary">Job Details</h2>
 
+  <div *ngIf="jobDetail">
+    <div class="mb-4">
+      <label class="font-semibold">Job Title:</label>
+      <!-- <input
+        *ngIf="isEditing"
+        type="text"
+        [(ngModel)]="updatedJob.jobTitle"
+        class="border px-3 py-2 w-full rounded"
+      /> -->
+      <p  class="text-gray-700">{{ jobDetail.jobTitle }}</p>
+    </div>
+
+    <div class="mb-4">
+      <label class="font-semibold">Description:</label>
+      <!-- <textarea
+        *ngIf="isEditing"
+        [(ngModel)]="updatedJob.jobDescription"
+        class="border px-3 py-2 w-full rounded"
+      ></textarea> -->
+      <p  class="text-gray-700">{{ jobDetail.jobDescription }}</p>
+    </div>
+
+    <div class="mb-4">
+      <label class="font-semibold">Salary Range:</label>
+      <!-- <input
+        *ngIf="isEditing"
+        type="text"
+        [(ngModel)]="updatedJob.salaryRange"
+        class="border px-3 py-2 w-full rounded"
+      /> -->
+      <p  class="text-gray-700">{{ jobDetail.salaryRange }}</p>
+    </div>
+
+    <div class="mb-4">
+      <label class="font-semibold">Location:</label>
+      <!-- <input
+        *ngIf="isEditing"
+        type="text"
+        [(ngModel)]="updatedJob.location"
+        class="border px-3 py-2 w-full rounded"
+      /> -->
+      <p  class="text-gray-700">{{ jobDetail.location }}</p>
+    </div>
+
+    <div class="flex space-x-4 mt-4">
+      <button
+        
+         class="bg-primary text-white px-4 py-2 rounded-lg"
+      >
+        Delete Application
+      </button>
+
+</div>
+</div>
+</div>
+</div>
 <app-footer class="w-full"></app-footer>  

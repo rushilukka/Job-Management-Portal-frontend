@@ -26,7 +26,7 @@ export class ToasterService {
     // Auto-dismiss after 3 seconds
     setTimeout(() => {
       this.removeToast(id);
-    }, 3000);
+    }, 2000);
   }
 
   success(message: string, title: string = 'Success') {

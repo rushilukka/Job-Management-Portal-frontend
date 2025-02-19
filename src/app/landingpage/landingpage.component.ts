@@ -44,8 +44,13 @@ export class LandingpageComponent implements OnInit {
            console.log('expiry',expiry);
           if(Date.now() > expiry) // Compare expiry time with current time
           this.router.navigate([`/auth/${ROUTES.AUTH.LOGIN}`]);
-          else
-          this.router.navigate([decoded.isAdmin ? ROUTES.ADMIN.DASHBOARD : ROUTES.USERS.DASHBOARD]);
+          else if(decoded.isAdmin){
+             this.router.navigate([ROUTES.ADMIN.DASHBOARD]); 
+          }
+          else if (!decoded.isAdmin){
+            this.router.navigate([ROUTES.USERS.DASHBOARD]);
+          }
+          // this.router.navigate([decoded.isAdmin ? ROUTES.ADMIN.DASHBOARD : ROUTES.USERS.DASHBOARD]);
         
       }
     }
