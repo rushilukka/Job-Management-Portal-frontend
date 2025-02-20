@@ -131,7 +131,7 @@ export class UserDetailsComponent {
   // viewJobDetails(jobId: string) {
   //   this.router.navigate(['/job-details', jobId]);
   // }
-    viewJobDetails(job: {id: string, jobTitle: string, location: string, jobDescription: string, salaryRange: string}): void {
+    viewJobDetails(job: {id: string, jobTitle: string, location: string, jobDescription: string, salaryRange: string,skills:string[]}): void {
       console.log('Job ----vID:', job);
       
       // this.router.navigate([ROUTES.JOB_DETAILS], { queryParams: { jobId: jobId } });

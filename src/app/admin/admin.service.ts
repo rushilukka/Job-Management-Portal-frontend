@@ -74,13 +74,13 @@ export class AdminService {
     localStorage.removeItem(this.userDataKey);
   }
 
-  setJobData(data: { id: string; jobTitle: string; location: string; jobDescription: string; salaryRange: string }) {
+  setJobData(data: { id: string; jobTitle: string; location: string; jobDescription: string; salaryRange: string,skills:string[] }) {
    console.log('data-----',data);
    
     localStorage.setItem(this.jobDataKey, JSON.stringify(data));
   }
 
-  getJobData(): { id: string; jobTitle: string; location: string; jobDescription: string; salaryRange: string } | null {
+  getJobData(): { id: string; jobTitle: string; location: string; jobDescription: string; salaryRange: string,skills:string[] } | null {
     
     const data = localStorage.getItem(this.jobDataKey);
     console.log('getJobData-----',JSON.parse(data?data:''));
@@ -128,7 +128,7 @@ export class AdminService {
 // { observe: 'response' } ,
 // );
 // }
-updateJob(jobData: { id: string; jobTitle: string; location: string; jobDescription: string; salaryRange: string }): Observable<any> {
+updateJob(jobData: { id: string; jobTitle: string; location: string; jobDescription: string; salaryRange: string , skills: string[]}): Observable<any> {
   console.log('jobData:', jobData);
 
   const sendData={
@@ -139,7 +139,8 @@ updateJob(jobData: { id: string; jobTitle: string; location: string; jobDescript
      jobTitle:jobData.jobTitle,
     location:jobData.location,
     jobDescription:jobData.jobDescription,
-    salaryRange:jobData.salaryRange
+    salaryRange:jobData.salaryRange,
+    skills:jobData.skills
   }
   console.log(typeof(sendJobData.id));
   console.log(sendJobData.id);
