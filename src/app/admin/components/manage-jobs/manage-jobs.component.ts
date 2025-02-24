@@ -29,7 +29,7 @@ export class ManageJobsComponent {
       (response: HttpResponse<StandardResponse<[]>> ):  void => {
         this.jobs = response.body?.data?response.body.data:[];
       },
-      (error: any) => {
+      (error) => {
         console.error("Error fetching jobs:", error);
       }
     );

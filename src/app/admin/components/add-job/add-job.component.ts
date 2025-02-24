@@ -12,8 +12,8 @@ import { ToasterService } from '../../../core/components/toaster.service';
 })
 export class AddJobComponent {
   jobForm: FormGroup = {} as FormGroup;
-  jobSkills: string[] = []; // Array to hold the skills
-  newSkill: string = '';  // Add this line to define newSkill
+  jobSkills: string[] = []; 
+  newSkill: string = '';   
 
   constructor(private fb: FormBuilder, private adminService: AdminService, private toaster: ToasterService) {}
 

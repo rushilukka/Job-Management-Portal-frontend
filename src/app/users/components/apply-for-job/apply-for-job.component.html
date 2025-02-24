@@ -1,10 +1,44 @@
-<div class="container mx-auto p-6">
-    <h2 class="text-2xl font-bold text-primary mb-4">Apply for Job</h2>
-    
-    <button 
-      (click)="applyJob()" 
-      class="bg-accent text-purple-800 px-4 py-2 rounded-lg hover:bg-yellow-300 transition-all">
-      Apply Now
-    </button>
+<app-header class="w-full"></app-header>
+
+<div class="min-h-screen flex items-center justify-center bg-slate-100 p-6">
+  <div class="max-w-3xl w-full bg-white rounded-lg shadow-md p-6">
+    <h2 class="text-2xl font-bold text-primary mb-6 text-center">Apply for Job</h2>
+
+    <div *ngIf="jobDetail; else noJob">
+      <div class="mb-4">
+        <label class="font-semibold">Job Title:</label>
+        <p class="text-gray-700">{{ jobDetail.jobTitle }}</p>
+      </div>
+
+      <div class="mb-4">
+        <label class="font-semibold">Description:</label>
+        <p class="text-gray-700">{{ jobDetail.jobDescription }}</p>
+      </div>
+
+      <div class="mb-4">
+        <label class="font-semibold">Salary Range:</label>
+        <p class="text-gray-700">{{ jobDetail.salaryRange }}</p>
+      </div>
+
+      <div class="mb-4">
+        <label class="font-semibold">Location:</label>
+        <p class="text-gray-700">{{ jobDetail.location }}</p>
+      </div>
+
+      <div class="flex justify-center mt-6">
+        <button 
+          (click)="applyJob()" 
+          class="bg-accent text-purple-800 px-6 py-3 rounded-lg hover:bg-yellow-300 transition-all shadow-md"
+        >
+          Apply Now
+        </button>
+      </div>
+    </div>
+
+    <ng-template #noJob>
+      <p class="text-red-500 text-center">No job details available.</p>
+    </ng-template>
   </div>
-  
+</div>
+
+<app-footer class="w-full"></app-footer>

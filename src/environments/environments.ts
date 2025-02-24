@@ -1,10 +1,10 @@
 export const environment = {
     production: false,
-    // backendUrl: 'http://127.0.0.1:3000', // Change this to your actual backend URL
+    // backendUrl: 'http://127.0.0.1:3000',  
     
-    // backendUrl: 'http://192.168.1.23:3000', // Change this to your actual backend URL
+    // backendUrl: 'http://192.168.1.23:3000',  
     
-    backendUrl: 'http://localhost:3000', // Change this to your actual backend URL
+    backendUrl: 'http://localhost:3000',  
     
     LOCALSTORAGE: {
       AUTH_TOKEN:'authToken',
@@ -13,6 +13,6 @@ export const environment = {
       USER_DATA:'userData',
       ADMIN_DATA:'adminData',
     }
-    // AUTH_STORAGE_KEY:'authToken'
+ 
   };
   

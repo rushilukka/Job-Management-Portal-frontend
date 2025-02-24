@@ -55,15 +55,7 @@ export class UserDetailsComponent {
 
   fetchUserDetails(): void {
       this.user = this.adminService.getUserData();
-    // this.http.get<any>(`${API_ENDPOINTS.USER_DETAILS}/${userId}`).subscribe({
-    //   next: (response) => {
-    //     this.user = response.data;
-    //   },
-    //   error: (error) => {
-    //     console.error("Error fetching user details:", error);
-    //   }
-    // });
-    
+ 
   }
 
   fetchUserSkills(userId: string): void {

@@ -8,44 +8,21 @@
   <div *ngIf="jobData; else loading">
     <div class="mb-4">
       <label class="font-semibold">Job Title:</label>
-      <!-- <input
-        *ngIf="isEditing"
-        type="text"
-        [(ngModel)]="updatedJob.jobTitle"
-        class="border px-3 py-2 w-full rounded"
-      /> -->
-      <p *ngIf="!isEditing" class="text-gray-700">{{ jobData.jobTitle }}</p>
+       <p *ngIf="!isEditing" class="text-gray-700">{{ jobData.jobTitle }}</p>
     </div>
 
     <div class="mb-4">
       <label class="font-semibold">Description:</label>
-      <!-- <textarea
-        *ngIf="isEditing"
-        [(ngModel)]="updatedJob.jobDescription"
-        class="border px-3 py-2 w-full rounded"
-      ></textarea> -->
       <p *ngIf="!isEditing" class="text-gray-700">{{ jobData.jobDescription }}</p>
     </div>
 
     <div class="mb-4">
       <label class="font-semibold">Salary Range:</label>
-      <!-- <input
-        *ngIf="isEditing"
-        type="text"
-        [(ngModel)]="updatedJob.salaryRange"
-        class="border px-3 py-2 w-full rounded"
-      /> -->
       <p *ngIf="!isEditing" class="text-gray-700">{{ jobData.salaryRange }}</p>
     </div>
 
     <div class="mb-4">
       <label class="font-semibold">Location:</label>
-      <!-- <input
-        *ngIf="isEditing"
-        type="text"
-        [(ngModel)]="updatedJob.location"
-        class="border px-3 py-2 w-full rounded"
-      /> -->
       <p *ngIf="!isEditing" class="text-gray-700">{{ jobData.location }}</p>
     </div>
 
@@ -56,7 +33,6 @@
       <ul *ngIf="jobData?.skills?.length" class="list-disc pl-5">
         <li *ngFor="let skill of jobData.skills" class="text-gray-700">
           {{ skill }} 
-          <!-- <button (click)="removeSkill(skill)" class="ml-2 text-red-500">Remove</button> -->
         </li>
       </ul>
       <p *ngIf="!jobData?.skills?.length" class="text-gray-700">No skills listed</p>

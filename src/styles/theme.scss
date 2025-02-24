@@ -1,28 +1,25 @@
 // Theme Variables
 
-// $primary-color: #6d28d9;  // primary purple-700
+//#6d28d9;  // primary purple-700
 $primary-color: #0f0224;   
 
-// $primary2-color: #0f0224;   // purple-600
+//  #0f0224;   // purple-600
 $primary2-color:#4a69bd;   // purple-600
 
 
-// $secondary-color: #9333ea; // secondary purple-500
+// #9333ea; // secondary purple-500
 $secondary-color: #0a0a0a; // secondary
 
-// $accent-color: #facc15;    // accent yellow-400
+//  #facc15;    // accent yellow-400
 $accent-color: #fed330;    
 
 
-// $background-color: #1e293b; // background slate-800
+//  #1e293b; // background slate-800
 $background-color: #ffffff; // background
-
-// $text-color: #ffffff;
 
 $text-color: #ffffff;
 
 
-// Tailwind CSS Classes using SCSS
 :root {
   --primary: #{$primary-color};
   --primary2: #{$primary2-color};

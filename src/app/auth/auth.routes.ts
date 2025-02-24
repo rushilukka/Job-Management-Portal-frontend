@@ -7,7 +7,7 @@ import { Enable2FAComponent } from './components/enable2fa/enable2fa.component';
 import { SignupVerificationPendingComponent } from './components/signup-verification-pending/signup-verification-pending.component';
 // import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { Login2faComponent } from './components/login2fa/login2fa.component';
-import { ROUTES } from "./constants/Routes.constant"; // 🔥 Importing Routes Constant
+import { ROUTES } from "./constants/Routes.constant"; //  Importing Routes Constant
 import { AuthReverseGuard } from '../guards/auth-reverse.guard';
 import { SignupPendingGuard } from '../guards/signup-pending.guard';
 
@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: ROUTES.AUTH.LOGIN_2FA, component: Login2faComponent, canActivate: [AuthReverseGuard] },
   { path: ROUTES.AUTH.SIGNUP, component: SignupComponent, canActivate: [AuthReverseGuard] },
   { path: ROUTES.AUTH.SIGNUP_VERIFIED, component: SignupVerifiedComponent, canActivate: [AuthReverseGuard] },
-  { path: ROUTES.AUTH.SIGNUP_VERIFICATION_PENDING, component: SignupVerificationPendingComponent, canActivate: [AuthReverseGuard ,SignupPendingGuard] // 🔒 Protect this route 
+  { path: ROUTES.AUTH.SIGNUP_VERIFICATION_PENDING, component: SignupVerificationPendingComponent, canActivate: [AuthReverseGuard ,SignupPendingGuard] //  Protect this route 
   },
   { path: ROUTES.AUTH.ENABLE_2FA, component: Enable2FAComponent, canActivate: [AuthReverseGuard] },
 

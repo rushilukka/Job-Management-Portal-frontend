@@ -7,24 +7,12 @@
         <p><strong>Name:</strong> {{ userData?.name }}</p>
         <p><strong>Email:</strong> {{ userData?.email }}</p>
         <p><strong>Phone Number:</strong> {{ userData?.phoneNumber }}</p>
-        <!-- <p><strong>Role ID:</strong> {{ userData?.roleId }}</p> -->
-        <!-- <p><strong>Is Email Verified:</strong> {{ userData?.isVerifiedEmail ? 'Yes' : 'No' }}</p>
-        <p><strong>Two-Factor Enabled:</strong> {{ userData?.isTwoFactorEnabled ? 'Yes' : 'No' }}</p> -->
-        <!-- <p><strong>2FA Secret:</strong> {{ userData?.twoFactorSecret }}</p> -->
-        <!-- <p><strong>2FA Reminder Popup:</strong> {{ userData?.is2FARemPopUp ? 'Yes' : 'No' }}</p> -->
-        <!-- <p><strong>Created At:</strong> {{ userData?.createdAt }}</p>
-        <p><strong>Updated At:</strong> {{ userData?.updatedAt }}</p> -->
-    </div>
+           </div>
 
     <!-- User Skills -->
     
     <h3 class="text-lg font-semibold mt-6">Skills</h3>
-    <!-- <div class="mt-4 bg-white p-4 rounded-lg shadow"> -->
-    <!-- <ul class="list-disc ml-5"> -->
-        <!-- <li *ngFor="let skill of skills">{{ skills }}</li> -->
-        <!-- <li *ngFor="let skill of skills">{{ skills }}</li>
-    </ul> -->
-    <div class="mt-4 bg-white p-4 rounded-lg shadow">
+       <div class="mt-4 bg-white p-4 rounded-lg shadow">
         <p *ngFor="let skill of skills">{{ skill }}</p>
     <!-- </div> -->
 </div>

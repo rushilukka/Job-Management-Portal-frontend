@@ -92,7 +92,7 @@ export class DashboardComponent {
    }
  
 
-   onApply(job:{jobId: string, jobTitle: string, location: string, jobDescription: string, salaryRange: string}){
+   onApply(job:{id: string, jobTitle: string, location: string, jobDescription: string, salaryRange: string}){
       // const jobId = job.jobId;{
       // console.log("Applied for :", jobId); // You can log or handle job details here
     
@@ -100,7 +100,10 @@ export class DashboardComponent {
       // 1 fetch job details 
       // 2 user apply for job
 
-      this.router.navigate(['users/apply'], { queryParams: { job: job} });
+      this.userService.setJobData(job);
+      console.log('jobDetail -  ------', this.userService.getJobData());
+      
+      this.router.navigate(['users/apply']);
 
 
 

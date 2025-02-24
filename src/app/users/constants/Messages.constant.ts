@@ -3,5 +3,6 @@ export const MESSAGES = {
   APPLY_JOB_SUCCESS: "Job application submitted successfully.",
   APPLY_JOB_ERROR: "Failed to apply for the job.",
   UPLOAD_SUCCESS: "Resume uploaded successfully.",
-  UPLOAD_ERROR: "Failed to upload resume."
+  UPLOAD_ERROR: "Failed to upload resume.",
+  ALREADY_APPLIED: "You have already applied for this job.",
 };
