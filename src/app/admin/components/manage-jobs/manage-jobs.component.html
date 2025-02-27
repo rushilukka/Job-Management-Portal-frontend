@@ -10,9 +10,17 @@
             + Add New Job
         </button>
     </div>
+  
+  
+    <app-ag-grid
+    [rowData]="jobs"
+    [colName]="jobColumn">
+    [frameworkComponents]="frameworkComponents">
 
+  </app-ag-grid>
+  
     <!-- Jobs Table -->
-    <div class="overflow-x-auto">
+    <!-- <div class="overflow-x-auto">
         <table class="w-full border-collapse border border-gray-300 bg-white">
             <thead>
                 <tr class="bg-primary text-white">
@@ -37,7 +45,7 @@
                 </tr>
             </tbody>
         </table>
-    </div>
+    </div> -->
 </div>
 
 <app-footer></app-footer>

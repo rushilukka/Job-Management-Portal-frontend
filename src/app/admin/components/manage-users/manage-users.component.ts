@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import {  ROUTES } from '../../constants/Routes.constants';
 import { API_ENDPOINTS } from '../../constants/api-endpoints.constant';
 import { AdminService } from '../../admin.service';
+import { ColDef } from 'ag-grid-community';
 
 @Component({
   selector: 'app-manage-users',
@@ -13,6 +14,21 @@ import { AdminService } from '../../admin.service';
 })
 export class ManageUsersComponent {
   users: any[] = []; // Store users list
+
+    rowData = [
+      { make: "Tesla", model: "Model Y", price: 64950, electric: true },
+      { make: "Ford", model: "F-Series", price: 33850, electric: false },
+      { make: "Toyota", model: "Corolla", price: 29600, electric: false },
+  ];
+  
+  // Column Definitions: Defines the columns to be displayed.
+  colDefs: ColDef[] = [
+      { field: "make" },
+      { field: "model" },
+      { field: "price" },
+      { field: "electric" }
+  ];
+  
 
   constructor(private http: HttpClient, private router: Router,private adminService: AdminService) {}
 

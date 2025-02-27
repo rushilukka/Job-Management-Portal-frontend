@@ -4,7 +4,23 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AdminService } from '../../admin.service';
 import { StandardResponse } from '../../../../interfaces/standard-response.interface';
- 
+import type { ColDef } from 'ag-grid-community'; // Column Definition Type Interface
+import { Job } from '../../../users/users.interface';
+import { AgButtonComponent } from '../ag-button/ag-button.component';
+
+interface JobDetails{  
+  jobTitle: string; 
+  location: string; 
+  jobDescription: string; 
+  actions:any
+}
+
+
+
+
+
+
+
 @Component({
   selector: 'app-manage-jobs',
   standalone: false,
@@ -13,7 +29,32 @@ import { StandardResponse } from '../../../../interfaces/standard-response.inter
 })
 export class ManageJobsComponent {
 
-  jobs:any[]= []; // Store jobs list
+  jobs:JobDetails[]= []; // Store jobs list
+ 
+
+jobColumn: ColDef[] = [
+  { field: "jobTitle", headerName: "Job Title" },
+  { field: "jobDescription", headerName: "Job Description" },
+  { field: "location", headerName: "Location" },
+  { 
+    field: 'action',
+    headerName: 'Action',
+    cellRenderer: AgButtonComponent,
+    cellRendererParams: (job: any) => ({
+      data: job, // Pass row data
+    }),
+  },
+  
+];
+
+frameworkComponents = {
+  agButtonRenderer: AgButtonComponent, // Register framework component
+};
+
+view(){
+  console.log("VIEWWW");
+  
+}
 
   constructor(private http: HttpClient, private router: Router,private adminService: AdminService) {}
 
@@ -27,7 +68,21 @@ export class ManageJobsComponent {
     // this.http.get<any>(API_ENDPOINTS.JOBS)
     this.adminService.fetchJobs().subscribe(
       (response: HttpResponse<StandardResponse<[]>> ):  void => {
+
         this.jobs = response.body?.data?response.body.data:[];
+        console.log('this.jobs -',this.jobs);
+        
+        this.jobs = this.jobs.map(job => {
+          console.log('job',job);
+          
+          return {
+          jobTitle: job.jobTitle,
+          jobDescription: job.jobDescription,
+          location: job.location,
+          actions: job // Placeholder for action buttons (edit/delete)
+        }
+      })
+         // console.log('this.jobs -',this.jobs);
       },
       (error) => {
         console.error("Error fetching jobs:", error);
@@ -46,7 +101,7 @@ export class ManageJobsComponent {
     console.log('Job ID:', job);
     
     // this.router.navigate([ROUTES.JOB_DETAILS], { queryParams: { jobId: jobId } });
-    this.adminService.setJobData( job);
+    // this.adminService.setJobData( job);
     this.router.navigate([ROUTES.JOB_DETAILS]);
     
     // this.router.navigate([ROUTES.JOB_DETAILS], { state: { jobId: jobId } });

@@ -4,6 +4,7 @@ import { ManageJobsComponent } from './manage-jobs.component';
 import { HeaderComponent } from '../header/header.component';
 import { AdminProfileComponent } from '../admin-profile/admin-profile.component';
 import { FooterComponent } from '../footer/footer.component';
+// import { AgGridComponent } from '../../../shared/ag-grid/ag-grid.component';
 
 
 @NgModule({
@@ -11,10 +12,11 @@ import { FooterComponent } from '../footer/footer.component';
     ManageJobsComponent,
      AdminProfileComponent,
         FooterComponent,
-        HeaderComponent
+        HeaderComponent,
+ 
   ],
   imports: [
     CommonModule, 
-  ]
+  ], 
 })
 export class ManageJobsModule { }

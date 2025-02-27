@@ -18,12 +18,14 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { AddJobComponent } from './components/add-job/add-job.component';
 // import { SafePdfPipe } from '../safe-pdf.pipe'; // Adjust the path as needed
 import { ReactiveFormsModule } from '@angular/forms';
+// import { AgGridModule } from '../shared/ag-grid/ag-grid.module';
+// import { AgGridComponent } from '../shared/ag-grid/ag-grid.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
     
-    // SafePdfPipe,
-
+ 
     ManageJobsComponent,
     ManageUsersComponent,
     AdminProfileComponent,
@@ -38,14 +40,17 @@ import { ReactiveFormsModule } from '@angular/forms';
     JobDetailsComponent,
      
     UserDetailsComponent,
-          AddJobComponent
-      
+          AddJobComponent,
+
+       
   ],
   imports: [
+ 
     ReactiveFormsModule,
     NgxExtendedPdfViewerModule,
     FormsModule,
      RouterModule.forChild(adminRoutes),
+     SharedModule,
     //  HeaderComponent,
     CommonModule
   ],
