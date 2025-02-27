@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { AdminService } from '../../admin.service';
 import { HttpResponse } from '@angular/common/http';
-import { LOCALSTORAGE } from '../../../auth/constants/local-storage.constant';
+import { JobDetails } from '../../admin.interface';
+import { StandardResponse } from '../../../../interfaces/standard-response.interface';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,20 +13,15 @@ import { LOCALSTORAGE } from '../../../auth/constants/local-storage.constant';
 })
 export class DashboardComponent {
  
-  jobs: any = [];
+  jobs: JobDetails[] = [];
 
   constructor(private adminService: AdminService) {}
   ngOnInit(){
-    console.log("admin dashboard");
-    
-    let token = localStorage.getItem(LOCALSTORAGE.AUTH_TOKEN);
-    
-    this.adminService.getJobsPosted().subscribe(//pass admin id
-      (response : HttpResponse<{ statusCode: number; message: string; data: { LoginTokenJWT: string } }>) => {
-        this.jobs = response.body?.data;
-        console.log(response.body?.data);
-      },
-      (error:any) => {
+    this.adminService.getJobsPosted().pipe(take(1)).subscribe(
+      (response : HttpResponse<StandardResponse<JobDetails[]>>) => {
+        this.jobs = response.body?.data??[];
+       },
+      (error:unknown) => {
         console.error(error);
       }
     )

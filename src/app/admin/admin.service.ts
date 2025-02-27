@@ -2,71 +2,29 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../environments/environments';
- 
-import { ROUTES } from './constants/Routes.constants';
-import { jwtDecode } from 'jwt-decode';
 import { LOCALSTORAGE } from '../auth/constants/local-storage.constant';
 import { StandardResponse } from '../../interfaces/standard-response.interface';
-import { UserData } from '../users/user.service';
+import { JobDetails, UserData } from './admin.interface';
+import { Job } from '../users/users.interface';
+import { API_ENDPOINTS } from './constants/api-endpoints.constant';
+import { Resume } from '../users/user.service';
  
- 
-interface JwtPayload {
-  userId: string;
-  email: string;
-  isAdmin: boolean;
-  is2FAEnabled: boolean;
-  isVerifiedEmail: boolean;
-  exp?: number; // Optional expiration timestamp
-}
-
-
 @Injectable({
   providedIn: 'root',
 })
 export class AdminService {
-  // private userDataKey = 'userData';
-  // private jobDataKey = 'jobData';
   private userDataKey = environment.LOCALSTORAGE.USER_DATA;
-  private adminDataKey = environment.LOCALSTORAGE.ADMIN_DATA;
   private jobDataKey = environment.LOCALSTORAGE.JOB_DATA;
 
-//implement admin data storage 
+  private apiUrl = environment.backendUrl;
 
-  setUserData(data: {
-    uuid: string;
-    roleId: string;
-    name: string;
-    email: string;
-    phoneNumber: string;
-    password: string;
-    isVerifiedEmail: boolean;
-    verificationToken: string | null;
-    verificationTokenExpiration: string | null;
-    twoFactorSecret: string;
-    isTwoFactorEnabled: boolean;
-    is2FARemPopUp: boolean;
-    createdAt: string;
-    updatedAt: string;
-  }) {
+  constructor(private http: HttpClient) {}
+
+  setUserData(data: UserData) {
     localStorage.setItem(this.userDataKey, JSON.stringify(data));
   }
 
-  getUserData(): {
-    uuid: string;
-    roleId: string;
-    name: string;
-    email: string;
-    phoneNumber: string;
-    password: string;
-    isVerifiedEmail: boolean;
-    verificationToken: string | null;
-    verificationTokenExpiration: string | null;
-    twoFactorSecret: string;
-    isTwoFactorEnabled: boolean;
-    is2FARemPopUp: boolean;
-    createdAt: string;
-    updatedAt: string;
-  } | null {
+  getUserData(): UserData| null {
     const data = localStorage.getItem(this.userDataKey);
     return data ? JSON.parse(data) : null;
   }
@@ -75,75 +33,50 @@ export class AdminService {
     localStorage.removeItem(this.userDataKey);
   }
 
-  setJobData(data: { id: string; jobTitle: string; location: string; jobDescription: string; salaryRange: string,skills:string[] }) {
-   console.log('data-----',data);
-   
-    localStorage.setItem(this.jobDataKey, JSON.stringify(data));
+  setJobData(data: Job) {
+      localStorage.setItem(this.jobDataKey, JSON.stringify(data));
   }
 
-  getJobData(): { id: string; jobTitle: string; location: string; jobDescription: string; salaryRange: string,skills:string[] } | null {
-    
+  getJobData(): Job| null {
     const data = localStorage.getItem(this.jobDataKey);
-    console.log('getJobData-----',JSON.parse(data?data:''));
     return data ? JSON.parse(data) : null;
   }
 
   clearJobData() {
     localStorage.removeItem(this.jobDataKey);
   }
-  private apiUrl = environment.backendUrl;
-
-  constructor(private http: HttpClient) {}
+  
   isAuthenticated(): boolean {
     const token = localStorage.getItem(LOCALSTORAGE.AUTH_TOKEN);
     return !!token; // Returns true if token exists
   }
 
      
-   getJobsPosted(): Observable<HttpResponse<{ statusCode: number; message: string; data: { LoginTokenJWT: string } }>> {
-    
-    return this.http.get<{ statusCode: number; message: string; data: { LoginTokenJWT: string }}>(
-            `${environment.backendUrl}/jobs`,
-      { observe: 'response' } 
-     );
-  }
- //TO Add - when click on a job to get all skills, application received
- 
- fetchJobs(): Observable<HttpResponse<StandardResponse<[]>>> {
-
-  return this.http.get<StandardResponse<[]>>(
+  getJobsPosted(): Observable<HttpResponse<StandardResponse<JobDetails[] >>> {
+  return this.http.get<StandardResponse<JobDetails[] >>(
           `${environment.backendUrl}/jobs`,
     { observe: 'response' } 
-   );
- }
+    );
+  }
+
+  fetchJobs(): Observable<HttpResponse<StandardResponse<[]>>> {
+
+    return this.http.get<StandardResponse<[]>>(
+            `${environment.backendUrl}/jobs`,
+      { observe: 'response' } 
+    );
+  }
  
  fetchUsers(): Observable<HttpResponse<StandardResponse<{users:UserData[],number:number}>>> {
-  // USERS:`${apiUrl}/admin/users`,
-  
   return this.http.get<StandardResponse<{users:UserData[],number:number}>>(
           `${environment.backendUrl}/admin/users`,
     { observe: 'response' } 
    );
  }
 
-  // Update job details
-//   updateJob(jobData: {id: string, jobTitle: string, location: string, jobDescription: string, salaryRange: string}): Observable<any> {
-//     console.log('jobData-_-__-___-',jobData);
-
-    
-//     // return this.http.patch(`${this.apiUrl}/jobs`, jobData);
-//     return this.http.patch<StandardResponse<[]>>(
-//       `${environment.backendUrl}/jobs`,
-//      jobData,
-// { observe: 'response' } ,
-// );
-// }
-updateJob(jobData: { id: string; jobTitle: string; location: string; jobDescription: string; salaryRange: string , skills: string[]}): Observable<any> {
-  console.log('jobData:', jobData);
-
-  const sendData={
-    id:String(jobData.id),
-  }
+ updateJob(jobData: { id: string; jobTitle: string; location: string; jobDescription: string; salaryRange: string , skills: string[]}): Observable<HttpResponse<StandardResponse<[]>>> {
+ 
+  
   const sendJobData={
     id:String(jobData.id),
      jobTitle:jobData.jobTitle,
@@ -152,9 +85,7 @@ updateJob(jobData: { id: string; jobTitle: string; location: string; jobDescript
     salaryRange:jobData.salaryRange,
     skills:jobData.skills
   }
-  console.log(typeof(sendJobData.id));
-  console.log(sendJobData.id);
-  
+ 
   return this.http.patch<StandardResponse<[]>>(
     `${environment.backendUrl}/jobs`,
     sendJobData,  // Send jobData directly instead of wrapping it inside another object
@@ -162,10 +93,19 @@ updateJob(jobData: { id: string; jobTitle: string; location: string; jobDescript
   );
 }
 
-
-
-
   addJob(jobData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/jobs`, jobData);
+  }
+
+  fetchUserSkills(userId:string):Observable<HttpResponse<StandardResponse<string[]>>>{
+    return this.http.get<HttpResponse<StandardResponse<string[]>>>(`${API_ENDPOINTS.USER_SKILLS}?userId=${userId}`);
+  }
+
+  fetchUserResume(userId:string):Observable<HttpResponse<StandardResponse<Resume>>>{
+    return this.http.get<HttpResponse<StandardResponse<Resume>>>(`${API_ENDPOINTS.USER_RESUME}?userId=${userId}`)
+  }
+
+  fetchUserAppliedJob(userId:string):Observable<HttpResponse<StandardResponse<JobDetails[]>>>{
+    return this.http.get<HttpResponse<StandardResponse<JobDetails[]>>>(`${API_ENDPOINTS.USER_APPLIED_JOBS}?userId=${userId}`)
   }
 }

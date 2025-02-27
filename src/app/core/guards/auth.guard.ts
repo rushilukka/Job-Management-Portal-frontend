@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { AuthService } from '../../auth/auth.service';
-import { ROUTES } from '../../auth/constants/Routes.constant';
+import { AuthService } from '../../auth/auth.service'; 
 import { ToasterService } from '../../shared/Toaster/toaster.service';
 import { ERROR_MESSAGES } from '../../auth/constants/errorMessages.constant';
 
@@ -16,11 +15,8 @@ export class AuthGuard implements CanActivate {
       return true;
     }
     else{
-    // Redirect to login if not authenticated
-    // this.router.navigate(['/unauthorized']);
     this.tosterService.warning(ERROR_MESSAGES.SESSIONEXPIRED, 'Redirecting...');
     this.router.navigate(['/auth/login']);
-      //  this.router.navigate([ROUTES.AUTH.LOGIN]);
     return false;}
   }
 }

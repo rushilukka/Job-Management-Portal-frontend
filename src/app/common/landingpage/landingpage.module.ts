@@ -6,8 +6,6 @@ const routes: Routes = [
   { path: '', component: LandingpageComponent } // Ensure this route is set correctly
 ];
 
-
-
 @NgModule({
   declarations: [
     LandingpageComponent

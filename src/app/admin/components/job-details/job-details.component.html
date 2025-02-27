@@ -120,11 +120,7 @@
         <small *ngIf="jobForm.get('location')?.hasError('maxlength')">Location cannot exceed 100 characters.</small>
       </div>
     </div>
-
-    <!-- <button type="submit" [disabled]="jobForm.invalid" class="btn btn-primary w-full py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50">
-      <i class="fas fa-plus-circle mr-2"></i> Create Job
-    </button> -->
-
+ 
     <div class="form-group">
       <label class="block text-lg font-semibold text-gray-700">Skills</label>
       <div class="space-y-2">
@@ -135,9 +131,6 @@
     
         <ul class="list-disc pl-5 space-y-1 mt-3">
           <li *ngFor="let skill of skills.controls; let i = index">
-            <!-- <p [formControlName]="i" type="text" class="form-control p-2 border rounded-lg w-full" >
-              {{ skill['value'] }}
-            </p> -->
             {{skill.value}}
             <button type="button" (click)="removeSkill(i)" class="text-red-500 ml-2">Remove</button>
           </li>
@@ -146,19 +139,14 @@
 
         <ul>
           <li *ngFor="let skillCtrl of skills.controls; let i = index">
-            <!-- <input [formControlName]="i" /> -->
           </li>
         </ul>
         
       </div>
     </div>
     
-
-
-
     <button
     type="submit" [disabled]="jobForm.invalid"
-    
     class="bg-accent text-purple-800 px-4 py-2 rounded-lg   space-y-6"
   >
     Save
@@ -172,7 +160,5 @@
       </button>
   </form>
 </div>
-
-
 
 <app-footer></app-footer>

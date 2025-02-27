@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { TOASTER_MESSAGES } from '../../constants/toasterMessages.constant';
-import { environment } from '../../../../environments/environments';
 import { ToasterService } from '../../../shared/Toaster/toaster.service';
 import { AuthService } from '../../auth.service';
 import { ROUTES } from '../../constants/Routes.constant';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-signup-verified',
@@ -19,12 +19,9 @@ export class SignupVerifiedComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private http: HttpClient,
     private router: Router,
     private toasterService:ToasterService,
-    private authService: AuthService 
-      
-    
+    private authService: AuthService     
   ) {}
 
   ngOnInit(): void {
@@ -32,17 +29,15 @@ export class SignupVerifiedComponent implements OnInit {
   }
 
   verifyEmail(): void {
-    const token = this.route.snapshot.queryParamMap.get('token'); // email verification token
-console.log(token);
+    const token = this.route.snapshot.queryParamMap.get('token'); 
+    // email verification token
     if (!token) {
       this.verificationMessage = TOASTER_MESSAGES.invalidVerificationToken;
       this.isSuccess = false;
       return;
     }
-
  
-    this.authService.verifyEmail(token)
-    .subscribe({
+    this.authService.verifyEmail(token).pipe(take(1)).subscribe({
       next: (response) => {
         if (response.statusCode === 200) {
           this.verificationMessage = TOASTER_MESSAGES.emailVerificationSuccess;
@@ -55,7 +50,6 @@ console.log(token);
         }
       },
       error: (error) => {
-        // console.error('Verification failed:', error);
         this.toasterService.error(TOASTER_MESSAGES.emailVerificationFailed);
         this.verificationMessage = error.error?.message || TOASTER_MESSAGES.emailVerificationFailed;
         this.isSuccess = false;
@@ -64,8 +58,6 @@ console.log(token);
   }
 
   goToLogin(): void {
-    // this.router.navigate([AUTH_ROUTES.login]);
-    this.router.navigate([`/auth/${ROUTES.AUTH.LOGIN}`]);
-    
+    this.router.navigate([`/auth/${ROUTES.AUTH.LOGIN}`]);  
   }
 }

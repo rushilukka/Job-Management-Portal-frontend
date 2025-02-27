@@ -15,45 +15,32 @@ import { UserDetailsComponent } from './components/user-details/user-details.com
 import { JobDetailsComponent } from './components/job-details/job-details.component';
 import { FormsModule } from '@angular/forms';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
-import { AddJobComponent } from './components/add-job/add-job.component';
-// import { SafePdfPipe } from '../safe-pdf.pipe'; // Adjust the path as needed
-import { ReactiveFormsModule } from '@angular/forms';
-// import { AgGridModule } from '../shared/ag-grid/ag-grid.module';
-// import { AgGridComponent } from '../shared/ag-grid/ag-grid.component';
+import { AddJobComponent } from './components/add-job/add-job.component'; 
+import { ReactiveFormsModule } from '@angular/forms'; 
 import { SharedModule } from '../shared/shared.module';
 import { UserActionButtonComponent } from './components/user-action-button/user-action-button.component';
 
 @NgModule({
   declarations: [
-    
- 
     ManageJobsComponent,
     ManageUsersComponent,
     AdminProfileComponent,
     AdminSettingsComponent,
     ReportsComponent,
-    
     DashboardComponent,
     FooterComponent,
     HeaderComponent,
- 
-     
     JobDetailsComponent,
-     
     UserDetailsComponent,
-          AddJobComponent,
-          UserActionButtonComponent,
-
-       
+    AddJobComponent,
+    UserActionButtonComponent,      
   ],
   imports: [
- 
     ReactiveFormsModule,
     NgxExtendedPdfViewerModule,
     FormsModule,
      RouterModule.forChild(adminRoutes),
      SharedModule,
-    //  HeaderComponent,
     CommonModule
   ],
   exports:[RouterModule]

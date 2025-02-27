@@ -11,15 +11,11 @@ export class StoreTokenJWTInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       tap(event => {
         if (event instanceof HttpResponse) {
-          console.log('Response Event:', event);
-
           // Extract token from response body if it exists
           const token = event.body?.data?.LoginTokenJWT || event.headers.get('Authorization');
           
           if (token) {
-            // localStorage.setItem('authToken', token);
             localStorage.setItem(LOCALSTORAGE.AUTH_TOKEN, token);
-            console.log('🔑 Token stored in localStorage:', localStorage.getItem(LOCALSTORAGE.AUTH_TOKEN));
           }
         }
       })

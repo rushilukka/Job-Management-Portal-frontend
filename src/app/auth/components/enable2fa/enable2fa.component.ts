@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ROUTES } from "../../constants/Routes.constant";
 import { MESSAGES } from '../../constants/Messages.constant';
 import { LOCALSTORAGE } from '../../constants/local-storage.constant';
+import { take } from 'rxjs';
 @Component({
   selector: 'app-enable2fa',
   standalone: false,
@@ -17,40 +18,32 @@ export class Enable2FAComponent {
   totp = '';
   private toasterService = inject(ToasterService);
   Token = localStorage.getItem(LOCALSTORAGE.AUTH_TOKEN);
-       
 
   constructor(private authService: AuthService,private router: Router) {
-    this.authService.enable2FA(this.Token ? this.Token : '').subscribe({
+    this.authService.enable2FA().pipe(take(1)).subscribe({
       next: (response) => {
         if (response.statusCode === 200) {
-          // console.log(response.data.qrCode);
-          this.qrCodeUrl = response.data?.qrCode?response.data.qrCode:'';
-           }
+           this.qrCodeUrl = response.data?.qrCode?response.data.qrCode:'';
+        }
       },
       error: (error) => {
         this.toasterService.error(error.error?.message || 'Failed to enable 2FA', 'Error'); // Handle error
       },
     });
-  
-
   };
-// 
+
   async verify() {
-    this.Token = localStorage.getItem(LOCALSTORAGE.AUTH_TOKEN);
-    await this.authService.verify2FA(this.totp,this.Token?this.Token:'').subscribe({
+   await this.authService.verify2FA(this.totp).pipe(take(1)).subscribe({
       next: (response) => {
         if (response.statusCode === 200) {
            this.toasterService.success(response.message, MESSAGES.TWO_FA.ENABLE_SUCCESS); // Show success message
             this.router.navigate([`${ROUTES.USERS.DASHBOARD}`]); // Redirect to 
-        
         }
       },
       error: (error) => {
         this.toasterService.error(error.error?.message || MESSAGES.TWO_FA.ENABLE_FAILED, 'Error'); // Handle error
       },
     });
-
-  }
-   
+  }   
 }
 

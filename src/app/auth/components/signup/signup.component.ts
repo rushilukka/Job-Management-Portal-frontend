@@ -2,7 +2,6 @@ import { Component, inject } from '@angular/core';
 import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
 import { ToasterService } from '../../../shared/Toaster/toaster.service';
-// import {  TOASTER_MESSAGES } from '../../';
 import { TOASTER_MESSAGES } from '../../constants/toasterMessages.constant';
 import { StandardResponse } from '../../../../interfaces/standard-response.interface';
 import { ROUTES } from '../../constants/Routes.constant';
@@ -27,7 +26,6 @@ export class SignupComponent {
   private toasterService = inject(ToasterService);
 
   constructor(private authService: AuthService, private router: Router) {}
-
  
    // Toggle password visibility
    togglePassword() {
@@ -68,36 +66,23 @@ export class SignupComponent {
       this.toasterService.error(TOASTER_MESSAGES.PASSWORD_MISMATCH, 'Error');
       return;
     }
-     else{
-       
-
-    const signupData = {
-      name: this.name,
-      email: this.email,
-      phoneNumber: this.phoneNumber,
-      password: this.password
-    };
-
+    else{      
+      const signupData = {
+        name: this.name,
+        email: this.email,
+        phoneNumber: this.phoneNumber,
+        password: this.password
+      };
       this.authService.signup(signupData).subscribe(
         (response: StandardResponse) => {
           if (response.statusCode === 201) {
-            // console.log('Signup Successful:', response.message);
-            // console.log('User Data:', response.data);
-        
-            //to access signup verification pending
-            // localStorage.setItem('verificationPending', 'true'); 
             localStorage.setItem(LOCALSTORAGE.VERIFICATION_PENDING, 'true'); 
-            //   Set flag when visiting signup
-  
             this.toasterService.success(TOASTER_MESSAGES.signupSuccess, 'Success');
-            // this.router.navigate([AUTH_ROUTES.signupVerificationPending]);
             this.router.navigate([`/auth/${ROUTES.AUTH.SIGNUP_VERIFICATION_PENDING}`]);
-     
           }
         },
         (error) => {
           let errorMessage = TOASTER_MESSAGES.UNEXPECTED_ERROR; // Default message
-        
           switch (error.status) {
             case 400:
               errorMessage = TOASTER_MESSAGES.BAD_REQUEST;
@@ -121,10 +106,9 @@ export class SignupComponent {
               errorMessage = TOASTER_MESSAGES.SERVICE_UNAVAILABLE;
               break;
           }
-        
           this.toasterService.error(errorMessage, 'Error');
         }      
       );
   }
-}
+ }
 }

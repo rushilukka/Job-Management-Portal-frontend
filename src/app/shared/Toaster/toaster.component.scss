@@ -1,21 +1,16 @@
 .toaster-container {
-
   z-index: 9999;
   display: flex;
-  justify-content: flex-end;
-  // flex-direction: column;
+  justify-content: flex-end; 
   flex-direction: column;
   gap: 10px;
-
-  pointer-events: none; /* Ensures it doesn't block interactions */
-  // opacity: 1.0;
+  pointer-events: none; /* Ensures it doesn't block interactions */  
 }
 
 .toast {
   position: fixed;
   top: 20px;
   right: 20px;
-  // margin: 20px;
   padding: auto;
   background: #323232;
   color: #fff;

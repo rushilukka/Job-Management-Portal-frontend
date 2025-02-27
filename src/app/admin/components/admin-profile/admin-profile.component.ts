@@ -9,5 +9,5 @@ import { Component } from '@angular/core';
 export class AdminProfileComponent {
   name = 'Rushi Lukka';
   email = 'admin@gmail.com';
-  is2FAEnabled = false; // Fetch from API in a real scenario
+  is2FAEnabled = false; 
 }

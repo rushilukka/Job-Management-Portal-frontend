@@ -5,7 +5,7 @@ export const TOASTER_MESSAGES = {
     verificationEmailResent: 'Verification email resent successfully.',
     verificationResendFailed: 'Failed to resend verification email. Please try again later.',
     emailVerificationSuccess: 'Email verification successful. You can now log in.',
-    emailVerificationFailed: '❌ Email verification failed.',
+    emailVerificationFailed: 'Email verification failed.',
     invalidVerificationToken: 'Invalid or missing verification token.',
     ALREADY_EXISTS: 'User already exists.',
     BAD_REQUEST: 'Bad request. Please check your input.',

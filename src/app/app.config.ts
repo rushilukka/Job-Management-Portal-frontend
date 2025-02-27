@@ -6,8 +6,6 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { ToasterService } from './shared/Toaster/toaster.service';
 import { StoreTokenJWTInterceptor } from './core/interceptor/storeTokenJWT.interceptor';
 import { SetHeaders_CheckExpireJWT_Interceptor } from './core/interceptor/setHeaders-CheckExpireJWT.interceptor';
-import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community'; 
- 
 
 export const appConfig: ApplicationConfig = {
   

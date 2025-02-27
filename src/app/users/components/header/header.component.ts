@@ -33,11 +33,7 @@ export class HeaderComponent {
                 }
               : { fileName: '', storageDirectoryPath: '' }, // Default empty Resume
           };
-          
-    
-          console.log('userData----------',userData);
           this.userName = userData?.name?? '';
-          
           this.userService.setUserData(userData);
         }
       },
@@ -45,10 +41,6 @@ export class HeaderComponent {
         console.error('Error fetching user data:', error);
       }
     );
-
-    // const userDetails = this.userService.getUserData();
-
-
   }
   settings() {
     this.router.navigate(['/users/settings']);
@@ -59,13 +51,13 @@ export class HeaderComponent {
   }
 
   logout() {
-   localStorage.removeItem(environment.LOCALSTORAGE.AUTH_TOKEN); // 🔥 Clear token
-        localStorage.removeItem(environment.LOCALSTORAGE.VERIFICATION_PENDING); // 🔥 Clear token
-        localStorage.removeItem(environment.LOCALSTORAGE.JOB_DATA); // 🔥 Clear token
-        localStorage.removeItem(environment.LOCALSTORAGE.USER_DATA); // 🔥 Clear token
-        localStorage.removeItem(environment.LOCALSTORAGE.ADMIN_DATA); // 🔥 Clear token
+   localStorage.removeItem(environment.LOCALSTORAGE.AUTH_TOKEN); 
+        localStorage.removeItem(environment.LOCALSTORAGE.VERIFICATION_PENDING); 
+        localStorage.removeItem(environment.LOCALSTORAGE.JOB_DATA); 
+        localStorage.removeItem(environment.LOCALSTORAGE.USER_DATA); 
+        localStorage.removeItem(environment.LOCALSTORAGE.ADMIN_DATA); 
        
   
-    this.router.navigate(['/auth/login']); // 🔄 Redirect to login
+    this.router.navigate(['/auth/login']); //  Redirect to login
   }
 }

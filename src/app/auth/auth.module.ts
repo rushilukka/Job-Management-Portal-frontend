@@ -9,7 +9,6 @@ import { SignupVerifiedComponent } from './components/signup-verified/signup-ver
 import { SignupVerificationPendingComponent } from './components/signup-verification-pending/signup-verification-pending.component';
 import { Enable2FAComponent } from './components/enable2fa/enable2fa.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from '../core/interceptor/auth.interceptor';
 import { Login2faComponent } from './components/login2fa/login2fa.component';
 import { PopupComponent } from './components/popup/popup.component';
  @NgModule({
@@ -28,9 +27,7 @@ import { PopupComponent } from './components/popup/popup.component';
     RouterModule,
     AuthRoutingModule 
   ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }  
-  ],
-  exports:[ ]
+  providers: [],
+  exports:[]
 })
 export class AuthModule { }

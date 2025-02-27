@@ -1,6 +1,7 @@
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../../../environments/environments';
+import { ROUTES } from '../../constants/Routes.constants';
 
 @Component({
   selector: 'app-header',
@@ -28,21 +29,18 @@ export class HeaderComponent {
   }
 
   settings() {
-    this.router.navigate(['/admin/settings']);
+     this.router.navigate([ROUTES.SETTINGS]);
   }
   myprofile() {
-    this.router.navigate(['/admin/profile']);
+     this.router.navigate([ROUTES.PROFILE]);
   }
 
-
-
-    logout() {
+  logout() {
       localStorage.removeItem(environment.LOCALSTORAGE.AUTH_TOKEN);  
       localStorage.removeItem(environment.LOCALSTORAGE.VERIFICATION_PENDING);  
       localStorage.removeItem(environment.LOCALSTORAGE.JOB_DATA);  
       localStorage.removeItem(environment.LOCALSTORAGE.USER_DATA);  
       localStorage.removeItem(environment.LOCALSTORAGE.ADMIN_DATA);  
-      
-      this.router.navigate(['/auth/login']);  
+      this.router.navigate([ROUTES.LOGIN]);  
     }
 }

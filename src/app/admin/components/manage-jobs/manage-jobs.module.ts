@@ -4,8 +4,6 @@ import { ManageJobsComponent } from './manage-jobs.component';
 import { HeaderComponent } from '../header/header.component';
 import { AdminProfileComponent } from '../admin-profile/admin-profile.component';
 import { FooterComponent } from '../footer/footer.component';
-// import { AgGridComponent } from '../../../shared/ag-grid/ag-grid.component';
-
 
 @NgModule({
   declarations: [
@@ -13,7 +11,6 @@ import { FooterComponent } from '../footer/footer.component';
      AdminProfileComponent,
         FooterComponent,
         HeaderComponent,
- 
   ],
   imports: [
     CommonModule, 

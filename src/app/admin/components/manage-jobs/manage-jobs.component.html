@@ -10,42 +10,11 @@
             + Add New Job
         </button>
     </div>
-  
-  
     <app-ag-grid
-    [rowData]="jobs"
-    [colName]="jobColumn">
-    [frameworkComponents]="frameworkComponents">
-
-  </app-ag-grid>
-  
-    <!-- Jobs Table -->
-    <!-- <div class="overflow-x-auto">
-        <table class="w-full border-collapse border border-gray-300 bg-white">
-            <thead>
-                <tr class="bg-primary text-white">
-                    <th class="border border-gray-300 p-3 text-left">Job Title</th>
-                    <th class="border border-gray-300 p-3 text-left">Job Description</th>
-                    <th class="border border-gray-300 p-3 text-left">Location</th>
-                    <th class="border border-gray-300 p-3 text-center">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let job of jobs" class=" ">
-                    <td class="border border-gray-300 p-3">{{ job.jobTitle }}</td>
-                    <td class="border border-gray-300 p-3">{{ job.jobDescription }}</td>
-                    <td class="border border-gray-300 p-3">{{ job.location }}</td>
-                    <td class="border border-gray-300 p-3 text-center">
-                        <button 
-                            (click)="viewJobDetails(job)" 
-                            class="bg-secondary text-white px-3 py-1 rounded-md hover:bg-gray-700 transition-all">
-                            View Details
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div> -->
+        [rowData]="jobs"
+        [colName]="jobColumn">
+        [frameworkComponents]="frameworkComponents">
+    </app-ag-grid>
 </div>
 
 <app-footer></app-footer>

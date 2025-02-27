@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-
 import { usersRoutes } from './user.routes';
 import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
@@ -12,7 +11,6 @@ import { AppliedJobComponent } from './components/applied-job/applied-job.compon
 import { UploadResumeComponent } from './components/upload-resume/upload-resume.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-// import { JobDetailsComponent } from './components/job-details/job-details.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +22,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AppliedJobComponent,
     UploadResumeComponent,
     SettingsComponent,
-     
   ],
   imports: [
     RouterModule.forChild(usersRoutes),

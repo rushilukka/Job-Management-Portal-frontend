@@ -6,55 +6,26 @@
   <div *ngIf="jobDetail">
     <div class="mb-4">
       <label class="font-semibold">Job Title:</label>
-      <!-- <input
-        *ngIf="isEditing"
-        type="text"
-        [(ngModel)]="updatedJob.jobTitle"
-        class="border px-3 py-2 w-full rounded"
-      /> -->
-      <p  class="text-gray-700">{{ jobDetail.jobTitle }}</p>
+         <p  class="text-gray-700">{{ jobDetail.jobTitle }}</p>
     </div>
 
     <div class="mb-4">
       <label class="font-semibold">Description:</label>
-      <!-- <textarea
-        *ngIf="isEditing"
-        [(ngModel)]="updatedJob.jobDescription"
-        class="border px-3 py-2 w-full rounded"
-      ></textarea> -->
       <p  class="text-gray-700">{{ jobDetail.jobDescription }}</p>
     </div>
 
     <div class="mb-4">
       <label class="font-semibold">Salary Range:</label>
-      <!-- <input
-        *ngIf="isEditing"
-        type="text"
-        [(ngModel)]="updatedJob.salaryRange"
-        class="border px-3 py-2 w-full rounded"
-      /> -->
       <p  class="text-gray-700">{{ jobDetail.salaryRange }}</p>
     </div>
 
     <div class="mb-4">
       <label class="font-semibold">Location:</label>
-      <!-- <input
-        *ngIf="isEditing"
-        type="text"
-        [(ngModel)]="updatedJob.location"
-        class="border px-3 py-2 w-full rounded"
-      /> -->
       <p  class="text-gray-700">{{ jobDetail.location }}</p>
     </div>
 
     <div class="mb-4">
       <label class="font-semibold">Skills:</label>
-      <!-- <input
-        *ngIf="isEditing"
-        type="text"
-        [(ngModel)]="updatedJob.location"
-        class="border px-3 py-2 w-full rounded"
-      /> -->
       <ng-container *ngIf="jobDetail?.skills?.length">
         <p *ngFor="let skill of jobDetail.skills" class="text-gray-700">{{ skill }}</p>
        </ng-container>

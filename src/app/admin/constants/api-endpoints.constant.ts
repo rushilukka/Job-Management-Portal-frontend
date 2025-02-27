@@ -10,7 +10,5 @@ export const API_ENDPOINTS = {
   APPLY_JOB: `${apiUrl}/job-applications/apply`,
   UPLOAD_RESUME: `${apiUrl}/resume/upload`,
   USER_DETAILS:'',
-//   USER_SKILLS:'',
-//   USER_APPLIED_JOBS:'',
-//   JOBS: "http://localhost:3000/jobs" // Adjust backend API URL
+ 
 };

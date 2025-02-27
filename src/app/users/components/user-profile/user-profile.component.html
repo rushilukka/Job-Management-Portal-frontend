@@ -1,18 +1,15 @@
 <app-header class="w-full"></app-header>
 <div class="container min-h-screen  p-6">
     <h2 class="text-2xl font-bold text-primary mb-4">User Profile</h2>
-  
     <button
     *ngIf="!isEditing"
     (click)="toggleEdit()"
     class="bg-gray-300 mx-5 px-4 py-2 rounded-lg"
-  >
+    >
     Edit
   </button>
-
     <div class="container mx-auto p-6 min-h-screen" *ngIf="!isEditing">
-      <h2 class="text-xl font-bold text-primary">User Details</h2>
-  
+      <h2 class="text-xl font-bold text-primary">User Details</h2>  
       <div class="mt-4 bg-white p-4 rounded-lg shadow">
           <p><strong>Name:</strong> {{ userData?.name }}</p>
           <p><strong>Email:</strong> {{ userData?.email }}</p>
@@ -93,8 +90,6 @@
   
 </div>
 
-
-
 <div *ngIf="isEditing" class="min-h-screen flex flex-col items-center      ">
   <form [formGroup]="userForm" (ngSubmit)="updateUser()" class="w-full max-w-3xl mt-5 p-6 bg-white rounded-lg shadow mx-auto space-y-6">
     <div class="form-group">
@@ -144,7 +139,6 @@
 
         <ul>
           <li *ngFor="let skillCtrl of skillsEditingFun.controls; let i = index">
-            <!-- <input [formControlName]="i" /> -->
           </li>
         </ul>
         
@@ -174,4 +168,3 @@
 
 </div>
   <app-footer class="w-full"></app-footer>
-  <!-- <app-footer></app-footer> -->

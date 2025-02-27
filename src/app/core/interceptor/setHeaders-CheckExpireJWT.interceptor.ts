@@ -8,8 +8,8 @@ import { LOCALSTORAGE } from '../../auth/constants/local-storage.constant';
 import { ToasterService } from '../../shared/Toaster/toaster.service';
 import { ERROR_MESSAGES } from '../../auth/constants/errorMessages.constant';
 
-
 //will work every time - but here for request to server only 
+
 //only handling requests to the server by attaching the JWT except for login, signup, and email verification.
 
 interface JwtPayload {
@@ -24,13 +24,13 @@ interface JwtPayload {
 export class SetHeaders_CheckExpireJWT_Interceptor implements HttpInterceptor {
   
   constructor(private router: Router,private tosterService:ToasterService) {}
-
+  
+  // List of exact endpoints to exclude
   private excludedEndpoints = [
     `${environment.backendUrl}/auth/login`,
-    // 'http://localhost:3000/auth/login',
     `${environment.backendUrl}/auth/signup`,
     `${environment.backendUrl}/auth/verify-email`
-  ]; // List of exact endpoints to exclude
+  ]; 
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = localStorage.getItem(LOCALSTORAGE.AUTH_TOKEN);  
@@ -39,37 +39,29 @@ export class SetHeaders_CheckExpireJWT_Interceptor implements HttpInterceptor {
       return next.handle(req);
     }   
 
-     // 🛑 Check if JWT is expired before sending request
+     // Check if JWT is expired before sending request
      if (token && this.isTokenExpired(token)) {
-      console.warn('🔴 JWT expired! Logging out...');
       this.handleLogout();
       throw new Error('Session Expired! Please log in again.');
     }
    
      // Clone request and set the Authorization header only if a token is available
      if (token) {
-      console.log('  Setting Authorization Header:', `Bearer ${token}`);
-
       const clonedReq = req.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`
         }
       });
-      
-      console.log('🛠 Cloned Request with Headers:', clonedReq);
       return next.handle(clonedReq);
     }
- 
-
-    return next.handle(req);
+     return next.handle(req);
   }
 
-   // 🔍 Function to check if JWT is expired
+   //  Function to check if JWT is expired
    private isTokenExpired(token: string): boolean {
     try {
       const decoded: JwtPayload = jwtDecode<JwtPayload>(token?token:'');
-      console.log('decoded.exp',decoded.exp);
-                      
+                       
          if(decoded?.exp){
           const expiry = decoded.exp * 1000; // Convert expiry to milliseconds
           return Date.now() > expiry; // Compare expiry time with current time
@@ -78,21 +70,21 @@ export class SetHeaders_CheckExpireJWT_Interceptor implements HttpInterceptor {
          this.tosterService.error('Session Expired! Please log in again.');
           return true; // Assume expired if decoding fails
          }
-      // const payload = JSON.parse(atob(token.split('.')[1])); // Decode JWT payload
          } catch (e) {
           return true;
     }
   }
 
-  // 🔄 Function to handle logout
+  //  Function to handle logout
   private handleLogout() {
-    localStorage.removeItem(environment.LOCALSTORAGE.AUTH_TOKEN); // 🔥 Clear token
-    localStorage.removeItem(environment.LOCALSTORAGE.VERIFICATION_PENDING); // 🔥 Clear token
-    localStorage.removeItem(environment.LOCALSTORAGE.JOB_DATA); // 🔥 Clear token
-    localStorage.removeItem(environment.LOCALSTORAGE.USER_DATA); // 🔥 Clear token
+    localStorage.removeItem(environment.LOCALSTORAGE.AUTH_TOKEN);  
+    localStorage.removeItem(environment.LOCALSTORAGE.VERIFICATION_PENDING);  
+    localStorage.removeItem(environment.LOCALSTORAGE.JOB_DATA);  
+    localStorage.removeItem(environment.LOCALSTORAGE.USER_DATA);  
    
     this.tosterService.warning(ERROR_MESSAGES.SESSIONEXPIRED, 'Redirecting...');
        
-    this.router.navigate(['/auth/login'], { queryParams: { sessionExpired: 'true' } }); // Redirect to login
+    this.router.navigate(['/auth/login'], { queryParams: { sessionExpired: 'true' } }); 
+    // Redirect to login
   }
 }

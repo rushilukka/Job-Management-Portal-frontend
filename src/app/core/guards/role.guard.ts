@@ -4,8 +4,6 @@ import { AuthService } from '../../auth/auth.service';
 import { jwtDecode } from 'jwt-decode';
 import { LOCALSTORAGE } from '../../auth/constants/local-storage.constant';
 
-
-
 interface JwtPayload {
   userId: string;
   email: string;
@@ -23,29 +21,20 @@ export class AdminRoleGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const requiredRoles = 'admin';
-    // route.data['roles'] as string[];
     const userRole = this.authService.getUserRole(); // Get user role from AuthService
     let token = localStorage.getItem(LOCALSTORAGE.AUTH_TOKEN);
-    // let decoded = jwtDecode
-      const decoded: JwtPayload = jwtDecode<JwtPayload>(token?token:'');
-              
-           console.log('role guard -----------------------',decoded.isAdmin,decoded.is2FAEnabled,decoded.is2FALogin);
-           
-           let x = decoded.is2FALogin?decoded.is2FALogin:false;
+    const decoded: JwtPayload = jwtDecode<JwtPayload>(token?token:'');
+    let x = decoded.is2FALogin?decoded.is2FALogin:false;
     if (decoded.isAdmin) {
       if(decoded.is2FAEnabled && !(decoded.is2FALogin?decoded.is2FALogin:false)) {
         this.router.navigate(['/auth/login-2fa']);
         return false;
-      }
-      console.log('require 2fa');
-      
+      }     
       return true;
     }
     else{
-
-      // Redirect to unauthorized page if role not allowed
-    this.router.navigate(['/unauthorized']);
-    return false;
-  }
+     this.router.navigate(['/unauthorized']);
+      return false;
+    }
   }
 }

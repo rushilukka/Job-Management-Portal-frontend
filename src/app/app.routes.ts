@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { AuthGuard } from '../app/core/guards/auth.guard';
 import { AdminRoleGuard } from '../app/core/guards/role.guard';
 import { UserRoleGuard } from '../app/core/guards/users.guard';
-// import './shared/components/'
+
 export const routes: Routes = [
   {
     path: '',
