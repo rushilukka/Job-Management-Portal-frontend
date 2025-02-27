@@ -21,6 +21,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 // import { AgGridModule } from '../shared/ag-grid/ag-grid.module';
 // import { AgGridComponent } from '../shared/ag-grid/ag-grid.component';
 import { SharedModule } from '../shared/shared.module';
+import { UserActionButtonComponent } from './components/user-action-button/user-action-button.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { SharedModule } from '../shared/shared.module';
      
     UserDetailsComponent,
           AddJobComponent,
+          UserActionButtonComponent,
 
        
   ],

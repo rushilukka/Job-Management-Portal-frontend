@@ -1,4 +1,4 @@
-<p>ag-grid works!</p>
+<!-- <p>ag-grid works!</p>
 <ag-grid-angular 
   style=" height: 400px;"
   class="ag-theme-alpine"
@@ -6,4 +6,33 @@
   [columnDefs]="colName">
   [frameworkComponents]="frameworkComponents">
 
+</ag-grid-angular> -->
+
+<!-- Quick Filter Input -->
+<div class="flex justify-between mb-2">
+  <input 
+    type="text" 
+    placeholder="Quick Filter..." 
+    (input)="onQuickFilterChanged($event)"
+    class="border p-2 rounded w-1/3"
+  />
+
+  <!-- Export Button -->
+  <button (click)="exportToCSV()" class="bg-purple-700 text-white px-4 py-2 rounded">
+    Export CSV
+  </button>
+</div>
+
+<!-- AG Grid Table --><ag-grid-angular 
+  class="ag-theme-alpine"
+  style="height: 400px; width: 100%;" 
+  [rowData]="rowData"
+  [columnDefs]="colName" 
+  [pagination]="true" 
+  [paginationPageSize]="10"
+  [domLayout]="'autoHeight'"
+  [floatingFiltersHeight]="30"
+  [gridOptions]="gridOptions"
+  [animateRows]="true"
+  (gridReady)="onGridReady($event)">
 </ag-grid-angular>

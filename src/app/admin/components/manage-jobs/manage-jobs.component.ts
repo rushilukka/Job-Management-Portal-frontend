@@ -43,13 +43,17 @@ jobColumn: ColDef[] = [
     cellRendererParams: (job: any) => ({
       data: job, // Pass row data
     }),
+    filter: false, // No filter needed for action column
+    sortable: false,
+    cellStyle: { textAlign: "center" }, // ✅ Align text and button center
+    cellClass: "center-action-cell" // ✅ Add a CSS class for extra control
   },
   
 ];
 
 frameworkComponents = {
   agButtonRenderer: AgButtonComponent, // Register framework component
-};
+};  
 
 view(){
   console.log("VIEWWW");

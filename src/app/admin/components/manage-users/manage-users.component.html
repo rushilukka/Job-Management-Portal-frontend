@@ -1,8 +1,6 @@
 <app-header class="w-full"></app-header>
 
 
-    <app-ag-grid/>
-
 
 <div class="container min-h-screen mx-auto p-6">
     <div class="flex justify-between items-center mb-4">
@@ -10,7 +8,16 @@
     </div>
 
     <!-- Users Table -->
-    <div class="overflow-x-auto">
+
+
+    <app-ag-grid
+    [rowData]="users"
+    [colName]="userColumn">
+    [frameworkComponents]="frameworkComponents">
+    
+    </app-ag-grid>
+
+    <!-- <div class="overflow-x-auto">
         <table class="w-full border-collapse border border-gray-300 bg-white">
             <thead>
                 <tr class="bg-primary text-white">
@@ -36,7 +43,7 @@
                 </tr>
             </tbody>
         </table>
-    </div>
+    </div> -->
 </div>
 
 <app-footer></app-footer>

@@ -41,8 +41,11 @@ export class UserDetailsComponent {
   constructor(private sanitizer: DomSanitizer,private route: ActivatedRoute, private http: HttpClient,private adminService: AdminService,private router: Router) {}
 
   ngOnInit(): void {
-      this.userData = this.adminService.getUserData();
-    // const userId = this.route.snapshot.paramMap.get('id');
+    
+    this.userData = this.adminService.getUserData();
+    
+    console.log('this.userData from user details -',this.userData);
+      // const userId = this.route.snapshot.paramMap.get('id');
     const userId = this.userData?.uuid;
     // const userId = '6f770236-3d24-45d1-88c6-edba6a9d0894';
     if (userId) {

@@ -7,6 +7,7 @@ import { ROUTES } from './constants/Routes.constants';
 import { jwtDecode } from 'jwt-decode';
 import { LOCALSTORAGE } from '../auth/constants/local-storage.constant';
 import { StandardResponse } from '../../interfaces/standard-response.interface';
+import { UserData } from '../users/user.service';
  
  
 interface JwtPayload {
@@ -112,6 +113,15 @@ export class AdminService {
 
   return this.http.get<StandardResponse<[]>>(
           `${environment.backendUrl}/jobs`,
+    { observe: 'response' } 
+   );
+ }
+ 
+ fetchUsers(): Observable<HttpResponse<StandardResponse<{users:UserData[],number:number}>>> {
+  // USERS:`${apiUrl}/admin/users`,
+  
+  return this.http.get<StandardResponse<{users:UserData[],number:number}>>(
+          `${environment.backendUrl}/admin/users`,
     { observe: 'response' } 
    );
  }
