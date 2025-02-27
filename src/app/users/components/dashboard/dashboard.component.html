@@ -32,7 +32,7 @@
       <h2 class="text-xl font-semibold mb-4 text-primary">Available Job Listings</h2>
 
       <!-- Check if jobs array is empty -->
-      <div *ngIf="jobs.length === 0" class="text-center text-gray-300">
+      <div *ngIf="jobs?.length === 0" class="text-center text-gray-300">
         <p>No job listings available at the moment.</p>
       </div>
 
@@ -47,6 +47,7 @@
           <div class="flex-grow"></div>
           <p class="text-sm text-accent mt-3 mb-3 font-medium">Salary: {{ job.salaryRange }}</p>
       
+
           <!-- Pass the job object -->
           <button 
           (click)="onApply(job)"  

@@ -19,22 +19,21 @@ export class HeaderComponent {
     this.userService.getUserDataFromBackend().subscribe(
       (response: HttpResponse<StandardResponse<UserData>>) => {
         if (response.body?.data) {
-          const userData = {
-            uuid: response.body.data.uuid,
-            roleId: String(response.body.data.roleId), // Ensure roleId is a string
+          const userData: UserData = {
             name: response.body.data.name,
             email: response.body.data.email,
             phoneNumber: response.body.data.phoneNumber,
-            password: response.body.data.password,
             isVerifiedEmail: response.body.data.isVerifiedEmail,
-            verificationToken: response.body.data.verificationToken ?? null,
-            verificationTokenExpiration: response.body.data.verificationTokenExpiration ?? null,
-            twoFactorSecret: response.body.data.twoFactorSecret ?? '', // Ensure a string
             isTwoFactorEnabled: response.body.data.isTwoFactorEnabled,
-            is2FARemPopUp: response.body.data.is2FARemPopUp,
-            createdAt: response.body.data.createdAt,
-            updatedAt: response.body.data.updatedAt
+            skills: response.body.data.skills ?? [], // Ensure an array
+            resume: response.body.data.resume
+              ? {
+                  fileName: response.body.data.resume.fileName,
+                  storageDirectoryPath: response.body.data.resume.storageDirectoryPath,
+                }
+              : { fileName: '', storageDirectoryPath: '' }, // Default empty Resume
           };
+          
     
           console.log('userData----------',userData);
           this.userName = userData?.name?? '';

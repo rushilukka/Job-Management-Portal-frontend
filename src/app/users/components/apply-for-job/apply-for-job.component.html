@@ -25,6 +25,20 @@
         <p class="text-gray-700">{{ jobDetail.location }}</p>
       </div>
 
+      <div class="mb-4">
+        <label class="font-semibold">Skills:</label>
+       <ng-container *ngIf="jobDetail?.skills?.length">
+        <p *ngFor="let skill of jobDetail.skills" class="text-gray-700">{{ skill }}</p>
+       </ng-container>
+       
+       <ng-container *ngIf="!jobDetail?.skills?.length">
+        <p   class="text-gray-700">No Skills Required</p>
+       </ng-container>
+
+      </div>
+
+       
+
       <div class="flex justify-center mt-6">
         <button 
           (click)="applyJob()" 

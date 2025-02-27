@@ -47,8 +47,29 @@
       <p  class="text-gray-700">{{ jobDetail.location }}</p>
     </div>
 
+    <div class="mb-4">
+      <label class="font-semibold">Skills:</label>
+      <!-- <input
+        *ngIf="isEditing"
+        type="text"
+        [(ngModel)]="updatedJob.location"
+        class="border px-3 py-2 w-full rounded"
+      /> -->
+      <ng-container *ngIf="jobDetail?.skills?.length">
+        <p *ngFor="let skill of jobDetail.skills" class="text-gray-700">{{ skill }}</p>
+       </ng-container>
+       
+       <ng-container *ngIf="!jobDetail?.skills?.length">
+        <p   class="text-gray-700">No Skills Required</p>
+       </ng-container>
+
+     
+    </div>
+
+
+
     <div class="flex space-x-4 mt-4">
-      <button
+      <button (click)="deleteApplication()"
         
          class="bg-primary text-white px-4 py-2 rounded-lg"
       >

@@ -5,6 +5,7 @@ import { UserService } from '../../user.service';
 import { LOCALSTORAGE } from '../../../auth/constants/local-storage.constant';
 import { Router } from '@angular/router';
 import { StandardResponse } from '../../../../interfaces/standard-response.interface';
+import { Job } from '../../users.interface';
 
 
 interface JwtPayload {
@@ -41,47 +42,19 @@ export interface UserData {
 })
 export class DashboardComponent {
   userEmail:string = '';
-  jobs: any = [];
+  jobs: Job[]|null = null;
     constructor(private userService: UserService,private router: Router) {}
    ngOnInit(){
      console.log("user dashboard");
      
      let token = localStorage.getItem(LOCALSTORAGE.AUTH_TOKEN);
-    //  this.userService.getUserDataFromBackend().subscribe(
-    //   (response: HttpResponse<StandardResponse<UserData>>) => {
-    //     if (response.body?.data) {
-    //       const userData = {
-    //         uuid: response.body.data.uuid,
-    //         roleId: String(response.body.data.roleId), // Ensure roleId is a string
-    //         name: response.body.data.name,
-    //         email: response.body.data.email,
-    //         phoneNumber: response.body.data.phoneNumber,
-    //         password: response.body.data.password,
-    //         isVerifiedEmail: response.body.data.isVerifiedEmail,
-    //         verificationToken: response.body.data.verificationToken ?? null,
-    //         verificationTokenExpiration: response.body.data.verificationTokenExpiration ?? null,
-    //         twoFactorSecret: response.body.data.twoFactorSecret ?? '', // Ensure a string
-    //         isTwoFactorEnabled: response.body.data.isTwoFactorEnabled,
-    //         is2FARemPopUp: response.body.data.is2FARemPopUp,
-    //         createdAt: response.body.data.createdAt,
-    //         updatedAt: response.body.data.updatedAt
-    //       };
-    
-    //       console.log('userData----------',userData);
-          
-    //       this.userService.setUserData(userData);
-    //     }
-    //   },
-    //   (error) => {
-    //     console.error('Error fetching user data:', error);
-    //   }
-    // );
-     
-        
-
+ 
      this.userService.getJobsAvailableJobs().subscribe(//pass admin id
-       (response : HttpResponse<{ statusCode: number; message: string; data: { LoginTokenJWT: string } }>) => {
-         this.jobs = response.body?.data;
+       (response : HttpResponse<StandardResponse<Job[] | null>>) => {
+           this.jobs = response.body?response.body.data as Job[]:null;
+           //OR Other Way  - 
+        //  this.jobs = response.body?.data ?? null;
+
          this.userEmail = jwtDecode<JwtPayload>(token?token:'').email;
          console.log(response.body?.data);
        },
@@ -92,7 +65,7 @@ export class DashboardComponent {
    }
  
 
-   onApply(job:{id: string, jobTitle: string, location: string, jobDescription: string, salaryRange: string}){
+   onApply(job:Job) {
       // const jobId = job.jobId;{
       // console.log("Applied for :", jobId); // You can log or handle job details here
     

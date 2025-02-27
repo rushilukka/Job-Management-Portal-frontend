@@ -11,6 +11,7 @@ import { ApplyForJobComponent } from './components/apply-for-job/apply-for-job.c
 import { AppliedJobComponent } from './components/applied-job/applied-job.component';
 import { UploadResumeComponent } from './components/upload-resume/upload-resume.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { JobDetailsComponent } from './components/job-details/job-details.component';
 
 @NgModule({
@@ -28,7 +29,8 @@ import { SettingsComponent } from './components/settings/settings.component';
   imports: [
     RouterModule.forChild(usersRoutes),
     CommonModule,
-
+    ReactiveFormsModule,
+    FormsModule,
   ],
   exports: [RouterModule]
 })

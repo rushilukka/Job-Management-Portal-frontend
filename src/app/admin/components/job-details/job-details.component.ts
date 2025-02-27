@@ -72,6 +72,7 @@ export class JobDetailsComponent implements OnInit {
   get skills(): FormArray {
     return this.jobForm.get('skills') as FormArray;
   }
+  
   salaryRangeValidator(control: any) {
     const regex = /^(\d+)-(\d+)$/;
     if (!control.value || !regex.test(control.value)) {
@@ -140,17 +141,11 @@ export class JobDetailsComponent implements OnInit {
     );
   }
 
-  // addSkill() {
-  //   if (this.newSkill.trim() && this.jobData) {
-  //     this.jobData.skills.push(this.newSkill.trim());
-  //     this.newSkill = '';
-  //   }
-  // }
+ 
 
 
   addSkill(skill: string): void {
     console.log('skill', skill);
-    
     if (skill.trim()) {
       this.skills.push(this.fb.control(skill.trim(), Validators.required));
     }
@@ -165,31 +160,5 @@ export class JobDetailsComponent implements OnInit {
     
   }
   
-  // addSkill(): void {
-  //   const skill = this.newSkill.trim();
-  //   if (!skill) {
-  //     this.toaster.error('Skill cannot be empty.', 'Error');
-  //     return;
-  //   }
-
-  //   const skillRegex = /^[A-Za-z]+$/;
-  //   if (!skillRegex.test(skill)) {
-  //     this.toaster.error('Skill must contain only alphabets.', 'Error');
-  //     return;
-  //   }
-
-  //   if (this.jobData?.skills.includes(skill)) {
-  //     this.toaster.error('Skill already added.', 'Error');
-  //     return;
-  //   }
-
-  //   this.jobData?.skills.push(skill);
-  //   this.newSkill = ''; // Reset the input
-  // }
-
-  // removeSkill(skill: string) {
-  //   if (this.jobData) {
-  //     this.jobData.skills = this.jobData.skills.filter(s => s !== skill);
-  //   }
-  // }
+ 
 }

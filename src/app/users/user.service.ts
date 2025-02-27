@@ -7,6 +7,7 @@ import { environment } from '../../environments/environments';
 import { jwtDecode } from 'jwt-decode';
 import { LOCALSTORAGE } from '../auth/constants/local-storage.constant';
 import { StandardResponse } from '../../interfaces/standard-response.interface';
+import { Job } from './users.interface';
  
  
 interface JwtPayload {
@@ -18,22 +19,21 @@ interface JwtPayload {
   exp?: number; // Optional expiration timestamp
 }
 
+export interface Resume {
+  fileName: string;
+  storageDirectoryPath: string;
+}
+
 export interface UserData {
-  uuid: string;
-  roleId: number;
-  name: string;
+   name: string;
   email: string;
   phoneNumber: string;
-  password: string;
-  isVerifiedEmail: boolean;
-  verificationToken?: string;
-  verificationTokenExpiration?: string;
-  twoFactorSecret?: string;
+   isVerifiedEmail: boolean;
   isTwoFactorEnabled: boolean;
-  is2FARemPopUp: boolean;
-  createdAt: string;
-  updatedAt: string;
+   skills: string[];
+  resume: Resume;
 }
+
 
 @Injectable({
   providedIn: 'root',
@@ -47,41 +47,27 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
 
-  setUserData(data: {
-    uuid: string;
-    roleId: string;
+  setUserData(data:  {
     name: string;
-    email: string;
-    phoneNumber: string;
-    password: string;
+   email: string;
+   phoneNumber: string;
     isVerifiedEmail: boolean;
-    verificationToken: string | null;
-    verificationTokenExpiration: string | null;
-    twoFactorSecret: string;
-    isTwoFactorEnabled: boolean;
-    is2FARemPopUp: boolean;
-    createdAt: string;
-    updatedAt: string;
-  }) {
+   isTwoFactorEnabled: boolean;
+    skills: string[];
+   resume: Resume;
+ }) {
     localStorage.setItem(this.userDataKey, JSON.stringify(data));
   }
 
-  getUserData(): {
-    uuid: string;
-    roleId: string;
+  getUserData():  {
     name: string;
-    email: string;
-    phoneNumber: string;
-    password: string;
+   email: string;
+   phoneNumber: string;
     isVerifiedEmail: boolean;
-    verificationToken: string | null;
-    verificationTokenExpiration: string | null;
-    twoFactorSecret: string;
-    isTwoFactorEnabled: boolean;
-    is2FARemPopUp: boolean;
-    createdAt: string;
-    updatedAt: string;
-  } | null {
+   isTwoFactorEnabled: boolean;
+    skills: string[];
+   resume: Resume;
+ } | null {
     const data = localStorage.getItem(this.userDataKey);
     return data ? JSON.parse(data) : null;
   }
@@ -90,11 +76,11 @@ export class UserService {
     localStorage.removeItem(this.userDataKey);
   }
 
-  setJobData(data: { id: string; jobTitle: string; location: string; jobDescription: string; salaryRange: string }) {
+  setJobData(data: { id: string; jobTitle: string; location: string; jobDescription: string; salaryRange: string,skills:string[] }) {
     localStorage.setItem(this.jobDataKey, JSON.stringify(data));
   }
 
-  getJobData(): { id: string; jobTitle: string; location: string; jobDescription: string; salaryRange: string } | null {
+  getJobData(): { id: string; jobTitle: string; location: string; jobDescription: string; salaryRange: string,skills:string[] } | null {
     
     const data = localStorage.getItem(this.jobDataKey);
     console.log('getJobData-----',JSON.parse(data?data:''));
@@ -110,11 +96,32 @@ export class UserService {
   getUserDataFromBackend(): Observable<HttpResponse<StandardResponse<UserData>>> {
     // const token = localStorage.getItem(LOCALSTORAGE.AUTH_TOKEN);
     // const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<StandardResponse<UserData>>(
-      `${environment.backendUrl}/users/details`,
+    const userData = this.http.get<StandardResponse<UserData>>(
+      `${environment.backendUrl}/user`,
+      { observe: 'response' }
+    );
+    return userData;
+  }
+
+  // updateUser(): Observable<HttpResponse<StandardResponse<UserData>>>{}
+  updateUser(userData: { name: string; phoneNumber: string;  skills: string[]}): Observable<any> {
+    console.log('userData:', userData);
+  
+     
+    const senduserData={
+      name:userData.name,
+      phoneNumber:userData.phoneNumber,
+      skills:userData.skills
+    } 
+    
+    return this.http.patch<StandardResponse<[]>>(
+      `${environment.backendUrl}/user`,
+      senduserData,  // Send userData directly instead of wrapping it inside another object
       { observe: 'response' }
     );
   }
+  
+
 
   isAuthenticated(): boolean {
     const token = localStorage.getItem(LOCALSTORAGE.AUTH_TOKEN);
@@ -148,13 +155,24 @@ export class UserService {
     );
   }     
 
-  getJobsAvailableJobs(): Observable<HttpResponse<{ statusCode: number; message: string; data: { LoginTokenJWT: string } }>> {
+  getJobsAvailableJobs(): Observable<HttpResponse<StandardResponse<Job[]|null>>> {
     
-    return this.http.get<{ statusCode: number; message: string; data: { LoginTokenJWT: string }}>(
-            `${environment.backendUrl}/job-applications/available-jobs`,
-{ observe: 'response' } 
+    const  jobs = this.http.get<StandardResponse<Job[]|null>>(
+      `${environment.backendUrl}/jobs/available-jobs`,
+      { observe: 'response' } 
       //       `${this.apiUrl}${ROUTES.GET_JOBS_POSTED}?postedBy=${postedBy}`,
     );
+    console.log('getJobsAvailableJobs',jobs);
+    return jobs?? null;
   }
  
+
+  deleteJobApplication(jobId: string): Observable<HttpResponse<{ statusCode: number; message: string; data: { LoginTokenJWT: string } }>> {
+    return this.http.delete<{ statusCode: number; message: string; data: { LoginTokenJWT: string }}>(
+      `${environment.backendUrl}/job-applications`,
+      
+      { body:{"jobId":jobId},
+        observe: 'response' }
+    );
+  }
 }

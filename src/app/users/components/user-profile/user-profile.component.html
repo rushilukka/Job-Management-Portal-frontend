@@ -1,49 +1,51 @@
 <app-header class="w-full"></app-header>
-
-
 <div class="container min-h-screen  p-6">
     <h2 class="text-2xl font-bold text-primary mb-4">User Profile</h2>
   
-    <div class="container mx-auto p-6 min-h-screen">
+    <button
+    *ngIf="!isEditing"
+    (click)="toggleEdit()"
+    class="bg-gray-300 mx-5 px-4 py-2 rounded-lg"
+  >
+    Edit
+  </button>
+
+    <div class="container mx-auto p-6 min-h-screen" *ngIf="!isEditing">
       <h2 class="text-xl font-bold text-primary">User Details</h2>
   
       <div class="mt-4 bg-white p-4 rounded-lg shadow">
           <p><strong>Name:</strong> {{ userData?.name }}</p>
           <p><strong>Email:</strong> {{ userData?.email }}</p>
           <p><strong>Phone Number:</strong> {{ userData?.phoneNumber }}</p>
-          <!-- <p><strong>Role ID:</strong> {{ userData?.roleId }}</p> -->
-          <!-- <p><strong>Is Email Verified:</strong> {{ userData?.isVerifiedEmail ? 'Yes' : 'No' }}</p>
-          <p><strong>Two-Factor Enabled:</strong> {{ userData?.isTwoFactorEnabled ? 'Yes' : 'No' }}</p> -->
-          <!-- <p><strong>2FA Secret:</strong> {{ userData?.twoFactorSecret }}</p> -->
-          <!-- <p><strong>2FA Reminder Popup:</strong> {{ userData?.is2FARemPopUp ? 'Yes' : 'No' }}</p> -->
-          <!-- <p><strong>Created At:</strong> {{ userData?.createdAt }}</p>
-          <p><strong>Updated At:</strong> {{ userData?.updatedAt }}</p> -->
       </div>
-  
-  
 
     <!-- User Resume -->
     <h3 class="text-lg font-semibold mt-6">Resume</h3>
-<div class="mt-4 bg-white p-4 rounded-lg shadow">
+    <div class="mt-4 bg-white p-5 rounded-lg shadow" >
+  
+      <div *ngIf="isResume" style="height: 500px;">
   <!-- Download button to allow users to download the PDF -->
-  <div *ngIf="resumeUrl" class="flex justify-between items-center w-full">
-    <!-- View Resume (Left Aligned) -->
-    <a [href]="resumeUrl"  rel="noopener noreferrer" target="_blank" class="text-blue-500 font-medium hover:underline">
+  <div  class="flex justify-between items-center ">
+     <a [href]="resumeUrl"  rel="noopener noreferrer" target="_blank" class="text-blue-500 font-medium hover:underline">
       View Resume
     </a>
-    <!-- <a [href]="'http://localhost:3000/' + resumeUrl" target="_blank" rel="noopener noreferrer">
-      http://localhost:3000/' + {{resumeUrl}}
-      View Resume
-    </a>
-     -->
-    <!-- Download Resume (Right Aligned) -->
-    <a [href]="resumeUrl" download="resume.pdf" class="text-blue-500 font-medium flex items-center space-x-2 hover:underline">
+
+     <a [href]="resumeUrl" download="resume.pdf" class="text-blue-500 font-medium flex items-center space-x-2 hover:underline">
       <span>Download</span>
       <i class="fas fa-download"></i>
     </a>
   </div>
-  
-  <p *ngIf="!resumeUrl"  >
+
+
+    <iframe 
+    [src]="getResumePath(resumeUrl)"
+    class="w-full h-full p-5 rounded-lg"
+    frameborder="0">
+  </iframe> 
+
+</div>
+
+  <p *ngIf="!isResume"  >
     No Resume Found
   </p>
 </div>
@@ -53,15 +55,18 @@
     <!-- User Skills -->
     
     <h3 class="text-lg font-semibold mt-6">Skills</h3>
-    <!-- <div class="mt-4 bg-white p-4 rounded-lg shadow"> -->
-    <!-- <ul class="list-disc ml-5"> -->
-        <!-- <li *ngFor="let skill of skills">{{ skills }}</li> -->
-        <!-- <li *ngFor="let skill of skills">{{ skills }}</li>
-    </ul> -->
+    <ng-container *ngIf="skills?.length">
     <div class="mt-4 bg-white p-4 rounded-lg shadow">
-        <p *ngFor="let skill of skills">{{ skill.skillName }}</p>
+        <p *ngFor="let skill of skills">{{ skill }}</p>
+    </div>
+</ng-container>
+<ng-container *ngIf="!skills?.length">
+    <div class="mt-4 bg-white p-4 rounded-lg shadow">
+      No Skills Added
+        <!-- <p *ngFor="let skill of skills">{{ skill.skillName }}</p> -->
     <!-- </div> -->
 </div>
+</ng-container>
 
 
 
@@ -87,6 +92,86 @@
 </div>
   
 </div>
+
+
+
+<div *ngIf="isEditing" class="min-h-screen flex flex-col items-center      ">
+  <form [formGroup]="userForm" (ngSubmit)="updateUser()" class="w-full max-w-3xl mt-5 p-6 bg-white rounded-lg shadow mx-auto space-y-6">
+    <div class="form-group">
+      <label for="name" class="block text-lg font-semibold text-gray-700">Name</label>
+      <div class="flex items-center space-x-2">
+        <i class="fas fa-user text-purple-500"></i>
+        <input id="name" formControlName="name" type="text" class="form-control p-3 w-full border rounded-lg focus:ring-2 focus:ring-purple-500" placeholder="Enter Name" />
+      </div>
+      <div *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched" class="text-red-600 mt-2">
+        <small *ngIf="userForm.get('name')?.hasError('required')">Name is required.</small>
+        <small *ngIf="userForm.get('name')?.hasError('maxlength')">Name cannot exceed 60 characters.</small>
+      </div>
+    </div>
+    
+ 
+    <div class="form-group">
+      <label for="phoneNumber" class="block text-lg font-semibold text-gray-700">phoneNumber</label>
+      <div class="flex items-center space-x-2">
+        <i class="fas fa-phone text-purple-500"></i>
+        <input id="phoneNumber" formControlName="phoneNumber" type="text" class="form-control p-3 w-full border rounded-lg focus:ring-2 focus:ring-purple-500" placeholder="Enter phoneNumber" />
+      </div>
+      <div *ngIf="userForm.get('phoneNumber')?.invalid && userForm.get('phoneNumber')?.touched" class="text-red-600 mt-2">
+        <small *ngIf="userForm.get('phoneNumber')?.hasError('required')">phoneNumber is required.</small>
+        <small *ngIf="userForm.get('phoneNumber')?.hasError('maxlength')">phoneNumber cannot exceed 100 characters.</small>
+      </div>
+    </div>
+ 
+
+    <div class="form-group">
+      <label class="block text-lg font-semibold text-gray-700">Skills</label>
+      <div class="space-y-2">
+        <div class="flex space-x-2">
+          <input #skillInput type="text" class="form-control p-3 w-full border rounded-lg" placeholder="Add skill" />
+          <button type="button" (click)="addSkill(skillInput.value); skillInput.value=''" class="bg-primary text-white px-4 py-2 rounded-lg">Add</button>
+        </div>
+    
+        <ul class="list-disc pl-5 space-y-1 mt-3">
+          <li *ngFor="let skill of skillsEditingFun.controls; let i = index">
+            <!-- <p [formControlName]="i" type="text" class="form-control p-2 border rounded-lg w-full" >
+              {{ skill['value'] }}
+            </p> -->
+            {{skill.value}}
+            <button type="button" (click)="removeSkill(i)" class="text-red-500 ml-2">Remove</button>
+          </li>
+        </ul>
+
+
+        <ul>
+          <li *ngFor="let skillCtrl of skillsEditingFun.controls; let i = index">
+            <!-- <input [formControlName]="i" /> -->
+          </li>
+        </ul>
+        
+      </div>
+    </div>
+    
+
+
+
+    <button
+    type="submit" [disabled]="userForm.invalid"
+    
+    class="bg-accent text-purple-800 px-4 py-2 rounded-lg   space-y-6"
+  >
+    Save
+  </button>
+    <button
+        *ngIf="isEditing"
+        (click)="toggleEdit()"
+        class="bg-gray-300 mx-5 px-4 py-2 rounded-lg"
+      >
+        Cancel
+      </button>
+  </form>
+</div>
+
+
 </div>
   <app-footer class="w-full"></app-footer>
   <!-- <app-footer></app-footer> -->
