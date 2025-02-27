@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { LOCALSTORAGE } from '../auth/constants/local-storage.constant';
+import { LOCALSTORAGE } from '../../auth/constants/local-storage.constant';
 
 //will work every time - but here for response from server only 
 //only handling responses from the server and storing the JWT if it's present

@@ -9,7 +9,7 @@ import { SignupVerifiedComponent } from './components/signup-verified/signup-ver
 import { SignupVerificationPendingComponent } from './components/signup-verification-pending/signup-verification-pending.component';
 import { Enable2FAComponent } from './components/enable2fa/enable2fa.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from '../interceptor/auth.interceptor';
+import { AuthInterceptor } from '../core/interceptor/auth.interceptor';
 import { Login2faComponent } from './components/login2fa/login2fa.component';
 import { PopupComponent } from './components/popup/popup.component';
  @NgModule({

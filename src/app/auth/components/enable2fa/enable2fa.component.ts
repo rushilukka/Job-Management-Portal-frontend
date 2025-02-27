@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../../auth.service';
-import { ToasterService } from '../../../core/components/toaster.service';
+import { ToasterService } from '../../../shared/Toaster/toaster.service';
 import { Router } from '@angular/router';
 // import ROUTES
 import { ROUTES } from "../../constants/Routes.constant";

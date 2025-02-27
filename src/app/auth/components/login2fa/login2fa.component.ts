@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { AUTH_STORAGE_KEY, } from '../../constants';
 import { ERROR_MESSAGES } from '../../constants/errorMessages.constant';
 import { TOASTER_MESSAGES } from '../../constants/toasterMessages.constant';
-import { ToasterService } from '../../../core/components/toaster.service';
+import { ToasterService } from '../../../shared/Toaster/toaster.service';
 import { AuthService } from '../../auth.service';
 import { ROUTES } from '../../constants/Routes.constant';
 import { LOCALSTORAGE } from '../../constants/local-storage.constant';

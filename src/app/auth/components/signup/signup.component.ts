@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
-import { ToasterService } from '../../../core/components/toaster.service';
+import { ToasterService } from '../../../shared/Toaster/toaster.service';
 // import {  TOASTER_MESSAGES } from '../../';
 import { TOASTER_MESSAGES } from '../../constants/toasterMessages.constant';
 import { StandardResponse } from '../../../../interfaces/standard-response.interface';

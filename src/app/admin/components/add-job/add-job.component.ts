@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AdminService } from '../../admin.service';
 import { HttpResponse } from '@angular/common/http';
-import { ToasterService } from '../../../core/components/toaster.service';
+import { ToasterService } from '../../../shared/Toaster/toaster.service';
 
 @Component({
   selector: 'app-add-job',

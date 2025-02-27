@@ -1,11 +1,12 @@
-import { Routes } from '@angular/router';
-import { AuthGuard } from './guards/auth.guard';
-import { AdminRoleGuard } from './guards/role.guard';
-import { UserRoleGuard } from './guards/users.guard';
+import { Routes } from '@angular/router'; 
+import { AuthGuard } from '../app/core/guards/auth.guard';
+import { AdminRoleGuard } from '../app/core/guards/role.guard';
+import { UserRoleGuard } from '../app/core/guards/users.guard';
+// import './shared/components/'
 export const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./landingpage/landingpage.module').then(m => m.LandingpageModule)  
+    loadChildren: () => import('./common/landingpage/landingpage.module').then(m => m.LandingpageModule)  
   },
   {
     path: 'auth',
@@ -23,11 +24,11 @@ export const routes: Routes = [
   },
   {
     path: 'notfound',
-    loadChildren: () => import('./notfound/notfound.module').then(m => m.NotfoundModule)
+    loadChildren: () => import('./common/notfound/notfound.module').then(m => m.NotfoundModule)
   },
   {
     path: 'unauthorized',
-    loadChildren: () => import('./unauthorized/unauthorized.module').then(m => m.UnauthorizedModule)
+    loadChildren: () => import('./common/unauthorized/unauthorized.module').then(m => m.UnauthorizedModule)
   },
   { path: '**', redirectTo: 'notfound',pathMatch: 'full' }  
 ];

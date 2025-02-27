@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../auth.service';
-import { ToasterService } from '../../../core/components/toaster.service';
+import { ToasterService } from '../../../shared/Toaster/toaster.service';
 import { TOASTER_MESSAGES } from '../../constants/toasterMessages.constant';
  import { Router } from '@angular/router';
 

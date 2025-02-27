@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { TOASTER_MESSAGES } from '../../constants/toasterMessages.constant';
 import { environment } from '../../../../environments/environments';
-import { ToasterService } from '../../../core/components/toaster.service';
+import { ToasterService } from '../../../shared/Toaster/toaster.service';
 import { AuthService } from '../../auth.service';
 import { ROUTES } from '../../constants/Routes.constant';
 

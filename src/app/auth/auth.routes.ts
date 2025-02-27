@@ -8,8 +8,9 @@ import { SignupVerificationPendingComponent } from './components/signup-verifica
 // import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { Login2faComponent } from './components/login2fa/login2fa.component';
 import { ROUTES } from "./constants/Routes.constant"; //  Importing Routes Constant
-import { AuthReverseGuard } from '../guards/auth-reverse.guard';
-import { SignupPendingGuard } from '../guards/signup-pending.guard';
+import { AuthReverseGuard } from '../core/guards/auth-reverse.guard';
+// import { AuthReverseGuard } from '../core/';
+import { SignupPendingGuard } from '../core/guards/signup-pending.guard';
 
 const routes: Routes = [
   { path: ROUTES.AUTH.LOGIN, component: LoginComponent, canActivate: [AuthReverseGuard] },

@@ -3,7 +3,7 @@ import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
 import { jwtDecode } from 'jwt-decode';
-import { ToasterService } from '../../../core/components/toaster.service';
+import { ToasterService } from '../../../shared/Toaster/toaster.service';
 import { AUTH_STORAGE_KEY } from '../../constants';
 import { StandardResponse } from '../../../../interfaces/standard-response.interface';
 import {ROUTES} from "../../constants/Routes.constant";

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../../auth/auth.service';
 import { jwtDecode } from 'jwt-decode';
-import { LOCALSTORAGE } from '../auth/constants/local-storage.constant';
+import { LOCALSTORAGE } from '../../auth/constants/local-storage.constant';
 
 
 interface JwtPayload {

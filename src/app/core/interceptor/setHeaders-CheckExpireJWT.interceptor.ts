@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environments';
+import { environment } from '../../../environments/environments';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
-import { LOCALSTORAGE } from '../auth/constants/local-storage.constant';
-import { ToasterService } from '../core/components/toaster.service';
-import { ERROR_MESSAGES } from '../auth/constants/errorMessages.constant';
+import { LOCALSTORAGE } from '../../auth/constants/local-storage.constant';
+import { ToasterService } from '../../shared/Toaster/toaster.service';
+import { ERROR_MESSAGES } from '../../auth/constants/errorMessages.constant';
 
 
 //will work every time - but here for request to server only 

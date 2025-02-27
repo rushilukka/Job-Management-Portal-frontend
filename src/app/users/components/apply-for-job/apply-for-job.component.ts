@@ -5,7 +5,7 @@ import { MESSAGES } from '../../constants/Messages.constant';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { UserService } from '../../user.service';
-import { ToasterService } from '../../../core/components/toaster.service';
+import { ToasterService } from '../../../shared/Toaster/toaster.service';
 import { Job } from '../../users.interface';
 
 

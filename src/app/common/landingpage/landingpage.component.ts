@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
-import { ROUTES } from '../auth/constants/Routes.constant';
-import { environment } from '../../environments/environments';
-
+ 
+import { ROUTES } from '../../auth/constants/Routes.constant';
+ 
+import { environment } from '../../../environments/environments';
 
 interface JwtPayload {
   userId: string;

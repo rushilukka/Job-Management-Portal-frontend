@@ -3,9 +3,9 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { ToasterService } from './core/components/toaster.service';
-import { StoreTokenJWTInterceptor } from './interceptor/storeTokenJWT.interceptor';
-import { SetHeaders_CheckExpireJWT_Interceptor } from './interceptor/setHeaders-CheckExpireJWT.interceptor';
+import { ToasterService } from './shared/Toaster/toaster.service';
+import { StoreTokenJWTInterceptor } from './core/interceptor/storeTokenJWT.interceptor';
+import { SetHeaders_CheckExpireJWT_Interceptor } from './core/interceptor/setHeaders-CheckExpireJWT.interceptor';
  
 export const appConfig: ApplicationConfig = {
   providers: [

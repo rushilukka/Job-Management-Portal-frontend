@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AdminService } from '../../admin.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpResponse } from '@angular/common/http';
-import { ToasterService } from '../../../core/components/toaster.service';
+import { ToasterService } from '../../../shared/Toaster/toaster.service';
 
 @Component({
   selector: 'app-job-details',

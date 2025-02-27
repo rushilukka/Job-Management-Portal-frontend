@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { AuthService } from '../auth/auth.service';
-import { ROUTES } from '../auth/constants/Routes.constant';
-import { ToasterService } from '../core/components/toaster.service';
-import { ERROR_MESSAGES } from '../auth/constants/errorMessages.constant';
+import { AuthService } from '../../auth/auth.service';
+import { ROUTES } from '../../auth/constants/Routes.constant';
+import { ToasterService } from '../../shared/Toaster/toaster.service';
+import { ERROR_MESSAGES } from '../../auth/constants/errorMessages.constant';
 
 @Injectable({
   providedIn: 'root'
