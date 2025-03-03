@@ -2,35 +2,39 @@
 
 <div  class="min-h-screen">
 <div class="max-w-3xl mt-5 p-6 bg-white rounded-lg shadow mx-auto">
-   <h2 class="text-2xl font-bold mb-4 text-primary">Job Details</h2>
-  <div *ngIf="jobDetail">
+   <h2 class="text-2xl font-bold mb-4 text-primary">Job Application Details</h2>
+  <div *ngIf="jobApplicationDetail">
+    <div class="mb-4">
+      <label class="font-semibold">Status:</label>
+      <p  class="text-gray-700">{{ jobApplicationDetail.status }}</p>
+    </div>
     <div class="mb-4">
       <label class="font-semibold">Job Title:</label>
-         <p  class="text-gray-700">{{ jobDetail.jobTitle }}</p>
+         <p  class="text-gray-700">{{ jobApplicationDetail.jobTitle }}</p>
     </div>
 
     <div class="mb-4">
       <label class="font-semibold">Description:</label>
-      <p  class="text-gray-700">{{ jobDetail.jobDescription }}</p>
+      <p  class="text-gray-700">{{ jobApplicationDetail.jobDescription }}</p>
     </div>
 
     <div class="mb-4">
       <label class="font-semibold">Salary Range:</label>
-      <p  class="text-gray-700">{{ jobDetail.salaryRange }}</p>
+      <p  class="text-gray-700">{{ jobApplicationDetail.salaryRange }}</p>
     </div>
 
     <div class="mb-4">
       <label class="font-semibold">Location:</label>
-      <p  class="text-gray-700">{{ jobDetail.location }}</p>
+      <p  class="text-gray-700">{{ jobApplicationDetail.location }}</p>
     </div>
 
     <div class="mb-4">
       <label class="font-semibold">Skills:</label>
-      <ng-container *ngIf="jobDetail?.skills?.length">
-        <p *ngFor="let skill of jobDetail.skills" class="text-gray-700">{{ skill }}</p>
+      <ng-container *ngIf="jobApplicationDetail?.skills?.length">
+        <p *ngFor="let skill of jobApplicationDetail.skills" class="text-gray-700">{{ skill }}</p>
        </ng-container>
        
-       <ng-container *ngIf="!jobDetail?.skills?.length">
+       <ng-container *ngIf="!jobApplicationDetail?.skills?.length">
         <p   class="text-gray-700">No Skills Required</p>
        </ng-container>
 
@@ -39,7 +43,7 @@
 
 
 
-    <div class="flex space-x-4 mt-4">
+    <div class="flex space-x-4 mt-4" *ngIf="canDeleteApplication">
       <button (click)="deleteApplication()"
         
          class="bg-primary text-white px-4 py-2 rounded-lg"

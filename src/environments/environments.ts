@@ -9,6 +9,7 @@ export const environment = {
       JOB_DATA:'jobData',
       USER_DATA:'userData',
       ADMIN_DATA:'adminData',
+      JOB_APPLICATION_DATA:'jobApplicationData',
     }
  
   };

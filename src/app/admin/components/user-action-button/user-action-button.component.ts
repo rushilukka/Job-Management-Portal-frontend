@@ -30,7 +30,6 @@ export class UserActionButtonComponent implements ICellRendererAngularComp  {
     }
     viewJobDetails(user: any): void {
         this.adminService.setUserData(user);
-        console.log( this.adminService.getUserData());
         this.router.navigate([ROUTES.VIEW_USERS]);
       }  
 }

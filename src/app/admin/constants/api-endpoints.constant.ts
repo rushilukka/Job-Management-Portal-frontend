@@ -10,5 +10,6 @@ export const API_ENDPOINTS = {
   APPLY_JOB: `${apiUrl}/job-applications/apply`,
   UPLOAD_RESUME: `${apiUrl}/resume/upload`,
   USER_DETAILS:'',
- 
+  UPDATE_JOB_APPLICATION_STATUS: `${apiUrl}/job-applications/update`,
+  
 };

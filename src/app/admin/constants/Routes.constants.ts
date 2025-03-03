@@ -6,6 +6,7 @@ export const ROUTES = {
   PROFILE: "admin/profile",
   SETTINGS: "admin/settings",
   JOB_DETAILS: "admin/job",
+  JOB_APPLICATION_DETAILS: "admin/user/job-application",
   ADD_JOB: "admin/add-job",
   MANAGE_USERS:'',
   LOGIN:'/auth/login',

@@ -19,6 +19,7 @@ import { AddJobComponent } from './components/add-job/add-job.component';
 import { ReactiveFormsModule } from '@angular/forms'; 
 import { SharedModule } from '../shared/shared.module';
 import { UserActionButtonComponent } from './components/user-action-button/user-action-button.component';
+import { UserJobApplicationComponent } from './components/user-job-application/user-job-application.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { UserActionButtonComponent } from './components/user-action-button/user-
     JobDetailsComponent,
     UserDetailsComponent,
     AddJobComponent,
-    UserActionButtonComponent,      
+    UserActionButtonComponent,
+    UserJobApplicationComponent,      
   ],
   imports: [
     ReactiveFormsModule,

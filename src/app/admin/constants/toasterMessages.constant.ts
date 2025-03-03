@@ -5,5 +5,7 @@ export const TOASTER_MESSAGES = {
   SKILL_EMPTY: "Skill cannot be empty.",
   SKILL_LENGTH_EXCEEDED: "Skill cannot exceed 10 characters.",
   SKILL_INVALID: "Skill must contain only alphabets (no spacing or special characters).",
-  SKILL_ALREADY_ADDED: "Skill already added."
+  SKILL_ALREADY_ADDED: "Skill already added.",
+  JOB_APPLICATION_REJECTED: "Job application rejected successfully.",
+  JOB_APPLICATION_APPROVED: "Job application approved successfully.",
 };

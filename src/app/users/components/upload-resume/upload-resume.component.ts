@@ -3,6 +3,8 @@ import { API_ENDPOINTS } from '../../constants/api-endpoints.constant';
 import { TOASTER_MESSAGES } from '../../constants/toasterMessages.constant';
 import { MESSAGES } from '../../constants/Messages.constant';
 import { HttpClient } from '@angular/common/http';
+import { UserService } from '../../user.service';
+import { ToasterService } from '../../../shared/Toaster/toaster.service';
 
 @Component({
   selector: 'app-upload-resume',
@@ -13,7 +15,7 @@ import { HttpClient } from '@angular/common/http';
 export class UploadResumeComponent {
   selectedFile: File | null = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private userService: UserService,private toasterService:ToasterService) {}
 
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
@@ -23,11 +25,15 @@ export class UploadResumeComponent {
     if (!this.selectedFile) return;
 
     const formData = new FormData();
-    formData.append('resume', this.selectedFile);
+    formData.append('file', this.selectedFile);
 
-    this.http.post(API_ENDPOINTS.UPLOAD_RESUME, formData).subscribe({
-      next: () => console.log(TOASTER_MESSAGES.RESUME_UPLOADED),
+    this.userService.uploadResume(formData).subscribe({
+      next: () => this.toasterService.success(TOASTER_MESSAGES.RESUME_UPLOADED),
       error: () => console.error(MESSAGES.UPLOAD_ERROR)
-    });
+    })
+    // this.http.post(API_ENDPOINTS.UPLOAD_RESUME, formData).subscribe({
+    //   next: () => console.log(TOASTER_MESSAGES.RESUME_UPLOADED),
+    //   error: () => console.error(MESSAGES.UPLOAD_ERROR)
+    // });
   }
 }

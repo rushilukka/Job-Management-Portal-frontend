@@ -5,7 +5,7 @@ import { environment } from '../../environments/environments';
 import { jwtDecode } from 'jwt-decode';
 import { LOCALSTORAGE } from '../auth/constants/local-storage.constant';
 import { StandardResponse } from '../../interfaces/standard-response.interface';
-import { Job } from './users.interface';
+import { Job, JobApplication } from './users.interface';
 import { API_ENDPOINTS } from './constants/api-endpoints.constant';
  
  
@@ -33,6 +33,11 @@ export interface UserData {
   resume: Resume;
 }
 
+  export enum jobApplicationStatus {
+    pending = 'pending',
+    approved = 'approved',
+    rejected = 'rejected',
+  }
 
 @Injectable({
   providedIn: 'root',
@@ -41,6 +46,7 @@ export class UserService {
   private apiUrl = environment.backendUrl;
   private userDataKey = environment.LOCALSTORAGE.USER_DATA;
   private jobDataKey = environment.LOCALSTORAGE.JOB_DATA;
+  private jobApplicationDataKey = environment.LOCALSTORAGE.JOB_APPLICATION_DATA;
 
   constructor(private http: HttpClient) {}
 
@@ -73,11 +79,11 @@ export class UserService {
     localStorage.removeItem(this.userDataKey);
   }
 
-  setJobData(data: { id: string; jobTitle: string; location: string; jobDescription: string; salaryRange: string,skills:string[] }) {
+  setJobData(data: Job) {
     localStorage.setItem(this.jobDataKey, JSON.stringify(data));
   }
 
-  getJobData(): { id: string; jobTitle: string; location: string; jobDescription: string; salaryRange: string,skills:string[] } | null {
+  getJobData(): Job | null {
     const data = localStorage.getItem(this.jobDataKey);
     return data ? JSON.parse(data) : null;
   }
@@ -85,6 +91,21 @@ export class UserService {
   clearJobData() {
     localStorage.removeItem(this.jobDataKey);
   }
+
+  setJobApplicationData(data: JobApplication ) {
+    localStorage.setItem(this.jobApplicationDataKey, JSON.stringify(data));
+  }
+
+  getJobApplicationData(): JobApplication | null {
+    const data = localStorage.getItem(this.jobApplicationDataKey);
+    return data ? JSON.parse(data) : null;
+  }
+
+  clearJobApplicationData() {
+    localStorage.removeItem(this.jobApplicationDataKey);
+  }
+
+  
 
   getUserDataFromBackend(): Observable<HttpResponse<StandardResponse<UserData>>> {
     const userData = this.http.get<StandardResponse<UserData>>(
@@ -163,5 +184,28 @@ export class UserService {
       { observe: 'response' }
     );
   }
+
+  uploadResume(formData: FormData): Observable<HttpResponse<{ statusCode: number; message: string; data: { LoginTokenJWT: string } }>> {
+    return this.http.post<{ statusCode: number; message: string; data: { LoginTokenJWT: string } }>(
+      API_ENDPOINTS.UPLOAD_RESUME,
+      formData,
+      { observe: 'response' }
+    );
+    //want to re render rewsume component after response
   }
+
+  deleteResume(): Observable<HttpResponse<{ statusCode: number; message: string; data: { LoginTokenJWT: string } }>> {
+    return this.http.delete<{ statusCode: number; message: string; data: { LoginTokenJWT: string } }>(
+      API_ENDPOINTS.DELETE_RESUME,
+      { observe: 'response' }
+    );
+  }
+
+  getUserAppliedJobDetails(jobId: string): Observable<HttpResponse<{ statusCode: number; message: string; data: { LoginTokenJWT: string } }>> {
+    return this.http.get<{ statusCode: number; message: string; data: { LoginTokenJWT: string } }>(
+      API_ENDPOINTS.USER_APPLIED_JOBS,
+      { observe: 'response' }
+    );
+  }
+}
   

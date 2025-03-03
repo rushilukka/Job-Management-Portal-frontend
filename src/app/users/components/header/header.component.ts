@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserData, UserService } from '../../user.service';
 import { environment } from '../../../../environments/environments';
@@ -13,9 +13,11 @@ import { HttpResponse } from '@angular/common/http';
 })
 export class HeaderComponent {
   userName:string = '';
+  isDropdownVisible: boolean = false;
+  
+
   constructor(private router: Router,private userService: UserService) {}
   ngOnInit() {
-
     this.userService.getUserDataFromBackend().subscribe(
       (response: HttpResponse<StandardResponse<UserData>>) => {
         if (response.body?.data) {
@@ -42,6 +44,21 @@ export class HeaderComponent {
       }
     );
   }
+
+  
+    @ViewChild('dropdownMenu', { static: false }) dropdownMenu!: ElementRef;
+  
+    toggleDropdown(event: Event): void {
+      event.stopPropagation(); // Prevents the event from bubbling up
+      this.isDropdownVisible = !this.isDropdownVisible;
+    }
+  
+    @HostListener('document:click', ['$event'])
+    closeDropdown(event: Event): void {
+      if (this.dropdownMenu && !this.dropdownMenu.nativeElement.contains(event.target)) {
+        this.isDropdownVisible = false;
+      }
+    }
   settings() {
     this.router.navigate(['/users/settings']);
     

@@ -39,10 +39,7 @@ export class LandingpageComponent implements OnInit {
         if(token){
          const decoded = jwtDecode<JwtPayload>(token); 
          if(decoded.exp){
-           
-           const expiry = decoded.exp * 1000; // Convert expiry to milliseconds
-           console.log('Date.now()',Date.now());
-           console.log('expiry',expiry);
+          const expiry = decoded.exp * 1000; // Convert expiry to milliseconds
           if(Date.now() > expiry) // Compare expiry time with current time
           this.router.navigate([`/auth/${ROUTES.AUTH.LOGIN}`]);
           else if(decoded.isAdmin){

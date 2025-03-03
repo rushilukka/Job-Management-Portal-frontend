@@ -5,7 +5,20 @@ export interface JobDetails{
   jobDescription: string; 
   salaryRange:string;
   skills : string[];
-  createdAt ?:string
+  createdAt ?:string;
+ 
+}
+export interface JobApplicationDetails{  
+  id:string,
+  jobTitle: string; 
+  location: string; 
+  jobDescription: string; 
+  salaryRange:string;
+  skills : string[];
+  createdAt ?:string;
+  status :string;
+  commnentByAdmin ?:string;
+  updatedBy?:string
 }
 export interface JobMange{  
   jobTitle: string; 

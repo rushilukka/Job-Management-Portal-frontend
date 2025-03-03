@@ -7,5 +7,6 @@ export const API_ENDPOINTS = {
   USER_SKILLS: `${apiUrl}/skills`,
   USER_APPLIED_JOBS: `${apiUrl}/job-applications/user`,
   APPLY_JOB: `${apiUrl}/job-applications/apply`,
-  UPLOAD_RESUME: `${apiUrl}/resume/upload`
+  UPLOAD_RESUME: `${apiUrl}/resume/upload`,
+  DELETE_RESUME: `${apiUrl}/resume/delete`,
 };

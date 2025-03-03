@@ -24,13 +24,11 @@
   <!-- Download button to allow users to download the PDF -->
   <div  class="flex justify-between items-center ">
      <a [href]="resumeUrl"  rel="noopener noreferrer" target="_blank" class="text-blue-500 font-medium hover:underline">
-      View Resume
-    </a>
-
-     <a [href]="resumeUrl" download="resume.pdf" class="text-blue-500 font-medium flex items-center space-x-2 hover:underline">
-      <span>Download</span>
+      <span>View Resume   </span> 
       <i class="fas fa-download"></i>
     </a>
+    <button (click)="deleteResume()" class="bg-primary text-white px-4 py-2 rounded-lg">Delete</button>
+      
   </div>
 
 
@@ -39,14 +37,16 @@
     class="w-full h-full p-5 rounded-lg"
     frameborder="0">
   </iframe> 
+ 
 
 </div>
 
-  <p *ngIf="!isResume"  >
-    No Resume Found
-  </p>
+  <div *ngIf="!isResume" class="flex justify-between items-center w-full">  
+      <p *ngIf="!isResume"  >
+        <app-upload-resume></app-upload-resume>
+      </p>
+  </div>
 </div>
-
 
 
     <!-- User Skills -->
@@ -76,7 +76,7 @@
     <ul class="list-disc ml-5">
         <li *ngFor="let job of appliedJobs" class="flex justify-between items-center mb-2">
             <span>{{ job.jobTitle }} - {{ job.location }}</span>
-            <button (click)="viewJobDetails(job)" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+            <button (click)="viewJobApplicationDetails(job)" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
                 View Details
             </button>
         </li>

@@ -1,0 +1,99 @@
+<app-header class="w-full"></app-header>
+
+<div  class="min-h-screen">
+<div class="max-w-3xl mt-5 p-6 bg-white rounded-lg shadow mx-auto">
+  <!-- Your content goes here -->
+  <h2 class="text-2xl font-bold mb-4 text-primary">{{userDetails?.name}} - Job Application Details</h2>
+
+  <div *ngIf="jobApplicationDetail; else loading">
+    <div class="mb-4">
+      <label class="font-semibold">Application Status:</label>
+       <p  class="text-gray-700">{{ jobApplicationDetail.status }}</p>
+    </div>
+    <div class="mb-4">
+      <label class="font-semibold">Job Title:</label>
+       <p  class="text-gray-700">{{ jobApplicationDetail.jobTitle }}</p>
+    </div>
+
+    <div class="mb-4">
+      <label class="font-semibold">Description:</label>
+      <p  class="text-gray-700">{{ jobApplicationDetail.jobDescription }}</p>
+    </div>
+
+    <div class="mb-4">
+      <label class="font-semibold">Salary Range:</label>
+      <p  class="text-gray-700">{{ jobApplicationDetail.salaryRange }}</p>
+    </div>
+
+    <div class="mb-4">
+      <label class="font-semibold">Location:</label>
+      <p  class="text-gray-700">{{ jobApplicationDetail.location }}</p>
+    </div>
+
+
+
+    <div class="mb-4">
+      <label class="font-semibold">Job Skills required:</label>
+      <ul *ngIf="jobApplicationDetail?.skills?.length" class="list-disc pl-5">
+        <li *ngFor="let skill of jobApplicationDetail.skills" class="text-gray-700">
+          {{ skill }} 
+        </li>
+      </ul>
+      <p *ngIf="!jobApplicationDetail?.skills?.length" class="text-gray-700">No skills listed</p>
+    </div>
+    
+   <ng-container *ngIf="isPending">  
+        <div class="mb-4">
+          <button  (click)="approveApplication()"
+          class="bg-green-700 text-white  px-6 py-3 rounded-lg hover:bg-green-900 transition-all shadow-md" >
+            Approve Application
+          </button> 
+          </div>
+
+
+        <div class="mb-4">
+          <button (click)="toggleRejectForm()"
+          class="bg-red-700 text-white  px-6 py-3 rounded-lg hover:bg-red-900 transition-all shadow-md" >
+          Reject Application
+        </button>
+
+         <!-- Show rejection form if isRejecting is true -->
+  <div *ngIf="isRejecting" class="mb-4">
+    <form [formGroup]="rejectForm">
+      <textarea formControlName="comment" maxlength="100"
+        placeholder="Enter reason for rejection (max 100 chars)"
+        class="w-full p-2 border rounded-lg shadow-md"></textarea>
+      
+      <!-- Validation Errors -->
+      <p *ngIf="rejectForm.controls['comment'].hasError('required')" class="text-red-500 text-sm">
+        Comment is required.
+      </p>
+      <p *ngIf="rejectForm.controls['comment'].hasError('maxlength')" class="text-red-500 text-sm">
+        Comment must not exceed 100 characters.
+      </p>
+
+      <!-- Character Count -->
+      <p class="text-sm text-gray-500">{{ rejectForm.value.comment.length || 0 }}/100</p>
+
+      <button (click)="rejectApplication()" [disabled]="rejectForm.invalid"
+        class="bg-red-500 text-white px-6 py-2 rounded-lg mt-2 hover:bg-red-700 transition-all shadow-md">
+        Submit Rejection
+      </button>
+    </form>
+  </div>
+      </div>
+      
+      </ng-container>
+
+  
+  
+  </div>
+
+  <ng-template #loading>
+    <p class="text-gray-500">Loading job details...</p>
+  </ng-template>
+</div>
+</div>
+
+ 
+<app-footer></app-footer>

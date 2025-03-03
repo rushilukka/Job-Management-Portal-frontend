@@ -8,6 +8,7 @@ import { ReportsComponent } from './components/reports/reports.component';
 import { JobDetailsComponent } from './components/job-details/job-details.component';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { AddJobComponent } from './components/add-job/add-job.component';
+import { UserJobApplicationComponent } from './components/user-job-application/user-job-application.component';
 
 export const adminRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
@@ -18,6 +19,7 @@ export const adminRoutes: Routes = [
   
   { path: 'manage-users', component: ManageUsersComponent  },
   { path: 'user', component: UserDetailsComponent  },
+  { path: 'user/job-application', component: UserJobApplicationComponent  },
   
   { path: 'settings', component: AdminSettingsComponent  },
   { path: 'reports', component: ReportsComponent  },

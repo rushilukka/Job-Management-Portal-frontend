@@ -6,10 +6,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../../environments/environments';
 import { UserData, UserService } from '../../user.service';
 import { ROUTES } from '../../constants/Routes.constant';
-import { Job } from '../../users.interface';
+import { Job, JobApplication } from '../../users.interface';
 import { LOCALSTORAGE } from '../../constants/local-storage.constant';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { take } from 'rxjs';
+import { ToasterService } from '../../../shared/Toaster/toaster.service';
+import { TOASTER_MESSAGES } from '../../constants/toasterMessages.constant';
  
 @Component({
   selector: 'app-user-profile',
@@ -22,7 +24,7 @@ export class UserProfileComponent {
   //need to use signal for userData
   user: UserData |null = null;
   skills: string[] = [];
-  appliedJobs: Job[] = [];
+  appliedJobs: JobApplication[] = [];
   resumeUrl: string = '';
   isResume:boolean = false;
   userData : UserData|null = null;
@@ -35,7 +37,7 @@ export class UserProfileComponent {
 
 
 
-  constructor(private fb: FormBuilder,private sanitizer: DomSanitizer,private route: ActivatedRoute, private http: HttpClient,private userService: UserService,private router: Router) {}
+  constructor(private fb: FormBuilder,private sanitizer: DomSanitizer,private route: ActivatedRoute, private http: HttpClient,private userService: UserService,private router: Router,private toasterService:ToasterService) {}
 
   ngOnInit(): void {
     this.userData = this.userService.getUserData();
@@ -65,7 +67,7 @@ getResumePath(resume: string): SafeResourceUrl {
   fetchUserResume(): void {
     this.http.get<any>(`${API_ENDPOINTS.USER_RESUME}`).subscribe({
       next: (response) => {
-         if(response.data.fileUrl){
+         if(response?.data?.fileUrl){
             this.isResume = !this.isResume;
             this.resumeUrl = response.data.fileUrl;  
         }
@@ -76,10 +78,26 @@ getResumePath(resume: string): SafeResourceUrl {
     });
   }
 
+  deleteResume(): void {
+    this.userService.deleteResume().subscribe({
+      next: () => {
+        this.isResume = !this.isResume;
+        this.resumeUrl = '';
+        this.toasterService.success(TOASTER_MESSAGES.RESUME_DELETED);
+      },
+      error: (error) => {
+        console.error("Error deleting resume:", error);
+      }
+    })
+    
+  }
+
    fetchUserAppliedJobs(): void {
        this.http.get<any>(`${environment.backendUrl}/job-applications/user`).pipe(take(1)).subscribe({
         next: (response) => {
            if(response.data.length > 0){
+            console.log('applied jobs',response.data);
+            
             this.appliedJobs = response.data;
           }
           else this.appliedJobs =[];
@@ -90,8 +108,8 @@ getResumePath(resume: string): SafeResourceUrl {
       });
     }
   
-    viewJobDetails(job: Job): void {
-        this.userService.setJobData(job);
+    viewJobApplicationDetails(job: JobApplication): void {
+        this.userService.setJobApplicationData(job);
         setTimeout(() => {
           this.routeToAppliedJobDetails();
         }, 10); // Small delay ensures the data is available before navigation
