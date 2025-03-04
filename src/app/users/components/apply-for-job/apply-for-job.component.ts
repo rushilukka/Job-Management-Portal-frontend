@@ -49,6 +49,9 @@ export class ApplyForJobComponent {
           else if(error.status === 400){
             this.toasterService.error(MESSAGES.SKILL_NOT_MATCHED);
           }
+          else if(error.status === 404){
+            this.toasterService.error(MESSAGES.RESUME_NOT_FOUND);
+          }
          console.error('errrrrr message',MESSAGES.APPLY_JOB_ERROR)
       }
     });

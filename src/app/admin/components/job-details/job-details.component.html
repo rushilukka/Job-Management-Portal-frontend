@@ -61,12 +61,60 @@
         Cancel
       </button>
     </div>
+
+    
   </div>
 
+  
   <ng-template #loading>
     <p class="text-gray-500">Loading job details...</p>
   </ng-template>
 </div>
+
+    <div class="max-w-3xl mt-5 p-6 bg-white rounded-lg shadow mx-auto">
+         <div class="max-w-3xl mt-5 p-6 bg-white rounded-lg shadow mx-auto">
+            <button
+              *ngIf="!isEditing"
+              (click)="viewUserApplication()"
+              class="bg-primary text-white px-4 py-2 rounded-lg"
+            >
+              View User Applications
+            </button>
+          </div>
+          
+          <!-- Show Loading -->
+          <div *ngIf="isLoading" class="text-center mt-4 text-gray-500">
+            Loading user applications...
+          </div>
+          
+          <!-- Show Error -->
+          <div *ngIf="isError" class="text-center mt-4 text-red-500">
+            Failed to load applications. Try again.
+          </div>
+          
+          <!-- Show User Applications -->
+          <div *ngIf="jobApplications.length > 0" class="mt-5">
+            <h3 class="text-lg font-semibold mb-3">Users Applied:</h3>
+            <div *ngFor="let application of jobApplications" class="p-3 border rounded-lg mb-2">
+              <p><strong>User ID:</strong> {{ application.userId }}</p>
+              <p><strong>Status:</strong> {{ application.status }}</p>
+              <p *ngIf="application.commentByAdmin"><strong>Admin Comment:</strong> {{ application.commentByAdmin }}</p>
+              <button class="bg-green-500 text-white px-3 py-1 rounded-lg mt-2">
+                Approve
+              </button>
+              <button class="bg-red-500 text-white px-3 py-1 rounded-lg mt-2 ml-2">
+                Reject
+              </button>
+            </div>
+          </div>
+          
+          <!-- No Applications Found -->
+          <div *ngIf="jobApplications.length === 0 && !isLoading && !isError " class="text-center mt-4 text-gray-500">
+            No users have applied for this job yet.
+          </div>
+          
+    </div>
+
 </div>
 
 

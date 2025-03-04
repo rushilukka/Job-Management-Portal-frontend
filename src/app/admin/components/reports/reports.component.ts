@@ -71,7 +71,7 @@ export class ReportsComponent implements OnInit {
     this.chartOptions = {
       responsive: true,
       plugins: {
-        legend: { position: 'top' }
+        legend: { position: 'bottom' }
       },
       scales: {
         x: { grid: { display: false } },
@@ -98,7 +98,7 @@ export class ReportsComponent implements OnInit {
       responsive: true,
       plugins: {
         legend: {
-          position: 'top',
+          position: 'bottom',
           labels: {
             usePointStyle: true,
             generateLabels: (chart: { data: { labels: any[]; datasets: { backgroundColor: { [x: string]: any; }; }[]; }; }) => {

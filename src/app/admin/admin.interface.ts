@@ -6,8 +6,8 @@ export interface JobDetails{
   salaryRange:string;
   skills : string[];
   createdAt ?:string;
- 
 }
+
 export interface JobApplicationDetails{  
   id:string,
   jobTitle: string; 
@@ -20,6 +20,17 @@ export interface JobApplicationDetails{
   commnentByAdmin ?:string;
   updatedBy?:string
 }
+
+export interface JobApplicationsByJobId{  
+  id:string,
+  jobId: string; 
+  userId: string; 
+  createdAt ?:string;
+  status :string;
+  commentByAdmin ?:string;
+  updatedBy?:string
+}
+ 
 export interface JobMange{  
   jobTitle: string; 
   location: string; 
@@ -29,8 +40,7 @@ export interface JobMange{
 export interface UserMange{
   name: string;
   email: string;
-  phoneNumber: string;
-   
+  phoneNumber: string;   
 }
 
 interface Resume{

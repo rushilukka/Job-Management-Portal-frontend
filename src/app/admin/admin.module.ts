@@ -4,7 +4,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AdminProfileComponent } from './components/admin-profile/admin-profile.component';
 
 import { adminRoutes } from './admin.routes';
-import { Router, RouterModule } from '@angular/router';
+import {  RouterModule } from '@angular/router';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ManageJobsComponent } from './components/manage-jobs/manage-jobs.component';
@@ -20,7 +20,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { UserActionButtonComponent } from './components/user-action-button/user-action-button.component';
 import { UserJobApplicationComponent } from './components/user-job-application/user-job-application.component';
-import { ChartModule } from 'primeng/chart'; // ✅ Import ChartModule
+import { ChartModule } from 'primeng/chart'; //  Import ChartModule
 
 
 @NgModule({

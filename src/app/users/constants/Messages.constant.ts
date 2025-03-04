@@ -6,5 +6,6 @@ export const MESSAGES = {
   UPLOAD_ERROR: "Failed to upload resume.",
   ALREADY_APPLIED: "You have already applied for this job.",
   SKILL_NOT_MATCHED: "Your skills do not match with the job requirements.",
-  APPLY_JOB_DELETED: "Successfully deleted the job application."
+  APPLY_JOB_DELETED: "Successfully deleted the job application.",
+  RESUME_NOT_FOUND: "Please upload your Resume from your profile."
 };

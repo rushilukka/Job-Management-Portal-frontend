@@ -9,7 +9,6 @@ import {ROUTES} from "../../constants/Routes.constant";
 import { ERROR_MESSAGES } from '../../constants/errorMessages.constant';
 import { LOCALSTORAGE } from '../../constants/local-storage.constant';
 import { UserData, UserService } from '../../../users/user.service';
-import { AdminService } from '../../../admin/admin.service';
 import { JwtPayload } from '../../auth.interface';
 import { take } from 'rxjs';
 

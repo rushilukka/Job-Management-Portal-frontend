@@ -97,7 +97,6 @@ export class UserDetailsComponent {
 
 
     viewJobApplicationDetails(job: JobApplication): void {
-      // this.adminService.setJobData(job);
       this.adminService.setJobApplicationData(job);
       this.router.navigate([ROUTES.JOB_APPLICATION_DETAILS]);
     }

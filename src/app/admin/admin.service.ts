@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { environment } from '../../environments/environments';
 import { LOCALSTORAGE } from '../auth/constants/local-storage.constant';
 import { StandardResponse } from '../../interfaces/standard-response.interface';
-import { JobApplicationDetails, JobDetails, UserData } from './admin.interface';
+import { JobApplicationDetails, JobApplicationsByJobId, JobDetails, UserData } from './admin.interface';
 import { Job, JobApplication } from '../users/users.interface';
 import { API_ENDPOINTS } from './constants/api-endpoints.constant';
 import { jobApplicationStatus, Resume } from '../users/user.service';
@@ -104,8 +104,8 @@ export class AdminService {
     `${environment.backendUrl}/jobs`,
     sendJobData,  // Send jobData directly instead of wrapping it inside another object
     { observe: 'response' }
-  );
-}
+    );
+  }
 
   addJob(jobData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/jobs`, jobData);
@@ -114,16 +114,13 @@ export class AdminService {
   fetchUserSkills(userId:string):Observable<HttpResponse<StandardResponse<string[]>>>{
     return this.http.get<StandardResponse<string[]>>(`${API_ENDPOINTS.USER_SKILLS}?userId=${userId}`,
       { observe: 'response' } // This ensures you get the full HttpResponse
-
     );
   }
 
   fetchUserResume(userId:string):Observable<HttpResponse<StandardResponse<Resume>>>{
         const resp = this.http.get<StandardResponse<Resume>>(`${API_ENDPOINTS.USER_RESUME}?userId=${userId}`,
       { observe: 'response' } // This ensures you get the full HttpResponse
-
     )
-      
     return resp;
   }
 
@@ -163,6 +160,13 @@ export class AdminService {
     return this.http.get<StandardResponse<{ pending: number; approved: number; rejected: number }>>(
       `${this.apiUrl}/job-applications/pie-chart-data`, 
       { observe: 'response' }
+    );
+  }
+
+    fetchUserDetailsByJobId(jobId: string): Observable<HttpResponse<StandardResponse<JobApplicationsByJobId[]>>> {
+      return this.http.get<StandardResponse<JobApplicationsByJobId[]>>(
+        `${API_ENDPOINTS.GET_JOB_APPLICATIONS_BY_JOB_ID}?jobId=${jobId}`,
+        { observe: 'response' }
     );
   }
   

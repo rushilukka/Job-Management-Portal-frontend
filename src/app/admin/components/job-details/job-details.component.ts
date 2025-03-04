@@ -7,6 +7,7 @@ import { ToasterService } from '../../../shared/Toaster/toaster.service';
 import { StandardResponse } from '../../../../interfaces/standard-response.interface';
 import { take } from 'rxjs';
 import { Job } from '../../../users/users.interface';
+import { JobApplicationsByJobId } from '../../admin.interface';
 
 @Component({
   selector: 'app-job-details',
@@ -22,6 +23,11 @@ export class JobDetailsComponent implements OnInit {
   updatedJob: any = {}; // Store updated values
   newSkill: string = ''; // Track new skill to be added
   jobSkills: string[] = []; // Track job skills in edit mode
+  
+  jobApplications: JobApplicationsByJobId[] = []; // Store fetched applications
+  isLoading: boolean = false;
+  isError: boolean = false;
+  
 
   constructor(private fb: FormBuilder, private router: Router, private adminService: AdminService,private toaster: ToasterService) {}
   
@@ -112,5 +118,26 @@ export class JobDetailsComponent implements OnInit {
   removeSkill(index: number): void {
     this.skills.removeAt(index); 
   }
+
+
+  viewUserApplication(): void {
+    const jobId = this.jobData ? this.jobData.id : null;
+    if (!jobId) return;
+
+    this.isLoading = true;
+    this.isError = false;
+
+    this.adminService.fetchUserDetailsByJobId(jobId).subscribe({
+      next: (response) => {
+        this.jobApplications = response.body?.data || [];
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+        this.isError = true;
+      }
+    });
+  }
+
   
 }
