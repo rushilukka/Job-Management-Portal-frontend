@@ -20,6 +20,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { UserActionButtonComponent } from './components/user-action-button/user-action-button.component';
 import { UserJobApplicationComponent } from './components/user-job-application/user-job-application.component';
+import { ChartModule } from 'primeng/chart'; // ✅ Import ChartModule
+
 
 @NgModule({
   declarations: [
@@ -43,7 +45,8 @@ import { UserJobApplicationComponent } from './components/user-job-application/u
     FormsModule,
      RouterModule.forChild(adminRoutes),
      SharedModule,
-    CommonModule
+    CommonModule,
+    ChartModule
   ],
   exports:[RouterModule]
   

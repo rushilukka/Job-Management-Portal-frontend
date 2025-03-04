@@ -145,4 +145,26 @@ export class AdminService {
     )
   }
 
+  fetchBarChartData(): Observable<HttpResponse<StandardResponse<{ months: string[], jobCounts: number[] }>>> {
+    return this.http.get<StandardResponse<{ months: string[], jobCounts: number[] }>>(
+      `${this.apiUrl}/jobs/bar-chart-data`, 
+      { observe: 'response' }
+    );
+  }
+  
+  fetchLineChartData(): Observable<HttpResponse<StandardResponse<{ months: string[], jobApplicationCounts: number[] }>>> {
+    return this.http.get<StandardResponse<{ months: string[], jobApplicationCounts: number[] }>>(
+      `${this.apiUrl}/jobs/line-chart-data`, 
+      { observe: 'response' }
+    );
+  }
+
+  fetchPieChartData(): Observable<HttpResponse<StandardResponse<{ pending: number; approved: number; rejected: number }>>> {
+    return this.http.get<StandardResponse<{ pending: number; approved: number; rejected: number }>>(
+      `${this.apiUrl}/job-applications/pie-chart-data`, 
+      { observe: 'response' }
+    );
+  }
+  
+  
 }
