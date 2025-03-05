@@ -1,170 +1,145 @@
 <app-header class="w-full"></app-header>
-<div class="container min-h-screen  p-6">
-    <h2 class="text-2xl font-bold text-primary mb-4">User Profile</h2>
-    <button
-    *ngIf="!isEditing"
-    (click)="toggleEdit()"
-    class="bg-gray-300 mx-5 px-4 py-2 rounded-lg"
-    >
-    Edit
-  </button>
-    <div class="container mx-auto p-6 min-h-screen" *ngIf="!isEditing">
-      <h2 class="text-xl font-bold text-primary">User Details</h2>  
-      <div class="mt-4 bg-white p-4 rounded-lg shadow">
-          <p><strong>Name:</strong> {{ userData?.name }}</p>
-          <p><strong>Email:</strong> {{ userData?.email }}</p>
-          <p><strong>Phone Number:</strong> {{ userData?.phoneNumber }}</p>
-      </div>
-
-    <!-- User Resume -->
-    <h3 class="text-lg font-semibold mt-6">Resume</h3>
-    <div class="mt-4 bg-white p-5 rounded-lg shadow" >
-  
-      <div *ngIf="isResume" style="height: 500px;">
-  <!-- Download button to allow users to download the PDF -->
-  <div  class="flex justify-between items-center ">
-     <a [href]="resumeUrl"  rel="noopener noreferrer" target="_blank" class="text-blue-500 font-medium hover:underline">
-      <span>View Resume   </span> 
-      <i class="fas fa-download"></i>
-    </a>
-    <button (click)="deleteResume()" class="bg-primary text-white px-4 py-2 rounded-lg">Delete</button>
-      
-  </div>
-
-
-    <iframe 
-    [src]="getResumePath(resumeUrl)"
-    class="w-full h-full p-5 rounded-lg"
-    frameborder="0">
-  </iframe> 
- 
-
-</div>
-
-  <div *ngIf="!isResume" class="flex justify-between items-center w-full">  
-      <p *ngIf="!isResume"  >
-        <app-upload-resume></app-upload-resume>
-      </p>
-  </div>
-</div>
-
-
-    <!-- User Skills -->
-    
-    <h3 class="text-lg font-semibold mt-6">Skills</h3>
-    <ng-container *ngIf="skills?.length">
-    <div class="mt-4 bg-white p-4 rounded-lg shadow">
-        <p *ngFor="let skill of skills">{{ skill }}</p>
-    </div>
-</ng-container>
-<ng-container *ngIf="!skills?.length">
-    <div class="mt-4 bg-white p-4 rounded-lg shadow">
-      No Skills Added
-        <!-- <p *ngFor="let skill of skills">{{ skill.skillName }}</p> -->
-    <!-- </div> -->
-</div>
-</ng-container>
-
-
-
-
-<!-- Applied Jobs -->
-<h3 class="text-lg font-semibold mt-6">Applied Jobs</h3>
-
-<!-- Show Jobs List if Available -->
-<div class="mt-4 bg-white p-4 rounded-lg shadow" *ngIf="appliedJobs.length > 0">
-    <ul class="list-disc ml-5">
-        <li *ngFor="let job of appliedJobs" class="flex justify-between items-center mb-2">
-            <span>{{ job.jobTitle }} - {{ job.location }}</span>
-            <button (click)="viewJobApplicationDetails(job)" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
-                View Details
-            </button>
-        </li>
-    </ul>
-</div>
-
-<!-- Show "Not Applied" Message If No Jobs Are Available -->
-<div class="mt-4 bg-white p-4 rounded-lg shadow" *ngIf="appliedJobs.length === 0">
-    Not Applied to any Jobs
-</div>
-  
-</div>
-
-<div *ngIf="isEditing" class="min-h-screen flex flex-col items-center      ">
-  <form [formGroup]="userForm" (ngSubmit)="updateUser()" class="w-full max-w-3xl mt-5 p-6 bg-white rounded-lg shadow mx-auto space-y-6">
-    <div class="form-group">
-      <label for="name" class="block text-lg font-semibold text-gray-700">Name</label>
-      <div class="flex items-center space-x-2">
-        <i class="fas fa-user text-purple-500"></i>
-        <input id="name" formControlName="name" type="text" class="form-control p-3 w-full border rounded-lg focus:ring-2 focus:ring-purple-500" placeholder="Enter Name" />
-      </div>
-      <div *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched" class="text-red-600 mt-2">
-        <small *ngIf="userForm.get('name')?.hasError('required')">Name is required.</small>
-        <small *ngIf="userForm.get('name')?.hasError('maxlength')">Name cannot exceed 60 characters.</small>
-      </div>
-    </div>
-    
- 
-    <div class="form-group">
-      <label for="phoneNumber" class="block text-lg font-semibold text-gray-700">phoneNumber</label>
-      <div class="flex items-center space-x-2">
-        <i class="fas fa-phone text-purple-500"></i>
-        <input id="phoneNumber" formControlName="phoneNumber" type="text" class="form-control p-3 w-full border rounded-lg focus:ring-2 focus:ring-purple-500" placeholder="Enter phoneNumber" />
-      </div>
-      <div *ngIf="userForm.get('phoneNumber')?.invalid && userForm.get('phoneNumber')?.touched" class="text-red-600 mt-2">
-        <small *ngIf="userForm.get('phoneNumber')?.hasError('required')">phoneNumber is required.</small>
-        <small *ngIf="userForm.get('phoneNumber')?.hasError('maxlength')">phoneNumber cannot exceed 100 characters.</small>
-      </div>
-    </div>
- 
-
-    <div class="form-group">
-      <label class="block text-lg font-semibold text-gray-700">Skills</label>
-      <div class="space-y-2">
-        <div class="flex space-x-2">
-          <input #skillInput type="text" class="form-control p-3 w-full border rounded-lg" placeholder="Add skill" />
-          <button type="button" (click)="addSkill(skillInput.value); skillInput.value=''" class="bg-primary text-white px-4 py-2 rounded-lg">Add</button>
-        </div>
-    
-        <ul class="list-disc pl-5 space-y-1 mt-3">
-          <li *ngFor="let skill of skillsEditingFun.controls; let i = index">
-            <!-- <p [formControlName]="i" type="text" class="form-control p-2 border rounded-lg w-full" >
-              {{ skill['value'] }}
-            </p> -->
-            {{skill.value}}
-            <button type="button" (click)="removeSkill(i)" class="text-red-500 ml-2">Remove</button>
-          </li>
-        </ul>
-
-
-        <ul>
-          <li *ngFor="let skillCtrl of skillsEditingFun.controls; let i = index">
-          </li>
-        </ul>
+<div class="container min-h-screen p-6">
+  <ng-container>
+    <div class="flex items-center justify-between w-full mb-6">
+        <!-- Centered Heading with Spacing -->
+        <h2 class="text-4xl font-bold text-primary text-center mx-auto">User Profile</h2> 
         
-      </div>
+        <!-- Edit Button -->
+        <button *ngIf="!isEditing" (click)="toggleEdit()" class="bg-accent hover:bg-primary text-white px-3 py-2 rounded-lg shadow-md transition-all ease-in-out duration-300 flex items-center">
+            <i class="fa fa-edit text-xl mr-2"></i> <!-- Icon with Margin -->
+            Edit
+        </button>
     </div>
+</ng-container>
+
+
+    <div class="container mx-auto p-6 min-h-screen" *ngIf="!isEditing">
+      
+         <h2 class="text-3xl font-semibold text-primary mb-6">User Details</h2>  <!-- Larger Heading -->
     
-
-
-
-    <button
-    type="submit" [disabled]="userForm.invalid"
+        <div class="mt-4 bg-white p-6 rounded-lg shadow-xl flex items-center space-x-6">
+            <!-- Profile Picture -->
+            <div class="w-24 h-24 bg-gray-300 rounded-full flex items-center justify-center overflow-hidden shadow-lg">
+                <i class="fas fa-user-circle text-6xl text-gray-500"></i> <!-- Icon in center -->
+            </div>
     
-    class="bg-accent text-purple-800 px-4 py-2 rounded-lg   space-y-6"
-  >
-    Save
-  </button>
-    <button
-        *ngIf="isEditing"
-        (click)="toggleEdit()"
-        class="bg-gray-300 mx-5 px-4 py-2 rounded-lg"
-      >
-        Cancel
-      </button>
-  </form>
+            <!-- User Details -->
+            <div>
+                <p class="text-lg font-medium text-gray-700"><strong>Name:</strong> {{ userData?.name }}</p>
+                <p class="text-lg font-medium text-gray-700"><strong>Email:</strong> {{ userData?.email }}</p>
+                <p class="text-lg font-medium text-gray-700"><strong>Phone Number:</strong> {{ userData?.phoneNumber }}</p>
+            </div>
+        </div>
+     
+        <!-- User Resume -->
+        <h3 class="text-3xl font-semibold mt-6">Resume</h3>
+        <div class="mt-4 bg-white p-5 rounded-lg shadow">
+            <div *ngIf="isResume" style="height: 500px;">
+                <div class="flex justify-between items-center">
+                    <a [href]="resumeUrl" rel="noopener noreferrer" target="_blank" class="text-blue-500 font-medium hover:underline">
+                        <span>View Resume</span> 
+                        <i class="fas fa-download"></i>
+                    </a>
+                    <button (click)="deleteResume()" class="bg-primary text-white px-4 py-2 rounded-lg">Delete</button>
+                </div>
+                <iframe [src]="getResumePath(resumeUrl)" class="w-full h-full p-5 rounded-lg" frameborder="0"></iframe>
+            </div>
+            <div *ngIf="!isResume" class="flex justify-between items-center w-full">
+                <p>No resume uploaded</p>
+                <app-upload-resume></app-upload-resume>
+            </div>
+        </div>
+
+        <!-- User Skills -->
+        <h3 class="text-3xl font-semibold mt-6">Skills</h3>
+        <ng-container *ngIf="skills?.length">
+          <div class="mt-4 bg-white p-4 rounded-lg shadow">
+              <div class="flex justify-center items-center flex-wrap gap-3">
+                  <span *ngFor="let skill of skills" class="bg-blue-500 text-white py-2 px-4 rounded-full text-sm">
+                      {{ skill }}
+                  </span>
+              </div>
+          </div>
+      </ng-container>
+      
+      
+      <ng-container *ngIf="!skills?.length">
+          <div class="mt-4 bg-white p-4 rounded-lg shadow">
+              No Skills Added
+          </div>
+      </ng-container>
+      
+        <!-- Applied Jobs -->
+        <h3 class="text-3xl font-semibold mt-6">Applied Jobs</h3>
+        <div class="mt-4 bg-white p-4 rounded-lg shadow" *ngIf="appliedJobs.length > 0">
+            <ul class="list-disc ml-5">
+                <li *ngFor="let job of appliedJobs" class="flex justify-between items-center mb-2">
+                    <span>{{ job.jobTitle }} - {{ job.location }}</span>
+                    <button (click)="viewJobApplicationDetails(job)" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+                        View Details
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <div class="mt-4 bg-white p-4 rounded-lg shadow" *ngIf="appliedJobs.length === 0">
+            Not Applied to any Jobs
+        </div>
+    </div>
+
+    <!-- Edit Mode -->
+    <div *ngIf="isEditing" class="min-h-screen flex flex-col items-center">
+        <form [formGroup]="userForm" (ngSubmit)="updateUser()" class="w-full max-w-3xl mt-5 p-6 bg-white rounded-lg shadow mx-auto space-y-6">
+            <div class="form-group">
+                <label for="name" class="block text-lg font-semibold text-gray-700">Name</label>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-user text-purple-500"></i>
+                    <input id="name" formControlName="name" type="text" class="form-control p-3 w-full border rounded-lg focus:ring-2 focus:ring-purple-500" placeholder="Enter Name" />
+                </div>
+                <div *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched" class="text-red-600 mt-2">
+                    <small *ngIf="userForm.get('name')?.hasError('required')">Name is required.</small>
+                    <small *ngIf="userForm.get('name')?.hasError('maxlength')">Name cannot exceed 60 characters.</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="phoneNumber" class="block text-lg font-semibold text-gray-700">Phone Number</label>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-phone text-purple-500"></i>
+                    <input id="phoneNumber" formControlName="phoneNumber" type="text" class="form-control p-3 w-full border rounded-lg focus:ring-2 focus:ring-purple-500" placeholder="Enter Phone Number" />
+                </div>
+                <div *ngIf="userForm.get('phoneNumber')?.invalid && userForm.get('phoneNumber')?.touched" class="text-red-600 mt-2">
+                    <small *ngIf="userForm.get('phoneNumber')?.hasError('required')">Phone number is required.</small>
+                    <small *ngIf="userForm.get('phoneNumber')?.hasError('maxlength')">Phone number cannot exceed 100 characters.</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="block text-lg font-semibold text-gray-700">Skills</label>
+                <div class="space-y-2">
+                    <div class="flex space-x-2">
+                        <input #skillInput type="text" class="form-control p-3 w-full border rounded-lg" placeholder="Add skill" />
+                        <button type="button" (click)="addSkill(skillInput.value); skillInput.value=''" class="bg-primary text-white px-4 py-2 rounded-lg">Add</button>
+                    </div>
+                    <ul class="list-disc pl-5 space-y-1 mt-3">
+                        <li *ngFor="let skill of skillsEditingFun.controls; let i = index" class="flex justify-between items-center">
+                            <span>{{ skill.value }}</span>
+                            <button type="button" (click)="removeSkill(i)" class="text-red-500 ml-2">Remove</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center space-x-4">
+                <button type="submit" [disabled]="userForm.invalid" class="bg-accent text-purple-800 px-6 py-3 rounded-lg">
+                    Save
+                </button>
+                <button *ngIf="isEditing" (click)="toggleEdit()" class="bg-gray-300 px-4 py-2 rounded-lg">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
 
-
-</div>
-  <app-footer class="w-full"></app-footer>
+<app-footer class="w-full"></app-footer>

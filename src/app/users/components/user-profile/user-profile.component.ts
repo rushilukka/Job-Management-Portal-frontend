@@ -163,6 +163,8 @@ getResumePath(resume: string): SafeResourceUrl {
                 resume: data?.resume??{fileName:'',storageDirectoryPath:''},
               });
             }
+            this.toasterService.success(TOASTER_MESSAGES.PROFILE_UPDATED);
+            this.fetchUserDetails();
           },
           (error :unknown) => {
             console.error('Error updating job:', error);
