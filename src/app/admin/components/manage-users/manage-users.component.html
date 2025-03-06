@@ -1,6 +1,6 @@
 <app-header class="w-full"></app-header>
 
-<div class="container min-h-screen mx-auto p-6">
+<div class="container min-h-screen mx-auto m-6 ag-grid-custom-height">
     <div class="flex justify-between items-center mb-4">
         <h2 class="text-xl font-bold text-primary">Manage Users</h2>
     </div>
@@ -8,7 +8,8 @@
     <app-ag-grid
         [rowData]="users"
         [colName]="userColumn">
-        [frameworkComponents]="frameworkComponents">    
+        [frameworkComponents]="frameworkComponents"
+ 
     </app-ag-grid>
 </div>
 

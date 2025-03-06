@@ -5,7 +5,7 @@ import { environment } from '../../environments/environments';
 import { jwtDecode } from 'jwt-decode';
 import { LOCALSTORAGE } from '../auth/constants/local-storage.constant';
 import { StandardResponse } from '../../interfaces/standard-response.interface';
-import { Job, JobApplication } from './users.interface';
+import { Job, JobApplicationWithJobData } from './users.interface';
 import { API_ENDPOINTS } from './constants/api-endpoints.constant';
  
  
@@ -92,11 +92,11 @@ export class UserService {
     localStorage.removeItem(this.jobDataKey);
   }
 
-  setJobApplicationData(data: JobApplication ) {
+  setJobApplicationData(data: JobApplicationWithJobData ) {
     localStorage.setItem(this.jobApplicationDataKey, JSON.stringify(data));
   }
 
-  getJobApplicationData(): JobApplication | null {
+  getJobApplicationData(): JobApplicationWithJobData | null {
     const data = localStorage.getItem(this.jobApplicationDataKey);
     return data ? JSON.parse(data) : null;
   }

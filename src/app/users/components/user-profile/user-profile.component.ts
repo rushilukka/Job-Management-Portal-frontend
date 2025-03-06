@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../../environments/environments';
 import { UserData, UserService } from '../../user.service';
 import { ROUTES } from '../../constants/Routes.constant';
-import { Job, JobApplication } from '../../users.interface';
+import { Job, JobApplicationWithJobData } from '../../users.interface';
 import { LOCALSTORAGE } from '../../constants/local-storage.constant';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { take } from 'rxjs';
@@ -24,7 +24,7 @@ export class UserProfileComponent {
   //need to use signal for userData
   user: UserData |null = null;
   skills: string[] = [];
-  appliedJobs: JobApplication[] = [];
+  appliedJobs: JobApplicationWithJobData[] = [];
   resumeUrl: string = '';
   isResume:boolean = false;
   userData : UserData|null = null;
@@ -108,7 +108,7 @@ getResumePath(resume: string): SafeResourceUrl {
       });
     }
   
-    viewJobApplicationDetails(job: JobApplication): void {
+    viewJobApplicationDetails(job: JobApplicationWithJobData): void {
         this.userService.setJobApplicationData(job);
         setTimeout(() => {
           this.routeToAppliedJobDetails();

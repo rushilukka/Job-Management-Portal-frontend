@@ -3,7 +3,7 @@
 <div *ngIf="!isEditing" class="min-h-screen">
 <div class="max-w-3xl mt-5 p-6 bg-white rounded-lg shadow mx-auto">
   <!-- Your content goes here -->
-  <h2 class="text-2xl font-bold mb-4 text-primary">Job Details</h2>
+  <h2 class="text-3xl flex justify-center font-bold mb-4 text-primary">Job Details</h2>
 
   <div *ngIf="jobData; else loading">
     <div class="mb-4">
@@ -39,13 +39,14 @@
     </div>
 
     <div class="flex space-x-4 mt-4">
-      <button
-        *ngIf="!isEditing"
-        (click)="toggleEdit()"
-        class="bg-primary text-white px-4 py-2 rounded-lg"
-      >
-        Edit
-      </button>
+         <button
+          *ngIf="!isEditing"
+          (click)="toggleEdit()"
+          class="bg-accent text-white px-4 py-2 rounded-lg flex items-center"
+        >
+          <i class="fa fa-edit mr-2"></i> Edit
+        </button>
+       
       <button
         *ngIf="isEditing"
         (click)="updateJob()"
@@ -72,15 +73,18 @@
 </div>
 
     <div class="max-w-3xl mt-5 p-6 bg-white rounded-lg shadow mx-auto">
-         <div class="max-w-3xl mt-5 p-6 bg-white rounded-lg shadow mx-auto">
-            <button
-              *ngIf="!isEditing"
-              (click)="viewUserApplication()"
-              class="bg-primary text-white px-4 py-2 rounded-lg"
-            >
-              View User Applications
-            </button>
-          </div>
+        
+      <div class="max-w-3xl mt-5 p-6 bg-white rounded-lg shadow mx-auto flex justify-center">
+        <button
+          *ngIf="!isEditing"
+          (click)="viewUserApplication()"
+          class="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
+        >
+          View User Applied
+        </button>
+      </div>
+      
+      
           
           <!-- Show Loading -->
           <div *ngIf="isLoading" class="text-center mt-4 text-gray-500">
@@ -96,22 +100,20 @@
           <div *ngIf="jobApplications.length > 0" class="mt-5">
             <h3 class="text-lg font-semibold mb-3">Users Applied:</h3>
             <div *ngFor="let application of jobApplications" class="p-3 border rounded-lg mb-2">
-              <p><strong>User ID:</strong> {{ application.userId }}</p>
-              <p><strong>Status:</strong> {{ application.status }}</p>
-              <p *ngIf="application.commentByAdmin"><strong>Admin Comment:</strong> {{ application.commentByAdmin }}</p>
-              <button class="bg-green-500 text-white px-3 py-1 rounded-lg mt-2">
-                Approve
-              </button>
-              <button class="bg-red-500 text-white px-3 py-1 rounded-lg mt-2 ml-2">
-                Reject
-              </button>
+              <p><strong>User ID:</strong> {{ application.name }}</p>
+              <p><strong>Phone Number:</strong> {{ application.phoneNumber }}</p>
+              <p><strong>Status:</strong> {{ application.jobApplication.status }}</p>
+              <p *ngIf="application.jobApplication.commentByAdmin"><strong>Admin Comment:</strong> {{ application.jobApplication.commentByAdmin }}</p>
+              <div *ngIf="application.jobApplication.status === 'pending'">
+              <button (click)="viewJobApplicationDetails(application)" class="bg-blue-500 text-white px-3 py-1 rounded-lg mt-2">
+                View Job Application
+              </button> 
+              </div>
             </div>
           </div>
           
           <!-- No Applications Found -->
-          <div *ngIf="jobApplications.length === 0 && !isLoading && !isError " class="text-center mt-4 text-gray-500">
-            No users have applied for this job yet.
-          </div>
+           
           
     </div>
 

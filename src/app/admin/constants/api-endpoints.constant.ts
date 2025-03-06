@@ -11,6 +11,7 @@ export const API_ENDPOINTS = {
   UPLOAD_RESUME: `${apiUrl}/resume/upload`,
   USER_DETAILS:'',
   UPDATE_JOB_APPLICATION_STATUS: `${apiUrl}/job-applications/update`,
-  GET_JOB_APPLICATIONS_BY_JOB_ID: `${apiUrl}/job-applications/job`
+  GET_JOB_APPLICATIONS_BY_JOB_ID: `${apiUrl}/job-applications/job`,
+  GET_APPLICATION_BY_JOB_APPLICATION__ID: `${apiUrl}/job-applications/job-application-id/`,
   
 };

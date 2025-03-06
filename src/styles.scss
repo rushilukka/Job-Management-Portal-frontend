@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @use "styles/theme.scss";
 .glass-effect {
-    background: rgba(255, 255, 255, 0.63); /* Light transparent white */
+    background: rgba(255, 255, 255, 0.904); /* Light transparent white */
     backdrop-filter: blur(10px); /* Blur effect */
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -11,7 +11,7 @@
 
 
   .glass-dark {
-    background: rgba(0, 0, 0, 0.247); /* Semi-transparent black */
+    background: rgba(255, 255, 255, 0.918); /* Semi-transparent black */
     backdrop-filter: blur(8px); /* Blur effect */
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.2);

@@ -10,7 +10,7 @@ import { JobDetails, UserData } from '../../admin.interface';
 import { StandardResponse } from '../../../../interfaces/standard-response.interface';
 import { take } from 'rxjs';
 import { Resume } from '../../../users/user.service';
-import { JobApplication } from '../../../users/users.interface';
+import { JobApplicationWithJobData } from '../../../users/users.interface';
 
 @Component({
   selector: 'app-user-details',
@@ -22,7 +22,7 @@ export class UserDetailsComponent {
   user: UserData | null = null;
   skills: string[] = [];
   // appliedJobs: JobDetails[] = [];
-  appliedJobs: JobApplication[] = [];
+  appliedJobs: JobApplicationWithJobData[] = [];
   isResume: boolean = false;
   resumeUrl: string = '';
   userData : UserData | null = null;
@@ -96,8 +96,9 @@ export class UserDetailsComponent {
 
 
 
-    viewJobApplicationDetails(job: JobApplication): void {
+    viewJobApplicationDetails(job: JobApplicationWithJobData): void {
       this.adminService.setJobApplicationData(job);
       this.router.navigate([ROUTES.JOB_APPLICATION_DETAILS]);
     }
+    
 }

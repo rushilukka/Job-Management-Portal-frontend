@@ -1,5 +1,5 @@
 <app-header class="w-full"></app-header>
-<div class="container min-h-screen p-6">
+<div class="container min-h-screen p-6 ">
   <ng-container>
     <div class="flex items-center justify-between w-full mb-6">
         <!-- Centered Heading with Spacing -->
@@ -20,7 +20,7 @@
     
         <div class="mt-4 bg-white p-6 rounded-lg shadow-xl flex items-center space-x-6">
             <!-- Profile Picture -->
-            <div class="w-24 h-24 bg-gray-300 rounded-full flex items-center justify-center overflow-hidden shadow-lg">
+            <div class="w-24 h-24 bg-white-300 rounded-full flex items-center justify-center overflow-hidden shadow-lg">
                 <i class="fas fa-user-circle text-6xl text-gray-500"></i> <!-- Icon in center -->
             </div>
     
@@ -134,7 +134,7 @@
                 <button type="submit" [disabled]="userForm.invalid" class="bg-accent text-purple-800 px-6 py-3 rounded-lg">
                     Save
                 </button>
-                <button *ngIf="isEditing" (click)="toggleEdit()" class="bg-gray-300 px-4 py-2 rounded-lg">
+                <button *ngIf="isEditing" (click)="toggleEdit()" class="bg-white-300 px-4 py-2 rounded-lg">
                     Cancel
                 </button>
             </div>

@@ -6,8 +6,9 @@ import { HttpResponse } from '@angular/common/http';
 import { ToasterService } from '../../../shared/Toaster/toaster.service';
 import { StandardResponse } from '../../../../interfaces/standard-response.interface';
 import { take } from 'rxjs';
-import { Job } from '../../../users/users.interface';
+import { Job, JobApplicationWithJobData, JobApplicationWithUserDetails } from '../../../users/users.interface';
 import { JobApplicationsByJobId } from '../../admin.interface';
+import { ROUTES } from '../../constants/Routes.constants';
 
 @Component({
   selector: 'app-job-details',
@@ -23,7 +24,8 @@ export class JobDetailsComponent implements OnInit {
   updatedJob: any = {}; // Store updated values
   newSkill: string = ''; // Track new skill to be added
   jobSkills: string[] = []; // Track job skills in edit mode
-  
+  appliedJobs: JobApplicationWithJobData[] = [];
+  jobApplicationDetails: JobApplicationWithJobData|null =null;
   jobApplications: JobApplicationsByJobId[] = []; // Store fetched applications
   isLoading: boolean = false;
   isError: boolean = false;
@@ -130,6 +132,9 @@ export class JobDetailsComponent implements OnInit {
     this.adminService.fetchUserDetailsByJobId(jobId).subscribe({
       next: (response) => {
         this.jobApplications = response.body?.data || [];
+        console.log('job applications',this.jobApplications);
+        console.log('job applications',this.jobApplications[0].jobApplication);
+        
         this.isLoading = false;
       },
       error: () => {
@@ -139,5 +144,131 @@ export class JobDetailsComponent implements OnInit {
     });
   }
 
+
+
+  /*
+  viewApplication(application: JobApplicationsByJobId): void {
+    
+     
+    // fetchUserAppliedJob(userId:string):Observable<HttpResponse<StandardResponse<JobApplicationDetails[]>>>{
+    //     return this.http.get<StandardResponse<JobApplicationDetails[]>>(`${API_ENDPOINTS.USER_APPLIED_JOBS}?userId=${userId}`,
+    
+    //       { observe: 'response' }
+    //     )
+    //   }
+    console.log('application',application.jobApplication);
+    console.log('application',application.name);
+    console.log('application',application.jobApplication);
+    
+    const jobApplication1 = application.jobApplication;
+   console.log('jobApplication1',jobApplication1.userId);
+   
+   this.adminService.fetchUserAppliedJobWithJobId(jobApplication1?.userId,jobApplication1?.jobId).subscribe({
+     next: (response) => {
+       if(response?.body?.data?.length??0 > 0){
+         this.appliedJobs = response?.body?.data??[];
+         console.log('applied jobs',this.appliedJobs);
+         
+       }
+       else this.appliedJobs =[];
+     }      
+   })
+
+  //  let job: JobApplicationWithJobData = ;
+    // this.adminService.fetchUserAppliedJob(jobApplication1?.userId).subscribe({
+    //   next: (response) => {
+    //     if(response?.body?.data?.length??0 > 0){
+    //       this.appliedJobs = response?.body?.data??[];
+    //       console.log('applied jobs',this.appliedJobs);
+          
+    //     }
+    //     else this.appliedJobs =[];
+    //   },
+    //   error: (error) => {
+    //     console.error("Error fetching applied jobs:", error);
+    //   }
+    // })
+     this.router.navigate(['/admin/user/job-application']);
+  }
+
+  */
+
+
+   viewJobApplicationDetails(job: JobApplicationsByJobId): void {
+    
+    /* required -
+    export interface JobApplicationWithJobData{
+  //this is job id, not application id,
+    id: string, jobTitle: string, location: string, jobDescription: string, salaryRange: string,skills:string[],status:string,commentByAdmin?:string,updatedBy?:string
+}
+
+    
+    */
+
+/* have -
+export interface JobApplicationsByJobId{  
+  jobApplication:JobApplication,
+  name?:string,
+  email?:string,
+  phoneNumber?:string
+}
+
+interface JobApplication{
+  id: string;
+  jobId: string;
+  userId: string;
+  status: string;
+  commentByAdmin?:string;
+  updatedBy?:string
+  
+}
+
+so get  JobApplicationWithUserAndJobData by -
+    using jobApplicationID
+
+    /job-application-id
+
+  */
+
+ console.log('application',job);
+    console.log('application',job.jobApplication);
+    console.log('application',job.jobApplication.id);
+    
+        this.adminService.fetchJobApplicationByJobApplicationId(job.jobApplication.id).subscribe({
+          next: (response) => {
+            if(response?.body?.data){
+              this.jobApplicationDetails = response?.body?.data??null;
+              console.log('Application recieved -',this.jobApplicationDetails);
+              
+            }
+            else this.jobApplicationDetails =null;
+          }
+        })
+/*need to fetch -
+
+*/
+        const jobApplication = job.jobApplication;  
+          console.log('jobData',this.jobData);
+          
+        /*
+          export interface JobApplicationWithJobData{
+            //this is job id, not application id,
+            id: string, jobTitle: string, location: string, jobDescription: string, salaryRange: string,skills:string[],status:string,commentByAdmin?:string,updatedBy?:string
+          }
+        */
+        const njobData = {
+          id:jobApplication.jobId,
+          jobTitle:this.jobData?.jobTitle??'',
+          location:this.jobData?.location??'',
+          jobDescription:this.jobData?.jobDescription??'',
+          salaryRange:this.jobData?.salaryRange??'',
+          skills:this.jobData?.skills??[],
+          status:jobApplication.status,
+          commentByAdmin:jobApplication.commentByAdmin,
+          updatedBy:jobApplication.updatedBy
+        }
+        this.adminService.setJobApplicationData(njobData);
+        this.router.navigate([ROUTES.JOB_APPLICATION_DETAILS]);
+      }
   
 }

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { MESSAGES } from '../../constants/Messages.constant';
 import { UserService } from '../../user.service';
-import { Job, JobApplication } from '../../users.interface';
+import { Job, JobApplicationWithJobData } from '../../users.interface';
 import { ToasterService } from '../../../shared/Toaster/toaster.service';
 import { Router } from '@angular/router';
 import { take } from 'rxjs';
@@ -16,7 +16,7 @@ import { jobApplicationStatus } from '../../user.service';
 export class AppliedJobComponent {
    
   // jobDetail:Job | null = null;
-  jobApplicationDetail:JobApplication | null = null;
+  jobApplicationDetail:JobApplicationWithJobData | null = null;
   canDeleteApplication: boolean = false;
   constructor(private http: HttpClient,
     private userService: UserService, 

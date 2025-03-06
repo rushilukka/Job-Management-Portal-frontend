@@ -1,3 +1,5 @@
+import {  JobApplicationWithJobData } from "../users/users.interface";
+
 export interface JobDetails{  
   id:string,
   jobTitle: string; 
@@ -17,18 +19,25 @@ export interface JobApplicationDetails{
   skills : string[];
   createdAt ?:string;
   status :string;
-  commnentByAdmin ?:string;
+  commentByAdmin ?:string;
   updatedBy?:string
 }
 
-export interface JobApplicationsByJobId{  
-  id:string,
-  jobId: string; 
-  userId: string; 
-  createdAt ?:string;
-  status :string;
-  commentByAdmin ?:string;
+interface JobApplication{
+  id: string;
+  jobId: string;
+  userId: string;
+  status: string;
+  commentByAdmin?:string;
   updatedBy?:string
+  
+}
+
+export interface JobApplicationsByJobId{  
+  jobApplication:JobApplication,
+  name?:string,
+  email?:string,
+  phoneNumber?:string
 }
  
 export interface JobMange{  

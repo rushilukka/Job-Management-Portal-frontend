@@ -3,13 +3,27 @@
 <div  class="min-h-screen">
 <div class="max-w-3xl mt-5 p-6 bg-white rounded-lg shadow mx-auto">
   <!-- Your content goes here -->
-  <h2 class="text-2xl font-bold mb-4 text-primary">{{userDetails?.name}} - Job Application Details</h2>
+   
+  <h2 class="text-2xl font-bold mb-4 text-primary">
+    <span *ngIf="userDetails?.name">{{userDetails?.name}} - </span>
+    Job Application Details</h2>
 
   <div *ngIf="jobApplicationDetail; else loading">
+    
     <div class="mb-4">
-      <label class="font-semibold">Application Status:</label>
-       <p  class="text-gray-700">{{ jobApplicationDetail.status }}</p>
+      <label class="font-semibold pr-6">Application Status:</label>
+      <p class="text-white font-semibold inline-block px-4 py-1 rounded-lg"
+        [ngClass]="{
+          'bg-yellow-500': jobApplicationDetail.status === 'pending',
+          'bg-green-500': jobApplicationDetail.status === 'approved',
+          'bg-red-500': jobApplicationDetail.status === 'rejected'
+        }">
+        {{ jobApplicationDetail.status }}
+      </p>
     </div>
+    
+
+
     <div class="mb-4">
       <label class="font-semibold">Job Title:</label>
        <p  class="text-gray-700">{{ jobApplicationDetail.jobTitle }}</p>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { JobApplication } from '../../../users/users.interface';
+import { JobApplicationWithJobData } from '../../../users/users.interface';
 import { AdminService } from '../../admin.service';
 import { UserData } from '../../admin.interface';
 import { jobApplicationStatus } from '../../../users/user.service';
@@ -7,6 +7,8 @@ import { take } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToasterService } from '../../../shared/Toaster/toaster.service';
 import { TOASTER_MESSAGES } from '../../constants/toasterMessages.constant';
+import { HttpResponse } from '@angular/common/http';
+import { StandardResponse } from '../../../../interfaces/standard-response.interface';
 @Component({
   selector: 'app-user-job-application',
   standalone: false,
@@ -16,7 +18,7 @@ import { TOASTER_MESSAGES } from '../../constants/toasterMessages.constant';
 export class UserJobApplicationComponent {
 
   //need to re render cmp after response
-  jobApplicationDetail: JobApplication | null = null;
+  jobApplicationDetail: JobApplicationWithJobData | null = null;
   userDetails: UserData | null = null;
   jobApplicationStatus = jobApplicationStatus;
   isPending: boolean = false;
@@ -28,6 +30,9 @@ export class UserJobApplicationComponent {
     private toasterService: ToasterService
   ) {
     this.jobApplicationDetail = this.adminService.getJobApplicationData();
+
+     
+
     this.userDetails = this.adminService.getUserData();
     this.isPending = this.jobApplicationDetail?.status === jobApplicationStatus.pending;
     this.rejectForm = this.fb.group({
@@ -48,7 +53,7 @@ export class UserJobApplicationComponent {
         this.adminService.setJobApplicationData({
           ...this.jobApplicationDetail, // Keep all existing properties
           status: jobApplicationStatus.approved // Only update status
-        } as JobApplication // Type assertion to fix TS error 
+        } as JobApplicationWithJobData // Type assertion to fix TS error 
       );
         console.log(response);
         this.isPending = false;
@@ -85,7 +90,8 @@ export class UserJobApplicationComponent {
           ...this.jobApplicationDetail, // Keep all existing properties
           status: jobApplicationStatus.rejected, // Only update status
           commentByAdmin: comment // Store the rejection comment
-        } as JobApplication // Type assertion to fix TS error 
+          
+        } as JobApplicationWithJobData // Type assertion to fix TS error 
       );
         console.log(response);
         this.isRejecting = false; // Hide rejection form after submission

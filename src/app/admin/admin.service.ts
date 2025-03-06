@@ -5,7 +5,7 @@ import { environment } from '../../environments/environments';
 import { LOCALSTORAGE } from '../auth/constants/local-storage.constant';
 import { StandardResponse } from '../../interfaces/standard-response.interface';
 import { JobApplicationDetails, JobApplicationsByJobId, JobDetails, UserData } from './admin.interface';
-import { Job, JobApplication } from '../users/users.interface';
+import { Job, JobApplicationWithJobData,JobApplicationWithJobAndUserData } from '../users/users.interface';
 import { API_ENDPOINTS } from './constants/api-endpoints.constant';
 import { jobApplicationStatus, Resume } from '../users/user.service';
  
@@ -47,18 +47,46 @@ export class AdminService {
     localStorage.removeItem(this.jobDataKey);
   }
 
-    setJobApplicationData(data: JobApplication ) {
+    setJobApplicationData(data: JobApplicationWithJobData ) {
       localStorage.setItem(this.jobApplicationDataKey, JSON.stringify(data));
     }
   
-    getJobApplicationData(): JobApplication | null {
+    getJobApplicationData(): JobApplicationWithJobData | null {
       const data = localStorage.getItem(this.jobApplicationDataKey);
       return data ? JSON.parse(data) : null;
     }
-  
+
     clearJobApplicationData() {
       localStorage.removeItem(this.jobApplicationDataKey);
     }
+
+  
+
+  /*
+  setJobApplicationData(data: JobApplicationWithJobAndUserData ) {
+      localStorage.setItem(this.jobApplicationDataKey, JSON.stringify(data));
+    }
+  
+    getJobApplicationData(): JobApplicationWithJobAndUserData | null {
+      const data = localStorage.getItem(this.jobApplicationDataKey);
+      return data ? JSON.parse(data) : null;
+    }
+
+    clearJobApplicationData() {
+      localStorage.removeItem(this.jobApplicationDataKey);
+    }
+
+
+*/
+    getJobApplicationDataFromBackend(jobApplicationId: string): Observable<HttpResponse<StandardResponse<JobApplicationWithJobData>>> {
+      const jobApplication = this.http.get<StandardResponse<JobApplicationWithJobData>>(
+        `${API_ENDPOINTS.GET_JOB_APPLICATIONS_BY_JOB_ID}/?jobId=${jobApplicationId}`,
+        { observe: 'response' } 
+      );
+      return jobApplication;
+    }
+
+   
   
   isAuthenticated(): boolean {
     const token = localStorage.getItem(LOCALSTORAGE.AUTH_TOKEN);
@@ -129,6 +157,21 @@ export class AdminService {
 
       { observe: 'response' }
     )
+  }
+
+  fetchUserAppliedJobWithJobId(userId:string,jobId:string):Observable<HttpResponse<StandardResponse<JobApplicationDetails[]>>>{
+    return this.http.get<StandardResponse<JobApplicationDetails[]>>(`${API_ENDPOINTS.USER_APPLIED_JOBS}?userId=${userId}`,
+
+      { observe: 'response' }
+    )
+  }
+
+  fetchJobApplicationByJobApplicationId(jobApplicationId:string):Observable<HttpResponse<StandardResponse<JobApplicationWithJobData>>>{
+    console.log('gdfgnhfmgjg',jobApplicationId,);
+    
+    return this.http.get<StandardResponse<JobApplicationWithJobData>>(`${API_ENDPOINTS.GET_APPLICATION_BY_JOB_APPLICATION__ID}?jobApplicationId=${jobApplicationId}`,
+      { observe: 'response' } // This ensures you get the full HttpResponse
+    );
   }
 
   updateJobApplicationStatus(jobId:string,userId:string,status:jobApplicationStatus,comment?:string):Observable<HttpResponse<StandardResponse>>{
