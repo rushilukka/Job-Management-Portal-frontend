@@ -43,8 +43,8 @@ import { ChartModule } from 'primeng/chart'; //  Import ChartModule
     ReactiveFormsModule,
     NgxExtendedPdfViewerModule,
     FormsModule,
-     RouterModule.forChild(adminRoutes),
-     SharedModule,
+    RouterModule.forChild(adminRoutes),
+    SharedModule,
     CommonModule,
     ChartModule
   ],
